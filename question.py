@@ -1,5 +1,5 @@
 from flask import Flask, render_template, redirect, request, session
-import common
+from common import *
 
 
 # the main list.html page

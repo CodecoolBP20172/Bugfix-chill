@@ -10,8 +10,10 @@ app = Flask(__name__)
 def listing_questions():
     return render_template("list.html")
 
-#@app.route('/list')
 
+@app.route('/list')
+def index():
+    return question.question_index()
 
 #@app.route('/new-question')
 
@@ -19,10 +21,18 @@ def listing_questions():
 #@app.route('/question/<question_id>')
 
 
-#@app.route('/question/<question_id>/edit')
+@app.route('/question/<question_id>/edit')
+def question_edit(question_edit):
+    form_keys = request.form.keys()
+    edited_question = dict()
+    for key in form_keys:
+        edited_question.update({key: request.form[key]})
+    return question.edit_question(question_id, edited_question)
 
 
-#@app.route('/question/<question_id>/delete')
+@app.route('/question/<question_id>/delete')
+def del_question_by_id(question_id):
+    return question.delete_question(question_id)
 
 
 #@app.route('/question/<question_id>/new-answer')
