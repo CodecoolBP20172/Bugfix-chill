@@ -6,8 +6,12 @@ def read_from_csv(): #Debi
     pass
 
 
-def write_to_csv(): #Gábor
-    pass
+def write_to_csv(datafile, output_file):
+    headers = datafile[0].keys()
+    with open(output_file, "w") as output_file:
+        dict_writer = csv.DictWriter(output_file, headers)
+        dict_writer.writeheader()
+        dict_writer.writerows(datafile)
 
 
 def string_to_base64(origin):
