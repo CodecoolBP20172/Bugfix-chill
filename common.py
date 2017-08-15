@@ -2,11 +2,16 @@ import csv
 import base64
 
 
-def read_from_csv(): #Debi
-    pass
+def read_from_csv(csvfile):  #Debi
+    with open(csvfile) as csvfile:
+        list_of_questions = csv.DictReader(csvfile)
+        questions = []
+        for row in list_of_questions:
+            questions.append(row)
+        return questions
 
 
-def write_to_csv(): #Gábor
+def write_to_csv():  #Gábor
     pass
 
 
