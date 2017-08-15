@@ -7,10 +7,6 @@ app = Flask(__name__)
 
 
 @app.route('/')
-def listing_questions():
-    return question.question_index()
-
-
 @app.route('/list')
 def index():
     return question.question_index()

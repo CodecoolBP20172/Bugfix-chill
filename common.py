@@ -8,13 +8,13 @@ def read_from_csv(input_file):
         questions = []
         for row in list_of_questions:
             questions.append(row)
-        for row in list_of_questions:
+        for row in questions:
             for key, value in row.items():
                 if key in ("title", "message", "image"):
                     row[key] = base64_to_string(value)
                 else:
                     continue
-        return list_of_questions
+        return questions
 
 
 def write_to_csv(data, output_file):

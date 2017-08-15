@@ -5,7 +5,15 @@ from common import *
 # the main list.html page
 def question_index():
     table = read_from_csv('data/question.csv')
-    return render_template('list.html', table=table, header=)
+    header = list()
+    header.append(Question ID)
+    header.append(Submission time)
+    header.append(View number)
+    header.append(Vote number)
+    header.append(Title)
+    header.append(Message)
+    header.append(Image)
+    return render_template('list.html', table=table, header=header)
 
 
 # deleting a question by id
