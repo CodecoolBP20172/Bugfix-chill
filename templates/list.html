@@ -6,23 +6,23 @@
     </head>
     <body>
         <h1>Questions</h1>
-        <form action="{{url_for('/new-question')}}" method="get">
+        <form action="/" method="get">
             <p><input type="submit" value="Ask a question"></p>
         </form>
         <table>
             <tr>
-                <th> ID </th>
-                <th> Story Title </th>
-                <th> User Story </th>
-                <th> Acceptance Criteria </th>
-                <th> Business Value </th>
-                <th> Estimation </th>
-                <th> Status </th>
+                <th> Question ID </th>
+                <th> Submission time </th>
+                <th> View number </th>
+                <th> Vote number </th>
+                <th> Title </th>
+                <th> Message </th>
+                <th> Image </th>
             </tr>
-            {% for row in story_info %}
+            {% for row in table %}
             <tr>
-                {% for element in row %}
-                    <td>{{ row[loop.index0] }}</td>
+                {% for element in row.values() %}
+                    <td>{{ element }}</td>
                 {% endfor %}
                 {% if row: %}
                     <td><a href="/story/{{ row[0] }}"><img src="/static/images/edit.svg" width="20" height="20" alt="Edit"></a></td>
