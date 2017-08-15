@@ -1,31 +1,34 @@
 from flask import Flask, render_template, redirect, request, session, url_for
 import common
-import questions
-import answers
+import question
+import answer
 
 app = Flask(__name__)
 
 
 @app.route('/')
-@app.route('/list')
+def listing_questions():
+    return render_template("list.html")
+
+#@app.route('/list')
 
 
-@app.route('/new-question')
+#@app.route('/new-question')
 
 
-@app.route('/question/<question_id>')
+#@app.route('/question/<question_id>')
 
 
-@app.route('/question/<question_id>/edit')
+#@app.route('/question/<question_id>/edit')
 
 
-@app.route('/question/<question_id>/delete')
+#@app.route('/question/<question_id>/delete')
 
 
-@app.route('/question/<question_id>/new-answer')
+#@app.route('/question/<question_id>/new-answer')
 
 
-@app.route('/answer/<answer_id>/delete')
+#@app.route('/answer/<answer_id>/delete')
 
 
 if __name__ == "__main__":

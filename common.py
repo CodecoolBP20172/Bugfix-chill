@@ -2,7 +2,7 @@ import csv
 import base64
 
 
-def read_from_csv(input_file):  #Debi
+def read_from_csv(input_file):
     with open(input_file) as input_file:
         list_of_questions = csv.DictReader(input_file)
         questions = []
