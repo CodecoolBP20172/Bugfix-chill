@@ -2,17 +2,21 @@ import csv
 import base64
 
 
-def read_from_csv(csvfile):  #Debi
-    with open(csvfile) as csvfile:
-        list_of_questions = csv.DictReader(csvfile)
+def read_from_csv(input_file):  #Debi
+    with open(input_file) as input_file:
+        list_of_questions = csv.DictReader(input_file)
         questions = []
         for row in list_of_questions:
             questions.append(row)
         return questions
 
 
-def write_to_csv():  #Gábor
-    pass
+def write_to_csv(data, output_file):
+    headers = data[0].keys()
+    with open(output_file, "w") as output_file:
+        dict_writer = csv.DictWriter(output_file, headers)
+        dict_writer.writeheader()
+        dict_writer.writerows(data)
 
 
 def string_to_base64(origin):
