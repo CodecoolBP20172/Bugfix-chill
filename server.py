@@ -7,10 +7,6 @@ app = Flask(__name__)
 
 
 @app.route('/')
-def listing_questions():
-    return render_template("list.html")
-
-
 @app.route('/list')
 def index():
     return question.question_index()
