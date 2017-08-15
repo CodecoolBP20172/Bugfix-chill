@@ -5,7 +5,7 @@ from common import *
 # the main list.html page
 def question_index():
     table = read_from_csv('/data/question.csv')
-    return render_template('/list', table=table)
+    return render_template('list.html', table=table)
 
 
 # deleting a question by id
