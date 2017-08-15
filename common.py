@@ -18,7 +18,7 @@ def read_from_csv(input_file):
 
 
 def write_to_csv(data, output_file):
-    headers = data[0].keys()
+    headers = ["ID", "submission_time", "view_number", "vote_number", "title", "message", "image"]
     for row in data:
         for key, value in row.items():
             if key in ("title", "message", "image"):

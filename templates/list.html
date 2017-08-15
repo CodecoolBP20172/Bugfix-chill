@@ -21,8 +21,8 @@
             </tr>
             {% for row in table %}
             <tr>
-                {% for element in row.values() %}
-                    <td>{{ element }}</td>
+                {% for key in header %}
+                    <td>'{{ row[key] }}'</td>
                 {% endfor %}
                 {% if row: %}
                     <td><a href="/story/{{ row[0] }}"><img src="/static/images/edit.svg" width="20" height="20" alt="Edit"></a></td>
@@ -30,6 +30,6 @@
                 {% endif%}
             </tr>
             {% endfor %}
-            
+
     </body>
 </html>

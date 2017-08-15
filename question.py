@@ -5,14 +5,7 @@ from common import *
 # the main list.html page
 def question_index():
     table = read_from_csv('data/question.csv')
-    header = list()
-    header.append("Question ID")
-    header.append("Submission time")
-    header.append("View number")
-    header.append("Vote number")
-    header.append("Title")
-    header.append("Message")
-    header.append("Image")
+    header = ["ID", "submission_time", "view_number", "vote_number", "title", "message", "image"]
     return render_template('list.html', table=table, header=header)
 
 
@@ -36,4 +29,5 @@ def edit_question(question_id, edited_question):
     for index, item in enumerate(table):
         if item["id"] == question_id:
             table[index] = edited_question
+    write_to_csv(table, 'data/question.csv')
     return redirect('/list')
