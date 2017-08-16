@@ -1,6 +1,7 @@
 import csv
 import base64
-import datetime
+from datetime import datetime
+import time
 
 
 def read_from_csv(input_file):
@@ -13,8 +14,6 @@ def read_from_csv(input_file):
             for key, value in row.items():
                 if key in ("title", "message", "image"):
                     row[key] = base64_to_string(value)
-                # elif key == "submission_time":
-                #     row[key] = datetime.datetime.fromtimestamp(int(row[key])).strftime('%Y-%m-%d %H:%M:%S')
                 else:
                     continue
         return questions
@@ -28,12 +27,19 @@ def write_to_csv(data, output_file):
         for key, value in row.items():
             if key in ("title", "message", "image"):
                 row[key] = string_to_base64(value)
-            # elif key == "submission_date":
-            #     row[key] = time.mktime(int(datetime.datetime.strptime(row[key], "%Y-%m-%d %H:%M:%S")).timetuple())
     with open(output_file, "w") as output_file:
         dict_writer = csv.DictWriter(output_file, fieldnames)
         dict_writer.writeheader()
         dict_writer.writerows(data)
+
+
+def generate_timestamp():
+    timestamp = int(time.time())
+    return timestamp
+
+
+def date_from_timestamp(timestamp):
+    return datetime.fromtimestamp(float(timestamp))
 
 
 def string_to_base64(origin):

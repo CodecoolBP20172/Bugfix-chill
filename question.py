@@ -1,10 +1,15 @@
 from flask import Flask, render_template, redirect, request, session
 from common import *
+import datetime
 
 
 # the main list.html page
 def question_index():
     table = read_from_csv('data/question.csv')
+    for row in table:
+        for key, value in row.items():
+            if key == "submission_time":
+                row[key] = date_from_timestamp(value)
     header = ["ID", "submission_time", "view_number", "vote_number", "title", "message", "image"]
     return render_template('list.html', table=table, header=header)
 
@@ -74,7 +79,7 @@ def add_question(question_id, new_question_data):
     table = read_from_csv('data/question.csv')
     new_question = dict()
     new_question['ID'] = question_id
-    new_question['submission_time'] = 0  # datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S')
+    new_question['submission_time'] = generate_timestamp()
     new_question['view_number'] = 0
     new_question['vote_number'] = 0
     new_question['title'] = new_question_data['question-title']
