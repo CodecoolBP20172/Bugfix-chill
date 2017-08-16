@@ -19,7 +19,8 @@ def delete_answer(answer_id):
     table = common.read_from_csv('data/answer.csv')
     for item in table:
         if item["ID"] == answer_id:
+            question_id = item['question_id']
             table.remove(item)
             break
     common.write_to_csv(table, 'data/answer.csv')
-    return render_template("display.html")
+    return redirect('/question/{}'.format(question_id))

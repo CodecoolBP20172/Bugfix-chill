@@ -21,7 +21,7 @@
         {% for answer in answers_list %}
         <p>{{answer['submission_time']}}</p>
         <h3>{{answer['message']}}</h3>
-    <form action="{{ url_for('delete_answer', answer_id=answer[id] ) }}">
+    <form action="{{ url_for('delete_answer', answer_id=answer['ID'] ) }}">
         <p><button type="Submit">Delete answer</button></p>
     </form>
 
