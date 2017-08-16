@@ -11,14 +11,19 @@ app = Flask(__name__)
 def index():
     return question.question_index()
 
-#@app.route('/new-question')
+
+@app.route('/new-question')
+def add_new_question():
+    return question.new_question(request.form)
 
 
-#@app.route('/question/<question_id>')
+@app.route('/question/<question_id>')
+def display_question_by_id(question_id):
+    return question.display_question(question_id)
 
 
 @app.route('/question/<question_id>/edit')
-def question_edit(question_edit):
+def question_edit(question_id):
     form_keys = request.form.keys()
     edited_question = dict()
     for key in form_keys:
