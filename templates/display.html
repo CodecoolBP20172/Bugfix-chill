@@ -12,7 +12,7 @@
     <form action="{{ url_for('new_answer', question_id=question['ID'] ) }}">
         <p><button type="Submit">Answer this question</button></p>
     </form>
-    <form action="{{ url_for('question_edit', question_id=question['ID'] ) }}">
+    <form action="{{ url_for('question_edit', question_id=question['ID'] ) }}" method="post">
         <p><button type="Submit">Edit question</button></p>
     </form>
     <form action="{{ url_for('del_question_by_id', question_id=question['ID'] ) }}">
@@ -24,7 +24,7 @@
     <form action="{{ url_for('delete_answer', answer_id=answer[id] ) }}">
         <p><button type="Submit">Delete answer</button></p>
     </form>
-    
+
         {% endfor %}
 
     <footer>
