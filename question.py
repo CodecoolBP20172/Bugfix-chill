@@ -51,7 +51,7 @@ def edit_question(question_id, edited_question):
 def new_question():
     table = read_from_csv('data/question.csv')
     new_id = id_generation(table)
-    return render_template("/form.html", id=new_id)
+    return render_template("/form.html", id=new_id, form_type="add_question")
 
 
 def display_question(question_id):

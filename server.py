@@ -50,7 +50,15 @@ def del_question_by_id(question_id):
 
 @app.route('/question/<question_id>/new-answer')
 def new_answer(question_id):
-    return answer.post_an_answer(question_id)
+    return render_template("form.html", question_id=question_id, form_type="answer")
+
+
+@app.route("/add_answer", methods=["POST"])
+def add_answer():
+    table = common.read_from_csv('data/answer.csv')
+    question_id = request.form.get("question_id")
+    message = request.form.get("answer")
+    return answer.post_an_answer(question_id, message)
 
 
 @app.route('/answer/<answer_id>/delete')
