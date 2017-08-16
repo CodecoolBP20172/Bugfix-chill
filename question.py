@@ -14,7 +14,7 @@ def question_index():
 def delete_question(question_id):
     table = read_from_csv('data/question.csv')
     for question in table:
-        if question["id"] == question_id:
+        if question["ID"] == question_id:
             table.remove(question)
             break
     write_to_csv(table, 'data/question.csv')
@@ -27,7 +27,7 @@ def delete_question(question_id):
 def edit_question(question_id, edited_question):
     table = read_from_csv('/data/question.csv')
     for index, question in enumerate(table):
-        if question["id"] == question_id:
+        if question["ID"] == question_id:
             table[index] = edited_question
     write_to_csv(table, 'data/question.csv')
     return redirect('/list')
@@ -45,7 +45,7 @@ def display_question(question_id):
     table = read_from_csv('data/question.csv')
     question_to_display = None
     for question in table:
-        if question["id"] == question_id:
+        if question["ID"] == question_id:
             question_to_display = question
             break
     return render_template("display.html", question=question_to_display)
