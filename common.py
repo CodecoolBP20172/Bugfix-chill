@@ -13,8 +13,8 @@ def read_from_csv(input_file):
             for key, value in row.items():
                 if key in ("title", "message", "image"):
                     row[key] = base64_to_string(value)
-                elif key == "submission_time":
-                    row[key] = datetime.datetime.fromtimestamp(int(row[key])).strftime('%Y-%m-%d %H:%M:%S')
+                # elif key == "submission_time":
+                #     row[key] = datetime.datetime.fromtimestamp(int(row[key])).strftime('%Y-%m-%d %H:%M:%S')
                 else:
                     continue
         return questions
@@ -28,8 +28,8 @@ def write_to_csv(data, output_file):
         for key, value in row.items():
             if key in ("title", "message", "image"):
                 row[key] = string_to_base64(value)
-            elif key == "submission_date":
-                row[key] = time.mktime(int(datetime.datetime.strptime(row[key], "%Y-%m-%d %H:%M:%S")).timetuple())
+            # elif key == "submission_date":
+            #     row[key] = time.mktime(int(datetime.datetime.strptime(row[key], "%Y-%m-%d %H:%M:%S")).timetuple())
     with open(output_file, "w") as output_file:
         dict_writer = csv.DictWriter(output_file, fieldnames)
         dict_writer.writeheader()
@@ -55,10 +55,8 @@ def print_info(variable):
 
 
 def id_generation(table):
-    with open(table, "r") as table:
-        id_list = []
-        generated_id = 0
-        for data in table:
-            id_list.append(int(data[0]))
-        generated_id = max(id_list) + 1
+    id_list = []
+    for data in table:
+        id_list.append(int(data['ID']))
+    generated_id = max(id_list) + 1
     return(generated_id)

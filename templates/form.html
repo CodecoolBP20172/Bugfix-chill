@@ -2,18 +2,18 @@
 <html>
     <head>
         <meta charset="utf-8">
-            <title>New question</title>
+        <title>New question</title>
     </head>
     <body>
         <h1>Ask a question</h1>
         <form action="/add_question/{{ id }}" method="post">
             <p>
                 <label for="question-title">Question title</label><br>
-                <textarea name="question-title" rows="1" cols="50">{{  }}</textarea>
+                <textarea name="question-title" rows="1" cols="50"></textarea>
             </p>
             <p>
-                <label for="user-title">Question Body</label><br>
-                <textarea name="user-story" rows="5" cols="50">{{ story[2] }}</textarea>
+                <label for="message">Question Body</label><br>
+                <textarea name="message" rows="5" cols="50"></textarea>
             </p>
             <button type="submit">Create</button>
         </form>

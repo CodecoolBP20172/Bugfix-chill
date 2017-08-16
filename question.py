@@ -74,12 +74,12 @@ def add_question(question_id, new_question_data):
     table = read_from_csv('data/question.csv')
     new_question = dict()
     new_question['ID'] = question_id
-    new_question['submission_time'] = datetime.now().strftime('%Y-%m-%d %H:%M:%S')
+    new_question['submission_time'] = 0  # datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S')
     new_question['view_number'] = 0
     new_question['vote_number'] = 0
-    new_question['title'] = new_question_data['title']
+    new_question['title'] = new_question_data['question-title']
     new_question['message'] = new_question_data['message']
-    new_question['image'] = None
+    new_question['image'] = ''
     table.append(new_question)
     print(table)
     write_to_csv(table, 'data/question.csv')

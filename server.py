@@ -17,9 +17,15 @@ def new_question_form():
     return question.new_question()
 
 
-@app.route('/add_question/<question_id>')
+@app.route('/add_question/<question_id>', methods=['POST'])
 def add_new_question(question_id):
-    return question.add_question(question_id, request.form)
+    new_question_dict = dict()
+    keys_of_form = request.form.keys()
+    for key in keys_of_form:
+        print(key)
+        new_question_dict.update({key: request.form[key]})
+    print(new_question_dict)
+    return question.add_question(question_id, new_question_dict)
 
 
 @app.route('/question/<question_id>')
@@ -27,9 +33,14 @@ def display_question_by_id(question_id):
     return question.display_question(question_id)
 
 
-@app.route('/question/<question_id>/edit')
+@app.route('/question/<question_id>/edit', methods=['POST'])
 def question_edit(question_id):
-    return question.edit_question(question_id, request.form)
+    edit_question_dict = dict()
+    keys_of_form = request.form.keys()
+    for key in keys_of_form:
+        print(key)
+        edit_question_dict.update({key: request.form[key]})
+    return question.edit_question(question_id, edit_question_dict)
 
 
 @app.route('/question/<question_id>/delete')
