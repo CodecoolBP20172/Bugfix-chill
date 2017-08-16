@@ -47,3 +47,13 @@ def print_info(variable):
         "var": variable,
         "type": type(variable)
     }))
+
+
+def id_generation(table):
+    with open(table, "r") as table:
+        id_list = []
+        generated_id = 0
+        for data in table:
+            id_list.append(int(data[0]))
+        generated_id = max(id_list) + 1
+    return(generated_id)
