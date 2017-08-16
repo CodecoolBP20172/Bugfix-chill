@@ -25,8 +25,8 @@
                     <td>{{ row[key] }}</td>
                 {% endfor %}
                 {% if row: %}
-                    <td><a href="url_for(/question/{{ row[ID] }}/edit)"><img src="/templates/static/edit.svg" width="20" height="20" alt="Edit"></a></td>
-                    <td><a href="url_for(/question/{{ row[ID] }}/delete)"><img src="/templates/static/waste-bin.svg" width="20" height="20" alt="Delete"></a></td>
+                    <td><a href="/question/{{ row['ID'] }}/edit"><img src="static/edit.svg" width="20" height="20" alt="Edit"></a></td>
+                    <td><a href="/question/{{ row['ID'] }}/delete"><img src="static/waste-bin.svg" width="20" height="20" alt="Delete"></a></td>
                 {% endif%}
             </tr>
             {% endfor %}
