@@ -9,24 +9,24 @@
     <p>Views: {{question["view_number"]}}</p>
     <h2>{{question["title"]}}</h2>
     <h3>{{question["message"]}}</h3>
-
+    <form action="{{ url_for('new_answer', question_id=question['ID'] ) }}">
+        <p><button type="Submit">Answer this question</button></p>
+    </form>
     <form action="{{ url_for('question_edit', question_id=question['ID'] ) }}">
         <p><button type="Submit">Edit question</button></p>
     </form>
     <form action="{{ url_for('del_question_by_id', question_id=question['ID'] ) }}">
         <p><button type="Submit">Delete question</button></p>
     </form>
-    {% if answer_display is not none %}
-    <p>Answers for this question:</p>
-    {% for answer in answers %}
-    <p>{{answer[submission_time]}} Views: {{answer[views]}}</p>
-    <h3>{{answer[message]}}</h3>
-    <!--<form action="{{ url_for('delete_answer', answer_id=answer[id] ) }}">
+        {% for answer in answers_list %}
+        <p>{{answer['submission_time']}}</p>
+        <h3>{{answer['message']}}</h3>
+    <form action="{{ url_for('delete_answer', answer_id=answer[id] ) }}">
         <p><button type="Submit">Delete answer</button></p>
     </form>
-    -->
-    {% endfor %}
-    {% endif %}
+    
+        {% endfor %}
+
     <footer>
         <img src="/static/logo_regular.png" height="10%" width="10%" />
     </footer>

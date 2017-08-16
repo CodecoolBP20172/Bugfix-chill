@@ -63,9 +63,10 @@ def display_question(question_id):
             question_to_display = question
             break
     answer_table = read_from_csv('data/answer.csv')
-    for answer in answers_list:
+    for answer in answer_table:
         if answer["question_id"] == question_id:
             answers_list.append(answer)
+    print(answers_list)
     return render_template("display.html", question=question_to_display, answers_list=answers_list)
 
 
