@@ -18,7 +18,7 @@ def index():
 
 
 @app.route('/question/<question_id>/edit')
-def question_edit(question_edit):
+def question_edit(question_id):
     form_keys = request.form.keys()
     edited_question = dict()
     for key in form_keys:

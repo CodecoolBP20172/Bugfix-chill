@@ -15,7 +15,7 @@ def delete_question(question_id):
     table = read_from_csv('data/question.csv')
     for item in table:
         if item["id"] == question_id:
-            item.remowe(item)
+            item.remove(item)
             break
     write_to_csv(table, 'data/question.csv')
     return redirect('/list')
@@ -25,9 +25,9 @@ def delete_question(question_id):
 # replaces the question with the one gets from the form
 # redirects to /list
 def edit_question(question_id, edited_question):
-    table = read_from_csv('/data/question.csv')
+    table = read_from_csv('data/question.csv')
     for index, item in enumerate(table):
-        if item["id"] == question_id:
+        if item["ID"] == question_id:
             table[index] = edited_question
     write_to_csv(table, 'data/question.csv')
     return redirect('/list')
