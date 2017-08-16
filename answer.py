@@ -12,13 +12,14 @@ def post_an_answer():
     dict_into_list["question_id"] = request.form(["id_of_question"])
     dict_into_list["answer"] = common.string_to_base64(request.form(["answer"]))
     output_list.append(dict_into_list)
-    return output_list
+    return render_template("display.html")
 
 
-def delete_an_answer():
-    id_of_answer = request.form("id_of_answer")
-    with open("data/answer.csv", "w") as table:
-        for record in table:
-            if id_of_answer == record[2]:
-                table.remove(record)
-    return
+def delete_answer(answer_id):
+    table = common.read_from_csv('data/answer.csv')
+    for item in table:
+        if item["ID"] == answer_id:
+            table.remove(item)
+            break
+    common.write_to_csv(table, 'data/answer.csv')
+    return render_template("display.html")
