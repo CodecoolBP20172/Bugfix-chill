@@ -29,7 +29,7 @@ def write_to_csv(data, output_file):
             if key in ("title", "message", "image"):
                 row[key] = string_to_base64(value)
             elif key == "submission_date":
-                row[key] = time.mktime(datetime.datetime.strptime(row[key], "%Y-%m-%d %H:%M:%S").timetuple())
+                row[key] = time.mktime(int(datetime.datetime.strptime(row[key], "%Y-%m-%d %H:%M:%S")).timetuple())
     with open(output_file, "w") as output_file:
         dict_writer = csv.DictWriter(output_file, fieldnames)
         dict_writer.writeheader()
