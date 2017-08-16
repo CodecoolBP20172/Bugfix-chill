@@ -42,12 +42,17 @@ def new_question():
 
 def display_question(question_id):
     table = read_from_csv('data/question.csv')
+    answers_list = None
     question_to_display = None
     for question in table:
         if question["ID"] == question_id:
             question_to_display = question
             break
-    return render_template("display.html", question=question_to_display)
+    answer_table = read_from_csv('data/answer.csv')
+    for answer in answers_list:
+        if answer["question_id"] == question_id:
+            answers_list.append(answer)
+    return render_template("display.html", question=question_to_display, answers_list=answers_list)
 
 
 def add_question(question_id, new_question_data):

@@ -2,33 +2,33 @@
 <html>
 <head>
     <meta charset='utf-8'>
-    <title>{{question_title}}</title>
+    <title>{{question["title"]}}</title>
 </head>
 <body>
-    <p>{{question_submission_time}}</p>
-    <p>Views: {{question_view_number}}</p>
-    <h2>{{question_title}}</h2>
-    <h3>{{question_message}}</h3>
-    <form action="{{ url_for('new_answer', question_id=question_id ) }}">
-        <p><button type="Submit">Answer this question</button></p>
-    <form action="{{ url_for('question_edit', question_id=question_id ) }}">
+    <p>{{question["submission_time"]}}</p>
+    <p>Views: {{question["view_number"]}}</p>
+    <h2>{{question["title"]}}</h2>
+    <h3>{{question["message"]}}</h3>
+
+    <form action="{{ url_for('question_edit', question_id=question['ID'] ) }}">
         <p><button type="Submit">Edit question</button></p>
     </form>
-    <form action="{{ url_for('del_question_by_id', question_id=question_id ) }}">
+    <form action="{{ url_for('del_question_by_id', question_id=question['ID'] ) }}">
         <p><button type="Submit">Delete question</button></p>
     </form>
-    {% if answers %}
+    {% if answer_display is not none %}
     <p>Answers for this question:</p>
     {% for answer in answers %}
     <p>{{answer[submission_time]}} Views: {{answer[views]}}</p>
     <h3>{{answer[message]}}</h3>
-    <form action="{{ url_for('delete_answer', answer_id=answer[id] ) }}">
+    <!--<form action="{{ url_for('delete_answer', answer_id=answer[id] ) }}">
         <p><button type="Submit">Delete answer</button></p>
     </form>
+    -->
     {% endfor %}
     {% endif %}
     <footer>
-        <img src="/static/logo_regular.png" />
+        <img src="/static/logo_regular.png" height="10%" width="10%" />
     </footer>
 </body>
 </html>

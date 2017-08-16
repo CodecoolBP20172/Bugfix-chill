@@ -22,6 +22,9 @@
             {% for row in table %}
             <tr>
                 {% for key in header %}
+                    {% if key == "title": %}
+                        <td><a href="{{url_for('display_question_by_id', question_id = row['ID'])}}"> {{row["title"]}} </a></td>
+                    {% endif %}
                     <td>{{ row[key] }}</td>
                 {% endfor %}
                 {% if row: %}
