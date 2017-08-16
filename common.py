@@ -18,16 +18,17 @@ def read_from_csv(input_file):
 
 
 def write_to_csv(data, output_file):
-    headers = ["ID", "submission_time", "view_number", "vote_number", "title", "message", "image"]
+    with open(output_file, "r") as headers:
+        reader = csv.DictReader(headers)
+        fieldnames = reader.fieldnames
     for row in data:
         for key, value in row.items():
             if key in ("title", "message", "image"):
                 row[key] = string_to_base64(value)
     with open(output_file, "w") as output_file:
-        dict_writer = csv.DictWriter(output_file, headers)
+        dict_writer = csv.DictWriter(output_file, fieldnames)
         dict_writer.writeheader()
         dict_writer.writerows(data)
-    return
 
 
 def string_to_base64(origin):
