@@ -41,11 +41,13 @@ def del_question_by_id(question_id):
     return question.delete_question(question_id)
 
 
-#@app.route('/question/<question_id>/new-answer')
+@app.route('/question/<question_id>/new-answer')
+def new_answer(question_id):
+    return answer.post_an_answer(question_id)
 
-
-#@app.route('/answer/<answer_id>/delete')
-
+@app.route('/answer/<answer_id>/delete')
+def delete_answer(answer_id):
+    return answer.delete_answer(answer_id)
 
 if __name__ == "__main__":
     app.secret_key = "this!is!the!secret!key"
