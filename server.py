@@ -17,6 +17,11 @@ def new_question_form():
     return question.new_question()
 
 
+@app.route('/add_question/<question_id>')
+def add_new_question(question_id):
+    return question.add_question(question_id, request.form)
+
+
 @app.route('/question/<question_id>')
 def display_question_by_id(question_id):
     return question.display_question(question_id)
