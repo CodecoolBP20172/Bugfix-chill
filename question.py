@@ -9,8 +9,6 @@ def question_index():
     return render_template('list.html', table=table, header=header)
 
 
-# deleting a question by id
-# redirects to /list
 def delete_question(question_id):
     table = read_from_csv('data/question.csv')
     for question in table:
@@ -18,6 +16,22 @@ def delete_question(question_id):
             table.remove(question)
             break
     write_to_csv(table, 'data/question.csv')
+
+
+def delete_answers_for_question_id(question_id):
+    answer_table = read_from_csv('data/answer.csv')
+    for answer in answer_table:
+        if answer['question_id'] == question_id:
+            answer_table.remove(answer)
+    write_to_csv(answer_table, 'data/answer.csv')
+
+
+# deleting a question by id
+# deletes the answers for the deleted question too
+# redirects to /list
+def delete_question_with_answers(question_id):
+    delete_question(question_id)
+    delete_answers_for_question_id(question_id)
     return redirect('/list')
 
 

@@ -29,16 +29,12 @@ def display_question_by_id(question_id):
 
 @app.route('/question/<question_id>/edit')
 def question_edit(question_id):
-    form_keys = request.form.keys()
-    edited_question = dict()
-    for key in form_keys:
-        edited_question.update({key: request.form[key]})
-    return question.edit_question(question_id, edited_question)
+    return question.edit_question(question_id, request.form)
 
 
 @app.route('/question/<question_id>/delete')
 def del_question_by_id(question_id):
-    return question.delete_question(question_id)
+    return question.delete_question_with_answers(question_id)
 
 
 @app.route('/question/<question_id>/new-answer')
