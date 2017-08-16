@@ -56,7 +56,7 @@ def new_question():
 
 def display_question(question_id):
     table = read_from_csv('data/question.csv')
-    answers_list = None
+    answers_list = list()
     question_to_display = None
     for question in table:
         if question["ID"] == question_id:
