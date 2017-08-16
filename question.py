@@ -41,9 +41,9 @@ def new_question():
 
 def display_question(question_id):
     table = read_from_csv('data/question.csv')
-    question_to_display = None
+    answer_to_display = None
     for question in table:
         if question["ID"] == question_id:
             question_to_display = question
             break
-    return render_template("display.html", question=question_to_display)
+    return render_template("display.html", question=question_to_display, answer_display=answer_to_display)
