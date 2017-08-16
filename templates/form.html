@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+            <title>Super Sprinter 3000 - Add new Story</title>
+    </head>
+    <body>
+        <h1>User Story Manager - Edit Story</h1>
+        <form action="/question/{{ new_id }}" method="post">
+            <p>
+                <label for="story-title">Question title</label><br>
+                <textarea name="story-title" rows="1" cols="50">{{ story[1] }}</textarea>
+            </p>
+            <p>
+                <label for="user-title">Question Body</label><br>
+                <textarea name="user-story" rows="5" cols="50">{{ story[2] }}</textarea>
+            </p>
+            <button type="submit">Create</button>
+        </form>
+        <p>
+            <a href="/">Back to the Questions page</a>
+        </p>
+    </body>
+</html>
