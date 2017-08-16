@@ -38,7 +38,7 @@ def question_edit(question_id):
 
 @app.route('/question/<question_id>/delete')
 def del_question_by_id(question_id):
-    return question.delete_question(question_id)
+    return question.delete_question_with_answers(question_id)
 
 
 @app.route('/question/<question_id>/new-answer')
