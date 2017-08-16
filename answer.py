@@ -1,10 +1,10 @@
-# from flask import Flask, render_template, redirect, request, session, url_for
+from flask import Flask, render_template, redirect, request, session, url_for
 from datetime import datetime
 import common
 import csv
 
 
-def post_an_answer():
+def post_an_answer(question_id):
     output_list = []
     dict_into_list = {}
     dict_into_list["answer_id"] = common.id_generation("data/answer.csv")
