@@ -25,7 +25,7 @@ def delete_question(question_id):
 # replaces the question with the one gets from the form
 # redirects to /list
 def edit_question(question_id, edited_question):
-    table = read_from_csv('/data/question.csv')
+    table = read_from_csv('data/question.csv')
     for index, question in enumerate(table):
         if question["ID"] == question_id:
             table[index] = edited_question
@@ -34,7 +34,7 @@ def edit_question(question_id, edited_question):
 
 
 def new_question():
-    table = read_from_csv('/data/question.csv')
+    table = read_from_csv('data/question.csv')
     new_id = id_generation(table)
     return render_template("/form.html", id=new_id)
 
