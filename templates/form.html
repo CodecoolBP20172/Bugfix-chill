@@ -2,14 +2,14 @@
 <html>
     <head>
         <meta charset="utf-8">
-            <title>Super Sprinter 3000 - Add new Story</title>
+            <title>New question</title>
     </head>
     <body>
-        <h1>User Story Manager - Edit Story</h1>
-        <form action="/question/{{ new_id }}" method="post">
+        <h1>Ask a question</h1>
+        <form action="/add_question/{{ id }}" method="post">
             <p>
-                <label for="story-title">Question title</label><br>
-                <textarea name="story-title" rows="1" cols="50">{{ story[1] }}</textarea>
+                <label for="question-title">Question title</label><br>
+                <textarea name="question-title" rows="1" cols="50">{{  }}</textarea>
             </p>
             <p>
                 <label for="user-title">Question Body</label><br>
