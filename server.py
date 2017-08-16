@@ -13,8 +13,8 @@ def index():
 
 
 @app.route('/new-question')
-def add_new_question():
-    return question.new_question(request.form)
+def new_question_form():
+    return question.new_question()
 
 
 @app.route('/question/<question_id>')

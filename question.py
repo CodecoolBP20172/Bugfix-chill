@@ -33,12 +33,10 @@ def edit_question(question_id, edited_question):
     return redirect('/list')
 
 
-def new_question(form_content):
-    table = read_from_csv('data/question.csv')
-    print(from_content)
-    table.append(form_content)
-    write_to_csv(table, 'data/question.csv')
-    return redirect("/")
+def new_question():
+    table = read_from_csv('/data/question.csv')
+    new_id = id_generation(table)
+    return render_template("/form.html", id=new_id)
 
 
 def display_question(question_id):
