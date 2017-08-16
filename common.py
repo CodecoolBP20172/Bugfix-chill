@@ -1,5 +1,6 @@
 import csv
 import base64
+import datetime
 
 
 def read_from_csv(input_file):
@@ -12,6 +13,8 @@ def read_from_csv(input_file):
             for key, value in row.items():
                 if key in ("title", "message", "image"):
                     row[key] = base64_to_string(value)
+                elif key == "submission_time":
+                    row[key] = datetime.datetime.fromtimestamp(int(row[key])).strftime('%Y-%m-%d %H:%M:%S')
                 else:
                     continue
         return questions

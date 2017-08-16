@@ -9,7 +9,7 @@
         <form action="/new-question" method="get">
             <p><input type="submit" value="Ask a question"></p>
         </form>
-        <table>
+        <table border="1">
             <tr>
                 <th> Question ID </th>
                 <th> Submission time </th>
@@ -24,8 +24,9 @@
                 {% for key in header %}
                     {% if key == "title": %}
                         <td><a href="{{url_for('display_question_by_id', question_id = row['ID'])}}"> {{row["title"]}} </a></td>
+                     {% else %}
+                        <td>{{ row[key] }}</td>
                     {% endif %}
-                    <td>{{ row[key] }}</td>
                 {% endfor %}
                 {% if row: %}
                     <td><a href="/question/{{ row['ID'] }}/edit"><img src="static/edit.svg" width="20" height="20" alt="Edit"></a></td>
