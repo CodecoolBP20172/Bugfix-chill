@@ -4,14 +4,15 @@ import datetime
 
 
 # the main list.html page
-def question_index():
+def question_index(criteria, order):
     table = read_from_csv('data/question.csv')
     for row in table:
         for key, value in row.items():
             if key == "submission_time":
                 row[key] = date_from_timestamp(value)
+    table = ordering(table, criteria, order)
     header = ["ID", "submission_time", "view_number", "vote_number", "title", "message", "image"]
-    return render_template('list.html', table=table, header=header)
+    return render_template('list.html', table=table, header=header, order=order)
 
 
 def delete_question(question_id):

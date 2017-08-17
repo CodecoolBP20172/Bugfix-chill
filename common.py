@@ -69,3 +69,13 @@ def id_generation(table):
     except ValueError:
         generated_id = 0
     return(generated_id)
+
+
+def ordering(table, criteria, order):
+    if order == "descending" and criteria == "ID":
+        table = sorted(table, key=lambda question: int(question["ID"]), reverse=True)
+    elif order == "ascending" and criteria == "ID":
+        table = sorted(table, key=lambda question: int(question["ID"]), reverse=False)
+    else:
+        table = sorted(table, key=lambda question: int(question["ID"]), reverse=False)
+    return table
