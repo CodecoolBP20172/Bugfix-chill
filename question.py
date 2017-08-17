@@ -50,6 +50,7 @@ def edit_question(question_id, edited_question):
             print("found the question to edit")
             question["title"] = edited_question["title"]
             question["message"] = edited_question["message"]
+            question["image"] = edited_question["image"]
     write_to_csv(table, 'data/question.csv')
     return redirect('/')
 
@@ -97,7 +98,7 @@ def add_question(question_id, new_question_data):
     new_question['vote_number'] = 0
     new_question['title'] = new_question_data['title']
     new_question['message'] = new_question_data['message']
-    new_question['image'] = ''
+    new_question['image'] = new_question_data['image']
     table.append(new_question)
     write_to_csv(table, 'data/question.csv')
     return redirect('/question/{}'.format(question_id))

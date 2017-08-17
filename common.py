@@ -61,11 +61,16 @@ def print_info(variable):
 
 
 def id_generation(table):
-    try: 
+    try:
         id_list = []
         for data in table:
             id_list.append(int(data['ID']))
         generated_id = max(id_list) + 1
-    except ValueError: 
+    except ValueError:
         generated_id = 0
     return(generated_id)
+
+
+def allowed_file(filename):
+    return '.' in filename and \
+           filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
