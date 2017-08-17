@@ -45,11 +45,13 @@ def delete_question_with_answers(question_id):
 # redirects to /list
 def edit_question(question_id, edited_question):
     table = read_from_csv('data/question.csv')
-    for index, question in enumerate(table):
+    for question in table:
         if question["ID"] == question_id:
-            table[index] = edited_question
+            print("found the question to edit")
+            question["title"] = edited_question["title"]
+            question["message"] = edited_question["message"]
     write_to_csv(table, 'data/question.csv')
-    return redirect('/list')
+    return redirect('/')
 
 
 def question_for_edit(question_id):
