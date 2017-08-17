@@ -72,10 +72,16 @@ def id_generation(table):
 
 
 def ordering(table, criteria, order):
-    if order == "descending" and criteria == "ID":
-        table = sorted(table, key=lambda question: int(question["ID"]), reverse=True)
-    elif order == "ascending" and criteria == "ID":
-        table = sorted(table, key=lambda question: int(question["ID"]), reverse=False)
+    if order == "descending":
+        if criteria == "submission_time":
+            table = sorted(table, key=lambda question: datetime.strptime(str(question["submission_time"]), '%Y-%m-%d %H:%M:%S'), reverse=True)
+        else:
+            table = sorted(table, key=lambda question: int(question[criteria]), reverse=True)
+    elif order == "ascending":
+        if criteria == "submission_time":
+            table = sorted(table, key=lambda question: datetime.strptime(str(question["submission_time"]), '%Y-%m-%d %H:%M:%S'), reverse=False)
+        else:
+            table = sorted(table, key=lambda question: int(question[criteria]), reverse=False)
     else:
         table = sorted(table, key=lambda question: int(question["ID"]), reverse=False)
     return table
