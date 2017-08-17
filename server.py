@@ -9,7 +9,9 @@ app = Flask(__name__)
 @app.route('/')
 @app.route('/list')
 def index():
-    return question.question_index()
+    criteria = request.args.get("criteria")
+    order = request.args.get("order")
+    return question.question_index(criteria, order)
 
 
 @app.route('/new-question')
