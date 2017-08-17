@@ -16,6 +16,10 @@
                         <label for="message">Question Body</label><br>
                         <textarea name="message" rows="5" cols="50" required></textarea>
                     </p>
+                    <p>
+                        <label for="image">Image link</label><br>
+                        <textarea name="image" rows="5" cols="50"></textarea>
+                    </p>
                     <button type="submit">Create</button>
                     <p>
                         <a href="/"><button type="submit">Back to the Questions page</button></a>
@@ -33,6 +37,10 @@
                         <label for="message">Question Body</label><br>
                         <textarea name="message" rows="5" cols="50" required>{{ question["message"] }}</textarea>
                     </p>
+                    <p>
+                        <label for="image">Image link</label><br>
+                        <textarea name="image" rows="5" cols="50"></textarea>
+                    </p>
                     <button type="submit">Update</button>
                 </form>
                 <p>
@@ -45,6 +53,10 @@
                 <p>
                         <label for="message">Answer</label><br>
                         <textarea name="answer" rows="5" cols="50"></textarea>
+                    </p>
+                    <p>
+                        <label for="image">Image link</label><br>
+                        <textarea name="image" rows="5" cols="50"></textarea>
                     </p>
                     <input type="hidden" name="question_id" value="{{ question_id }}"/>
                     <button type="submit">Add answer</button>

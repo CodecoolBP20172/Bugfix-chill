@@ -3,6 +3,7 @@ import common
 import question
 import answer
 
+
 app = Flask(__name__)
 
 
@@ -67,7 +68,8 @@ def add_answer():
     table = common.read_from_csv('data/answer.csv')
     question_id = request.form.get("question_id")
     message = request.form.get("answer")
-    return answer.post_an_answer(question_id, message)
+    image = request.form.get("image")
+    return answer.post_an_answer(question_id, message, image)
 
 
 @app.route('/answer/<answer_id>/delete')

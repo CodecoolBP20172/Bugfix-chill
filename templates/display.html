@@ -21,6 +21,9 @@
         <p>
             {{ question["message"] }}
         </p>
+        <p>
+            <img src="{{question['image']}}" height=20% width="20%" />
+        </p>
         <table>
             <tr>
                 <td>
@@ -54,6 +57,9 @@
                 <tr>
                     <td>
                         <pre>   <b>Answer</b>: {{answer['message']}}</pre>
+                    </td>
+                    <td>
+                        <pre>   <img src="{{answer['image']}}" height=20% width="20%" /></pre>
                     </td>
                 </tr>
             </table>
