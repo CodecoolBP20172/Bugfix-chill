@@ -6,11 +6,13 @@ import datetime
 # the main list.html page
 def question_index(criteria, order):
     table = read_from_csv('data/question.csv')
-    for row in table:
-        for key, value in row.items():
-            if key == "submission_time":
-                row[key] = date_from_timestamp(value)
-    table = ordering(table, criteria, order)
+    # for row in table:
+    #     for key, value in row.items():
+    #         if key == "submission_time":
+    #             row[key] = date_from_timestamp(value)
+    for index, question in enumerate(table):
+        table[index] = question_to_display_format(question)
+        table = ordering(table, criteria, order)
     header = ["ID", "submission_time", "view_number", "vote_number", "title", "message", "image"]
     return render_template('list.html', table=table, header=header, order=order)
 
@@ -73,6 +75,19 @@ def new_question():
     return render_template("/form.html", id=new_id, form_type="add_question")
 
 
+def question_to_display_format(question):
+    tmp_dict = dict(question)
+    tmp_dict["submission_time"] = date_from_timestamp(tmp_dict["submission_time"])
+    tmp_dict["title"] = tmp_dict["title"].replace('\\n', '<br>')
+    tmp_dict["message"] = tmp_dict["message"].replace('\r\n', '<br>')
+    return tmp_dict
+
+
+def answer_to_display_format(answer):
+    answer["message"] = answer["message"].replace('\\n', '<br>')
+    return answer
+
+
 def display_question(question_id):
     table = read_from_csv('data/question.csv')
     answers_list = list()
@@ -81,13 +96,16 @@ def display_question(question_id):
         if question["ID"] == question_id:
             view_counter = int(question["view_number"]) + 1
             question["view_number"] = str(view_counter)
-            question_to_display = dict(question)
-            question_to_display["submission_time"] = date_from_timestamp(question_to_display["submission_time"])
+            question_to_display = question_to_display_format(question)
+            print('\n\n\n')
+            print(question_to_display)
+            print('\n\n\n')
+            break
     answer_table = read_from_csv('data/answer.csv')
     for answer in answer_table:
         answer["submission_time"] = date_from_timestamp(answer["submission_time"])
         if answer["question_id"] == question_id:
-            answers_list.append(answer)
+            answers_list.append(answer_to_display_format(answer))
     write_to_csv(table, 'data/question.csv')
     return render_template("display.html", question=question_to_display, answers_list=answers_list)
 

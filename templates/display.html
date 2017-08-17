@@ -19,9 +19,15 @@
                     <b>Votes:</b> {{question["vote_number"]}}
             </tr>
         </table>
-        <h2>{{ question["title"] }}</h2>
+        <h2>
+            {% autoescape false %}
+                {{ question["title"] }}
+            {% endautoescape %}
+        </h2>
         <p>
-            {{ question["message"] }}
+            {% autoescape false %}
+                {{ question["message"] }}
+            {% endautoescape %}
         </p>
         <p>
             <img src="{{question['image']}}" height=20% width="20%" />

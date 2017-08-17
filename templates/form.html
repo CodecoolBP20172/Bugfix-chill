@@ -10,7 +10,7 @@
                 <form action="/add_question/{{ id }}" method="post">
                     <p>
                         <label for="title">Question title</label><br>
-                        <input name="title" minlength="10" required></input>
+                        <textarea name="title" minlength="10" cols="50" required></textarea>
                     </p>
                     <p>
                         <label for="message">Question Body</label><br>
@@ -29,19 +29,21 @@
         {% if form_type == "edit_question" %}
             <h1>Edit a question</h1>
                 <form action="/question/{{ question['ID'] }}/edit" method="post">
-                    <p>
-                        <label for="title">Question title</label><br>
-                        <input name="title" minlength="10" value="{{ question["title"] }}" required></input>
-                    </p>
-                    <p>
-                        <label for="message">Question Body</label><br>
-                        <textarea name="message" rows="5" cols="50" required>{{ question["message"] }}</textarea>
-                    </p>
-                    <p>
-                        <label for="image">Image link</label><br>
-                        <textarea name="image" rows="5" cols="50"></textarea>
-                    </p>
-                    <button type="submit">Update</button>
+                    {% autoescape false%}
+                        <p>
+                            <label for="title">Question title</label><br>
+                            <textarea name="title" minlength="10" rows="1" cols="50" required>{{ question["title"] }}</textarea>
+                        </p>
+                        <p>
+                            <label for="message">Question Body</label><br>
+                            <textarea name="message" rows="5" cols="50" required>{{ question["message"] }}</textarea>
+                        </p>
+                        <p>
+                            <label for="image">Image link</label><br>
+                            <textarea name="image" rows="5" cols="50"></textarea>
+                        </p>
+                        <button type="submit">Update</button>
+                    {% endautoescape %}
                 </form>
                 <p>
                     <a href="/"><button type="submit">Back to the Questions page</button></a>
