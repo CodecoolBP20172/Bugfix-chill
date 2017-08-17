@@ -123,3 +123,14 @@ def add_question(question_id, new_question_data):
     table.append(new_question)
     write_to_csv(table, 'data/question.csv')
     return redirect('/question/{}'.format(question_id))
+
+
+def upvote_question(id_, csv):
+    table = read_from_csv(csv)
+    for record in table:
+        print(record)
+        if record['ID'] == id_:
+            record['vote_number'] = str(int(record["vote_number"]) + 1)
+            break
+    write_to_csv(table, csv)
+    return redirect("/question/{}".format(id_))

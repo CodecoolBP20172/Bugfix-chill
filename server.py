@@ -74,6 +74,19 @@ def delete_answer(answer_id):
     return answer.delete_answer(answer_id)
 
 
+@app.route("/upvote_question", methods=["POST"])
+def upvote_question():
+    id_ = request.form.get("question_id")
+    return question.upvote_question(id_, "data/question.csv")
+
+
+@app.route("/upvote_answer", methods=["POST"])
+def upvote_answer():
+    question_id = request.form.get("question_id")
+    answer_id = request.form.get("answer_id")
+    return answer.upvote(answer_id, "data/answer.csv", question_id)
+
+
 if __name__ == "__main__":
     app.secret_key = "this!is!the!secret!key"
     app.run(

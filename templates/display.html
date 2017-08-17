@@ -53,6 +53,14 @@
                         </p>
                     </form>
                 </td>
+                <td>
+                    <form action="/upvote_question" method="POST">
+                    <input type="hidden" name="question_id" value="{{ question['ID'] }}"/>
+                        <p>
+                            <button type="Submit">Upvote question</button>
+                        </p>
+                    </form>
+                </td>
             </tr>
         </table>
         {% for answer in answers_list %}
@@ -73,7 +81,19 @@
                 <p>
                     <button type="Submit">Delete answer</button>
                 </p>
-            </form>
+                <h3>{{answer['message']}}</h3>
+                <form action="{{ url_for('delete_answer', answer_id=answer['ID'] ) }}">
+                    <p>
+                        <button type="Submit">Delete answer</button>
+                    </p>
+                </form>
+                <form action="/upvote_answer" method="POST">
+                    <p>
+                        <input type="hidden" name="question_id" value="{{ question['ID'] }}"/>
+                        <input type="hidden" name="answer_id" value="{{ answer['ID'] }}"/>
+                        <button type="submit">Upvote answer</button>
+                    </p>
+                </form>
         {% endfor %}
         <p>
             <a href="/"><button type="submit">Back to the Questions page</button></a>
