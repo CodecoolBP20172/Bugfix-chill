@@ -15,6 +15,8 @@
                 <td>
                     <b>Views:</b> {{question["view_number"]}}
                 </td>
+                <td>
+                    <b>Votes:</b> {{question["vote_number"]}}
             </tr>
         </table>
         <h2>{{ question["title"] }}</h2>
@@ -50,8 +52,18 @@
                 <td>
                     <form action="/upvote_question" method="POST">
                     <input type="hidden" name="question_id" value="{{ question['ID'] }}"/>
+                    <input type="hidden" name="vote" value="up"/>
                         <p>
                             <button type="Submit">Upvote question</button>
+                        </p>
+                    </form>
+                </td>
+                <td>
+                    <form action="/upvote_question" method="POST">
+                    <input type="hidden" name="question_id" value="{{ question['ID'] }}"/>
+                    <input type="hidden" name="vote" value="down"/>
+                        <p>
+                            <button type="Submit">Downvote question</button>
                         </p>
                     </form>
                 </td>
@@ -61,6 +73,7 @@
             <table>
                 <tr>
                     <td><b>Submitted</b>: {{ answer['submission_time'] }}</td>
+                    <td><b>Votes:</b> {{answer["vote_number"]}}</td>
                 </tr>
                 <tr>
                     <td>
@@ -75,17 +88,21 @@
                 <p>
                     <button type="Submit">Delete answer</button>
                 </p>
-                <h3>{{answer['message']}}</h3>
-                <form action="{{ url_for('delete_answer', answer_id=answer['ID'] ) }}">
+                </form>
+                <form action="/upvote_answer" method="POST">
                     <p>
-                        <button type="Submit">Delete answer</button>
+                        <input type="hidden" name="question_id" value="{{ question['ID'] }}"/>
+                        <input type="hidden" name="answer_id" value="{{ answer['ID'] }}"/>
+                        <input type="hidden" name="vote" value="up"/>
+                        <button type="submit">Upvote answer</button>
                     </p>
                 </form>
                 <form action="/upvote_answer" method="POST">
                     <p>
                         <input type="hidden" name="question_id" value="{{ question['ID'] }}"/>
                         <input type="hidden" name="answer_id" value="{{ answer['ID'] }}"/>
-                        <button type="submit">Upvote answer</button>
+                        <input type="hidden" name="vote" value="down"/>
+                        <button type="submit">Downvote answer</button>
                     </p>
                 </form>
         {% endfor %}

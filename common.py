@@ -85,14 +85,3 @@ def ordering(table, criteria, order):
     else:
         table = sorted(table, key=lambda question: int(question["ID"]), reverse=False)
     return table
-
-
-def upvote_question(id_, csv):
-    table = common.read_from_csv(csv)
-    for record in table:
-        print(record)
-        if record['ID'] == id_:
-            record['vote_number'] = str(int(record["vote_number"]) + 1)
-            break
-    common.write_to_csv(table, csv)
-    return redirect("/question/{}".format(id_))
