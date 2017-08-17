@@ -74,7 +74,6 @@ def id_generation(table):
 def ordering(table, criteria, order):
     if order == "descending":
         if criteria == "submission_time":
-            print (table)
             table = sorted(table, key=lambda question: datetime.strptime(str(question["submission_time"]), '%Y-%m-%d %H:%M:%S'), reverse=True)
         else:
             table = sorted(table, key=lambda question: int(question[criteria]), reverse=True)
