@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 {% if order == 'ascending' %}
     {% set ordering = 'descending' %}
-{% elif order == 'descending' %} 
+{% elif order == 'descending' %}
     {% set ordering = 'ascending' %}
 {% else %}
     {% set ordering = 'ascending' %}
@@ -33,6 +33,8 @@
                         <td align="center"><a href="{{url_for('display_question_by_id', question_id = row['ID'])}}"> {{row["title"]}} </a></td>
                     {% elif key in ("title", "message") %}
                         <td align="justify">{{ row[key] }}</td>
+                    {% elif key in ("image") %}
+                        <td align="center"><img src="{{row['image']}}" height="110%" width="110%" /></td>
                     {% else %}
                         <td align="center">{{ row[key] }}</td>
                     {% endif %}
