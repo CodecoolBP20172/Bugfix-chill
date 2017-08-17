@@ -1,4 +1,11 @@
 <!DOCTYPE html>
+{% if order == 'ascending' %}
+    {% set ordering = 'descending' %}
+{% elif order == 'descending' %} 
+    {% set ordering = 'ascending' %}
+{% else %}
+    {% set ordering = 'ascending' %}
+{% endif%}
 <html>
     <head>
         <meta charset="utf-8">
@@ -6,12 +13,12 @@
     </head>
     <body>
         <h1>Questions</h1>
-        <form action="/new-question" method="get">
+        <form action="{{ url_for('new_question_form') }}" method="get">
             <p><input type="submit" value="Ask a question"></p>
         </form>
         <table border="1" cellpadding="10">
             <tr>
-                <th> Question ID </th>
+                <th><a href="{{url_for('index', criteria='ID', order=ordering )}}"> ID </th>
                 <th> Submission time </th>
                 <th> View number </th>
                 <th> Vote number </th>
