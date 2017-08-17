@@ -44,7 +44,9 @@ def question_edit(question_id):
     keys_of_form = request.form.keys()
     for key in keys_of_form:
         print(key)
-        edit_question_dict.update({key: request.form[key]})
+        edit_question_dict.update({key: request.form.get(key)})
+    print(edit_question_dict)
+    print("question_id type: {}".format(type(question_id)))
     return question.edit_question(question_id, edit_question_dict)
 
 
