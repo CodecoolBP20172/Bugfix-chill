@@ -18,7 +18,7 @@
                     </p>
                     <button type="submit">Create</button>
                     <p>
-                        <a href="/">Back to the Questions page</a>
+                        <a href="/"><button type="submit">Back to the Questions page</button></a>
                     </p>
                 </form>
         {% endif %}
@@ -35,6 +35,9 @@
                     </p>
                     <button type="submit">Update</button>
                 </form>
+                <p>
+                    <a href="/"><button type="submit">Back to the Questions page</button></a>
+                </p>
         {% endif %}
         {% if form_type == "answer" %}
             <h1>Add an answer!</h1>
@@ -45,10 +48,10 @@
                     </p>
                     <input type="hidden" name="question_id" value="{{ question_id }}"/>
                     <button type="submit">Add answer</button>
-                <p>
-                    <a href="/">Back to the Questions page</a>
-                </p>
             </form>
+            <p>
+                <a href="/question/{{ question_id }}"><button type="submit">Back to the Question</button></a>
+            </p>
         {% endif %}
     </body>
 </html>
