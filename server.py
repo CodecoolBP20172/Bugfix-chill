@@ -32,7 +32,6 @@ def add_new_question(question_id):
 
 @app.route('/question/<question_id>')
 def display_question_by_id(question_id):
-    # view counter
     return question.display_question(question_id)
 
 
