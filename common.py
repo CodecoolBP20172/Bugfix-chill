@@ -71,6 +71,11 @@ def id_generation(table):
     return(generated_id)
 
 
-def allowed_file(filename):
-    return '.' in filename and \
-           filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
+def ordering(table, criteria, order):
+    if order == "descending" and criteria == "ID":
+        table = sorted(table, key=lambda question: int(question["ID"]), reverse=True)
+    elif order == "ascending" and criteria == "ID":
+        table = sorted(table, key=lambda question: int(question["ID"]), reverse=False)
+    else:
+        table = sorted(table, key=lambda question: int(question["ID"]), reverse=False)
+    return table
