@@ -4,7 +4,7 @@
 {% elif order == 'descending' %} 
     {% set ordering = 'ascending' %}
 {% else %}
-    {% set ordering = 'ascending' %}
+    {% set ordering = 'descending' %}
 {% endif%}
 <html>
     <head>
@@ -19,9 +19,9 @@
         <table border="1" cellpadding="10">
             <tr>
                 <th><a href="{{url_for('index', criteria='ID', order=ordering )}}"> ID </th>
-                <th> Submission time </th>
-                <th> View number </th>
-                <th> Vote number </th>
+                <th><a href="{{url_for('index', criteria='submission_time', order=ordering )}}"> Submission time </th>
+                <th><a href="{{url_for('index', criteria='view_number', order=ordering )}}"> View number </th>
+                <th><a href="{{url_for('index', criteria='vote_number', order=ordering )}}"> Vote number </th>
                 <th> Title </th>
                 <th> Message </th>
                 <th> Image </th>
