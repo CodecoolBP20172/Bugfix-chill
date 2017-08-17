@@ -33,6 +33,11 @@ def display_question_by_id(question_id):
     return question.display_question(question_id)
 
 
+@app.route('/question/<question_id>/edit')
+def redirect_to_edit(question_id):
+    return question.question_for_edit(question_id)
+
+
 @app.route('/question/<question_id>/edit', methods=['POST'])
 def question_edit(question_id):
     edit_question_dict = dict()

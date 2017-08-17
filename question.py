@@ -52,6 +52,16 @@ def edit_question(question_id, edited_question):
     return redirect('/list')
 
 
+def question_for_edit(question_id):
+    table = read_from_csv('data/question.csv')
+    question_to_return = None
+    for question in table:
+        if question["ID"] == question_id:
+            question_to_return = question
+            break
+    return render_template("form.html", question=question_to_return, form_type="edit_question")
+
+
 # redirects to the question submitting page with a new id for the question
 def new_question():
     table = read_from_csv('data/question.csv')
@@ -82,7 +92,7 @@ def add_question(question_id, new_question_data):
     new_question['submission_time'] = generate_timestamp()
     new_question['view_number'] = 0
     new_question['vote_number'] = 0
-    new_question['title'] = new_question_data['question-title']
+    new_question['title'] = new_question_data['title']
     new_question['message'] = new_question_data['message']
     new_question['image'] = ''
     table.append(new_question)
