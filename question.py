@@ -74,14 +74,15 @@ def display_question(question_id):
     answers_list = list()
     question_to_display = None
     for question in table:
+        question["submission_time"] = date_from_timestamp(question["submission_time"])
         if question["ID"] == question_id:
             question_to_display = question
             break
     answer_table = read_from_csv('data/answer.csv')
     for answer in answer_table:
+        answer["submission_time"] = date_from_timestamp(answer["submission_time"])
         if answer["question_id"] == question_id:
             answers_list.append(answer)
-    print(answers_list)
     return render_template("display.html", question=question_to_display, answers_list=answers_list)
 
 
@@ -96,6 +97,5 @@ def add_question(question_id, new_question_data):
     new_question['message'] = new_question_data['message']
     new_question['image'] = ''
     table.append(new_question)
-    print(table)
     write_to_csv(table, 'data/question.csv')
     return redirect('/question/{}'.format(question_id))
