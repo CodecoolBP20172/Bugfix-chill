@@ -53,13 +53,6 @@ def base64_to_string(encoded_string):
     return decoded_string.decode('utf-8')
 
 
-def print_info(variable):
-    print("Original string: {var} ({type})".format(**{
-        "var": variable,
-        "type": type(variable)
-    }))
-
-
 def id_generation(table):
     try:
         id_list = []
@@ -74,12 +67,14 @@ def id_generation(table):
 def ordering(table, criteria, order):
     if order == "descending":
         if criteria == "submission_time":
-            table = sorted(table, key=lambda question: datetime.strptime(str(question["submission_time"]), '%Y-%m-%d %H:%M:%S'), reverse=True)
+            table = sorted(table, key=lambda question: datetime.strptime(str(question["submission_time"]),
+                                                                         '%Y-%m-%d %H:%M:%S'), reverse=True)
         else:
             table = sorted(table, key=lambda question: int(question[criteria]), reverse=True)
     elif order == "ascending":
         if criteria == "submission_time":
-            table = sorted(table, key=lambda question: datetime.strptime(str(question["submission_time"]), '%Y-%m-%d %H:%M:%S'), reverse=False)
+            table = sorted(table, key=lambda question: datetime.strptime(str(question["submission_time"]),
+                                                                         '%Y-%m-%d %H:%M:%S'), reverse=False)
         else:
             table = sorted(table, key=lambda question: int(question[criteria]), reverse=False)
     else:

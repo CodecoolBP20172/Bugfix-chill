@@ -6,8 +6,8 @@ import datetime
 # the main list.html page
 def question_index(criteria, order):
     table = read_from_csv('data/question.csv')
-    for index, question in enumerate(table):
-        table[index] = question_to_display_format(question)
+    for question in table:
+        question = question_to_display_format(question)
         table = ordering(table, criteria, order)
     header = ["ID", "submission_time", "view_number", "vote_number", "title", "message", "image"]
     return render_template('list.html', table=table, header=header, order=order)
@@ -46,7 +46,6 @@ def edit_question(question_id, edited_question):
     table = read_from_csv('data/question.csv')
     for question in table:
         if question["ID"] == question_id:
-            print("found the question to edit")
             question["title"] = edited_question["title"]
             question["message"] = edited_question["message"]
             question["image"] = edited_question["image"]
@@ -93,9 +92,6 @@ def display_question(question_id):
             view_counter = int(question["view_number"]) + 1
             question["view_number"] = str(view_counter)
             question_to_display = question_to_display_format(question)
-            print('\n\n\n')
-            print(question_to_display)
-            print('\n\n\n')
             break
     answer_table = read_from_csv('data/answer.csv')
     for answer in answer_table:
