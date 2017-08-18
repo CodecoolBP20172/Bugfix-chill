@@ -76,15 +76,17 @@ def delete_answer(answer_id):
 
 @app.route("/upvote_question", methods=["POST"])
 def upvote_question():
+    vote = request.form.get("vote")
     id_ = request.form.get("question_id")
-    return question.upvote_question(id_, "data/question.csv")
+    return question.upvote_question(id_, "data/question.csv", vote)
 
 
 @app.route("/upvote_answer", methods=["POST"])
 def upvote_answer():
+    vote = request.form.get("vote")
     question_id = request.form.get("question_id")
     answer_id = request.form.get("answer_id")
-    return answer.upvote(answer_id, "data/answer.csv", question_id)
+    return answer.upvote(answer_id, "data/answer.csv", question_id, vote)
 
 
 if __name__ == "__main__":

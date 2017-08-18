@@ -29,12 +29,16 @@ def delete_answer(answer_id):
     return redirect('/question/{}'.format(question_id))
 
 
-def upvote(id_, csv, question_id):
+def upvote(id_, csv, question_id, vote):
     table = common.read_from_csv(csv)
     for record in table:
         print(record)
         if record['ID'] == id_:
-            record['vote_number'] = str(int(record["vote_number"]) + 1)
-            break
+            if vote == "up":
+                record['vote_number'] = str(int(record["vote_number"]) + 1)
+                break
+            else:
+                record['vote_number'] = str(int(record["vote_number"]) - 1)
+                break
     common.write_to_csv(table, csv)
     return redirect("/question/{}".format(question_id))

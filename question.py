@@ -125,12 +125,16 @@ def add_question(question_id, new_question_data):
     return redirect('/question/{}'.format(question_id))
 
 
-def upvote_question(id_, csv):
+def upvote_question(id_, csv, vote):
     table = read_from_csv(csv)
     for record in table:
         print(record)
         if record['ID'] == id_:
-            record['vote_number'] = str(int(record["vote_number"]) + 1)
-            break
+            if vote == "up":
+                record['vote_number'] = str(int(record["vote_number"]) + 1)
+                break
+            else: 
+                record['vote_number'] = str(int(record["vote_number"]) - 1)
+                break
     write_to_csv(table, csv)
     return redirect("/question/{}".format(id_))
