@@ -133,7 +133,7 @@ def upvote_question(id_, csv, vote):
             if vote == "up":
                 record['vote_number'] = str(int(record["vote_number"]) + 1)
                 break
-            else: 
+            else:
                 record['vote_number'] = str(int(record["vote_number"]) - 1)
                 break
     write_to_csv(table, csv)
