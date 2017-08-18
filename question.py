@@ -6,10 +6,6 @@ import datetime
 # the main list.html page
 def question_index(criteria, order):
     table = read_from_csv('data/question.csv')
-    # for row in table:
-    #     for key, value in row.items():
-    #         if key == "submission_time":
-    #             row[key] = date_from_timestamp(value)
     for index, question in enumerate(table):
         table[index] = question_to_display_format(question)
         table = ordering(table, criteria, order)

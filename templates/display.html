@@ -35,9 +35,11 @@
                 {{ question["message"] }}
             {% endautoescape %}
         </p>
-        <p>
-            <img src="{{question['image']}}" height=20% width="20%" />
-        </p>
+        {% if question['image'] != '' %}
+            <p>
+                <img src="{{question['image']}}" height=20% width="20%" />
+            </p>
+        {% endif %}
         <table>
             <tr>
                 <td>
@@ -76,7 +78,9 @@
                         <pre>   <b>Answer</b>: {{answer['message']}}</pre>
                     </td>
                     <td>
-                        <pre>   <img src="{{answer['image']}}" height=20% width="20%" /></pre>
+                        {% if question['image'] != '' %}
+                            <pre>   <img src="{{answer['image']}}" height=20% width="20%" /></pre>
+                        {% endif %}
                     </td>
                 </tr>
             </table>
@@ -101,7 +105,6 @@
                         </form></td>
                     </tr>
                 </table>
-
         {% endfor %}
         <p>
             <a href="/"><button type="submit">Back to the Questions page</button></a>

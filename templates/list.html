@@ -36,7 +36,11 @@
                             <td align="justify">{{ row[key] }}</td>
                         {% endautoescape %}
                     {% elif key in ("image") %}
-                        <td align="center"><img src="{{row['image']}}" height="110%" width="110%" /></td>
+                        <td align="center">
+                            {% if row['image'] != '' %}
+                                <img src="{{row['image']}}" height="110%" width="110%" />
+                            {% endif %}
+                        </td>
                     {% else %}
                         <td align="center">{{ row[key] }}</td>
                     {% endif %}
