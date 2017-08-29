@@ -4,11 +4,13 @@ import datetime
 
 
 # the main list.html page
-def question_index(criteria, order):
-    table = read_from_csv('data/question.csv')
+@connection_handler
+def question_index(cursor, criteria, order):
+    cursor.execute("SELECT * FROM question;")
+    table = cursor.fetchall()
     for question in table:
         question = question_to_display_format(question)
-        table = ordering(table, criteria, order)
+        # table = ordering(table, criteria, order)
     header = ["ID", "submission_time", "view_number", "vote_number", "title", "message", "image"]
     return render_template('list.html', table=table, header=header, order=order)
 
@@ -72,9 +74,9 @@ def new_question():
 
 def question_to_display_format(question):
     tmp_dict = dict(question)
-    tmp_dict["submission_time"] = date_from_timestamp(tmp_dict["submission_time"])
-    tmp_dict["title"] = tmp_dict["title"].replace('\\n', '<br>')
-    tmp_dict["message"] = tmp_dict["message"].replace('\r\n', '<br>')
+    # tmp_dict["submission_time"] = date_from_timestamp(tmp_dict["submission_time"])
+    # tmp_dict["title"] = tmp_dict["title"].replace('\\n', '<br>')
+    # tmp_dict["message"] = tmp_dict["message"].replace('\r\n', '<br>')
     return tmp_dict
 
 
