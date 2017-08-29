@@ -23,7 +23,7 @@
                     <button type="submit">Create</button>
                 </form>
                 <p>
-                    <a href="/"><button type="submit">Back to the Questions page</button></a>
+                    <a href="/"><button>Back to the Questions page</button></a>
                 </p>
         {% endif %}
         {% if form_type == "edit_question" %}
@@ -42,11 +42,11 @@
                             <label for="image">Image link</label><br>
                             <textarea name="image" rows="5" cols="50"></textarea>
                         </p>
-                        <button type="submit">Update</button>
+                        <button>Update</button>
                     {% endautoescape %}
                 </form>
                 <p>
-                    <a href="/"><button type="submit">Back to the Questions page</button></a>
+                    <a href="/"><button >Back to the Questions page</button></a>
                 </p>
         {% endif %}
         {% if form_type == "answer" %}
@@ -64,7 +64,7 @@
                     <button type="submit">Add answer</button>
             </form>
             <p>
-                <a href="/question/{{ question_id }}"><button type="submit">Back to the Question</button></a>
+                <a href="/question/{{ question_id }}"><button>Back to the Question</button></a>
             </p>
         {% endif %}
     </body>

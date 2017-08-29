@@ -62,7 +62,6 @@ def new_answer(question_id):
 
 @app.route("/add_answer", methods=["POST"])
 def add_answer():
-    table = common.read_from_csv('data/answer.csv')
     question_id = request.form.get("question_id")
     message = request.form.get("answer")
     image = request.form.get("image")

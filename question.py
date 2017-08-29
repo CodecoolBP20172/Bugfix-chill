@@ -122,11 +122,13 @@ def upvote_question(id_, csv, vote):
     for record in table:
         print(record)
         if record['ID'] == id_:
-            if vote == "up":
-                record['vote_number'] = str(int(record["vote_number"]) + 1)
-                break
-            else:
-                record['vote_number'] = str(int(record["vote_number"]) - 1)
-                break
+            view_counter = int(record["view_number"]) - 1
+            record["view_number"] = str(view_counter)
+            # if vote == "up":
+            record['vote_number'] = str(int(record["vote_number"]) + (1 if vote == "up" else -1))
+            break
+            # else:
+            # record['vote_number'] = str(int(record["vote_number"]) - 1)
+            # break
     write_to_csv(table, csv)
     return redirect("/question/{}".format(id_))
