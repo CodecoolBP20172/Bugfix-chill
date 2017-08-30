@@ -27,8 +27,9 @@ def add_new_question(question_id):
     for key in keys_of_form:
         print(key)
         new_question_dict.update({key: request.form[key]})
+    new_question_dict.update({"id": question_id})
     print(new_question_dict)
-    return question.add_question(question_id, new_question_dict)
+    return question.add_question(new_question_dict)
 
 
 @app.route('/question/<question_id>')
