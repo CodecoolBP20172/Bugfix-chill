@@ -91,6 +91,16 @@ def upvote_answer():
     return answer.upvote(answer_id, question_id, vote)
 
 
+@app.route("/question/<question_id>/new-comment")
+def comment_to_question(question_id):
+    return render_template("form.html", question_id=question_id, form_type="comment_to_question")
+
+
+@app.route("/answer/<answer_id>/new-comment")
+def comment_to_answer(question_id):
+    return render_template("form.html", answer_id=answer_id, form_type="comment_to_answer")
+
+
 if __name__ == "__main__":
     app.secret_key = "this!is!the!secret!key"
     app.run(
