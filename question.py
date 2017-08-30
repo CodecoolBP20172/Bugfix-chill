@@ -21,6 +21,8 @@ def delete_question(cursor, question_id):
     deleted_tag = cursor.fetchall()
     cursor.execute("""DELETE FROM question
                       WHERE id = %s RETURNING *;""", question_id)
+    cursor.execute("""DELETE FROM comment
+                      WHERE id = %s;""", question_id)
     deleted_question = cursor.fetchall()
     print (deleted_tag, deleted_question)
 
