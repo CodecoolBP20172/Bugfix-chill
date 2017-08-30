@@ -81,12 +81,14 @@ def new_question():
 def display_question(cursor, question_id):
     cursor.execute("""UPDATE question
                       SET view_number = view_number + 1
-                      WHERE id = %(id)s;""", question_to_display)
+                      WHERE id = %s;""", question_id)
     cursor.execute("SELECT * FROM question WHERE id = (%s);", (question_id))
     question_dict = cursor.fetchall()
+    print(question_dict[0])
     cursor.execute("SELECT * FROM answer WHERE question_id = (%s);", (question_id))
     answer_list = cursor.fetchall()
-    return render_template("display.html", question=question_dict, answers_list=answer_list)
+    print(answer_list)
+    return render_template("display.html", question=question_dict[0], answers_list=answer_list)
 
 
 @connection_handler
