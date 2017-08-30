@@ -68,9 +68,10 @@ def add_answer():
     return answer.post_an_answer(question_id, message, image)
 
 
-@app.route('/answer/<answer_id>/delete')
+@app.route('/answer/<answer_id>/delete', methods=["POST"])
 def delete_answer(answer_id):
-    return answer.delete_answer(answer_id)
+    question_id = request.form.get("question_id")
+    return answer.delete_answer(answer_id, question_id)
 
 
 @app.route("/upvote_question", methods=["POST"])
