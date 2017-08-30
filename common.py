@@ -25,6 +25,9 @@ def connection_handler(function):
     return wrapper
 
 
+""" I think id_generation is not nessescary anymore as the tables generate the ids with a sequence """
+
+
 def id_generation(table):
     try:
         id_list = []
