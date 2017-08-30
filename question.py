@@ -1,6 +1,7 @@
 from flask import Flask, render_template, redirect, request, session
 from common import *
 from datetime import datetime
+import answer
 
 
 # the main list.html page
@@ -27,11 +28,11 @@ def delete_question(cursor, question_id):
 
 @connection_handler
 def delete_answers_for_question_id(cursor, question_id):
-    cursor.execute("""DELETE FROM answer
-                      WHERE question_id = %s RETURNING *;""", question_id)
+    cursor.execute("SELECT answer WHERE question_id = (%s);", (question_id))
     deleted_answers = cursor.fetchall()
     for answer in deleted_answers:
         print (answer)
+        answer.delete_answer(answer_id["id"], question_id)
 
 
 # deleting a question by id
@@ -105,9 +106,9 @@ def upvote_question(cursor, id_, vote):
     if vote == "up":
         cursor.execute("""UPDATE question
                           SET vote_number = vote_number + 1
-                          WHERE id = %d;""", id_)
+                          WHERE id = %s;""", id_)
     else:
         cursor.execute("""UPDATE question
                           SET vote_number = vote_number - 1
-                          WHERE id = %d;""", id_)
+                          WHERE id = %s;""", id_)
     return redirect("/question/{}".format(id_))
