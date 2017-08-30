@@ -33,7 +33,6 @@ def delete_answers_for_question_id(cursor, question_id):
 # deleting a question by id
 # deletes the answers for the deleted question too
 # redirects to /list
-# @connection_handler
 def delete_question_with_answers(question_id):
     delete_question(question_id)
     delete_answers_for_question_id(question_id)
@@ -44,14 +43,11 @@ def delete_question_with_answers(question_id):
 # replaces the question with the one gets from the form
 # redirects to /list
 @connection_handler
-def edit_question(question_id, edited_question):
-    table = read_from_csv('data/question.csv')
-    for question in table:
-        if question["ID"] == question_id:
-            question["title"] = edited_question["title"]
-            question["message"] = edited_question["message"]
-            question["image"] = edited_question["image"]
-    write_to_csv(table, 'data/question.csv')
+def edit_question(cursor, question_id, edited_question):
+    if question_id == edited_question['id']:
+        cursor.execute("""UPDATE question
+                          SET title = %(title)s, message = %(message)s, image = %(image)s
+                          WHERE iD = %(id)s RETURNING *;""", edited_question)
     return redirect('/')
 
 
