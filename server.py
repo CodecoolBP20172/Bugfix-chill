@@ -8,8 +8,15 @@ app = Flask(__name__)
 
 
 @app.route('/')
-@app.route('/list')
 def index():
+    criteria = request.args.get("criteria")
+    order = request.args.get("order")
+    limit = 5
+    return question.question_index(criteria, order, limit)
+
+
+@app.route('/list')
+def index_list():
     criteria = request.args.get("criteria")
     order = request.args.get("order")
     return question.question_index(criteria, order)

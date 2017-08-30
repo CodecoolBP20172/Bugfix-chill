@@ -13,9 +13,20 @@
     </head>
     <body>
         <h1>Questions</h1>
-        <form action="{{ url_for('new_question_form') }}" method="get">
-            <p><input type="submit" value="Ask a question"></p>
-        </form>
+        <table>
+            <tr>
+                <td>
+                    <a href="{{ url_for('new_question_form') }}"><input type="submit" value="Ask a question"></a>
+                </td>
+                <td>
+                    <a href="/list"><input type="submit" value="See full list"></a>
+                </td>
+                <td>
+                    <a href="/"><input type="submit" value="Latest 5 Questions"></a>
+                </td>
+            </tr>
+        </table>
+
         <table border="1" cellpadding="10">
             <tr>
                 <th><a href="{{url_for('index', criteria='ID', order=ordering )}}"> ID </th>
@@ -23,25 +34,14 @@
                 <th><a href="{{url_for('index', criteria='view_number', order=ordering )}}"> View number </th>
                 <th><a href="{{url_for('index', criteria='vote_number', order=ordering )}}"> Vote number </th>
                 <th> Title </th>
-                <th> Message </th>
-                <th> Image </th>
             </tr>
             {% for row in table %}
             <tr>
                 {% for key in header %}
                     {% if key == "title": %}
                         <td align="center"><a href="{{url_for('display_question_by_id', question_id = row['id'])}}"> {{ row["title"] }} </a></td>
-                    {% elif key in ("title", "message") %}
-                        {% autoescape false%}
-                            <td align="justify">{{ row[key] }}</td>
-                        {% endautoescape %}
-                    {% elif key in ("image") %}
-                        <td align="center">
-                            {% if row['image'] != None %}
-                                <img src="{{row['image']}}" height="110%" width="110%" />
-                            {% endif %}
-                        </td>
-                    {% else %}
+
+                    {% elif key not in ("message", "image") %}
                         <td align="center">{{ row[key] }}</td>
                     {% endif %}
                 {% endfor %}

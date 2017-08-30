@@ -6,9 +6,11 @@ import answer
 
 # the main list.html page
 @connection_handler
-def question_index(cursor, criteria, order):
-    cursor.execute("""SELECT *
-                      FROM question;""")
+def question_index(cursor, criteria, order, limit=0):
+    cursor.execute("SELECT * \
+                      FROM question \
+                      ORDER BY id desc \
+                      {limit_val};".format(limit_val='' if limit == 0 else " LIMIT 5"))
     table = cursor.fetchall()
     # table = ordering(table, criteria, order)
     header = ["id", "submission_time", "view_number", "vote_number", "title", "message", "image"]
@@ -67,54 +69,47 @@ def question_for_edit(cursor, question_id):
 # redirects to the question submitting page with a new id for the question
 @connection_handler
 def new_question(cursor):
-    cursor.execute("""INSERT INTO question
-                      (title)
-                      VALUES (NULL);""")
-    cursor.execute("""SELECT *
+    cursor.execute("""SELECT id
                       FROM question
                       ORDER BY id desc
                       LIMIT 1""")
     new_question_template = cursor.fetchall()
-    return render_template("/form.html", id=new_question_template[0]["id"], form_type="add_question")
+    return render_template("/form.html", id=new_question_template[0]["id"]+1, form_type="add_question")
 
 
 @connection_handler
 def display_question(cursor, question_id):
+    print("question_id: {}".format(question_id))
     cursor.execute("""UPDATE question
                       SET view_number = view_number + 1
                       WHERE id = %s;""", question_id)
     cursor.execute("""SELECT *
                       FROM question
-                      WHERE id = (%s)
-                      ORDER BY id;""", (question_id))
+                      WHERE id = %s
+                      ORDER BY id;""", question_id)
     question_dict = cursor.fetchall()
-    print(question_dict)
+    print("question_dict: {}".format(question_dict))
     cursor.execute("""SELECT *
                       FROM answer
                       WHERE question_id = (%s);""", (question_id))
     answer_list = cursor.fetchall()
-    print(answer_list)
+    print("answer_list: {}".format(answer_list))
     return render_template("display.html", question=question_dict[0], answers_list=answer_list)
 
 
 @connection_handler
 def add_question(cursor, new_question_data):
     new_question_data["submission_time"] = datetime.now()
-    cursor.execute("""UPDATE question
-                      SET submission_time = %(submission_time)s, view_number = 0, vote_number = 0,
-                          title = %(title)s, message = %(message)s, image = %(image)s
-                      WHERE id = %(id)s""", new_question_data)
+    cursor.execute("INSERT INTO question \
+                    (submission_time, vote_number, view_number, title, message, image) \
+                    VALUES (%(submission_time)s, 0, 0, %(title)s, %(message)s, {image}); \
+                    ".format(image='NULL' if new_question_data["image"] == '' else '%(image)s'), new_question_data)
     return redirect('/question/{}'.format(new_question_data["id"]))
 
 
 @connection_handler
 def upvote_question(cursor, id_, vote):
-    if vote == "up":
-        cursor.execute("""UPDATE question
-                          SET vote_number = vote_number + 1, view_number = view_number -1
-                          WHERE id = %s;""", id_)
-    else:
-        cursor.execute("""UPDATE question
-                          SET vote_number = vote_number - 1, view_number = view_number -1
-                          WHERE id = %s;""", id_)
+    cursor.execute("UPDATE question \
+                    SET vote_number = vote_number + {vote_var}, view_number = view_number -1 \
+                    WHERE id = %s;".format(vote_var=1 if vote == "up" else -1), id_)
     return redirect("/question/{}".format(id_))
