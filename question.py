@@ -17,15 +17,9 @@ def question_index(cursor, criteria, order):
 
 @connection_handler
 def delete_question(cursor, question_id):
-    cursor.execute("""DELETE FROM question_tag
-                      WHERE question_id = %s RETURNING *;""", question_id)
-    deleted_tag = cursor.fetchall()
-    cursor.execute("""DELETE FROM question
-                      WHERE id = %s RETURNING *;""", question_id)
-    cursor.execute("""DELETE FROM comment
-                      WHERE id = %s;""", question_id)
-    deleted_question = cursor.fetchall()
-    print (deleted_tag, deleted_question)
+    cursor.execute("DELETE FROM question_tag WHERE question_id = %s;", question_id)
+    cursor.execute("DELETE FROM comment WHERE question_id = %s;", question_id)
+    cursor.execute("DELETE FROM question WHERE id = %s;", question_id)
 
 
 @connection_handler
@@ -33,8 +27,8 @@ def delete_answers_for_question_id(cursor, question_id):
     cursor.execute("SELECT id FROM answer WHERE question_id = %s;", question_id)
     deleted_answers = cursor.fetchall()
     for answer_id in deleted_answers:
-        print (answer_id)
-        answer.delete_answer(answer_id["id"])
+        cursor.execute("DELETE FROM comment WHERE answer_id = %(id)s;", answer_id)
+        cursor.execute("DELETE FROM answer WHERE id = %(id)s;", answer_id)
 
 
 # deleting a question by id
@@ -51,11 +45,11 @@ def delete_question_with_answers(question_id):
 # redirects to /list
 @connection_handler
 def edit_question(cursor, question_id, edited_question):
-    if question_id == edited_question['id']:
-        cursor.execute("""UPDATE question
-                          SET title = %(title)s, message = %(message)s, image = %(image)s
-                          WHERE iD = %(id)s
-                          RETURNING *;""", edited_question)
+    cursor.execute("""UPDATE question
+                      SET title = %s, message = %s, image = %s
+                      WHERE id = %s
+                      ;""", (edited_question["title"], edited_question["message"], edited_question["image"],
+                             question_id))
     return redirect('/')
 
 
@@ -64,8 +58,9 @@ def question_for_edit(cursor, question_id):
     cursor.execute("""SELECT *
                       FROM question
                       WHERE id = %s
-                      RETURNING *;""", question_id)
+                      ;""", question_id)
     question_to_return = cursor.fetchall()
+    question_to_return = question_to_return[0]
     return render_template("form.html", question=question_to_return, form_type="edit_question")
 
 
