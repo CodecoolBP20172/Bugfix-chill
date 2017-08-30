@@ -1,6 +1,6 @@
 from flask import Flask, render_template, redirect, request, session
 from common import *
-import datetime
+from datetime import datetime
 
 
 # the main list.html page
@@ -51,42 +51,30 @@ def edit_question(cursor, question_id, edited_question):
     if question_id == edited_question['id']:
         cursor.execute("""UPDATE question
                           SET title = %(title)s, message = %(message)s, image = %(image)s
-                          WHERE iD = %(id)s RETURNING *;""", edited_question)
+                          WHERE iD = %(id)s
+                          RETURNING *;""", edited_question)
     return redirect('/')
 
 
 @connection_handler
 def question_for_edit(question_id):
-    table = read_from_csv('data/question.csv')
-    question_to_return = None
-    for question in table:
-        if question["ID"] == question_id:
-            question_to_return = question
-            break
+    cursor.execute("""SELECT *
+                      FROM question
+                      WHERE id = %s
+                      RETURNING *;""", question_id)
+    question_to_return = cursor.fetchall()
     return render_template("form.html", question=question_to_return, form_type="edit_question")
 
 
 # redirects to the question submitting page with a new id for the question
 @connection_handler
 def new_question():
-    table = read_from_csv('data/question.csv')
-    new_id = id_generation(table)
-    return render_template("/form.html", id=new_id, form_type="add_question")
-
-
-@connection_handler
-def question_to_display_format(question):
-    tmp_dict = dict(question)
-    # tmp_dict["submission_time"] = date_from_timestamp(tmp_dict["submission_time"])
-    # tmp_dict["title"] = tmp_dict["title"].replace('\\n', '<br>')
-    # tmp_dict["message"] = tmp_dict["message"].replace('\r\n', '<br>')
-    return tmp_dict
-
-
-@connection_handler
-def answer_to_display_format(answer):
-    answer["message"] = answer["message"].replace('\\n', '<br>')
-    return answer
+    cursor.execute("""INSERT INTO question
+                      (title)
+                      VALUES (NULL)
+                      RETURNING;""")
+    new_question_template = cursor.fetchall()
+    return render_template("/form.html", id=new_question_template["id"], form_type="add_question")
 
 
 @connection_handler
@@ -111,33 +99,21 @@ def display_question(question_id):
 
 @connection_handler
 def add_question(question_id, new_question_data):
-    table = read_from_csv('data/question.csv')
-    new_question = dict()
-    new_question['ID'] = question_id
-    new_question['submission_time'] = generate_timestamp()
-    new_question['view_number'] = 0
-    new_question['vote_number'] = 0
-    new_question['title'] = new_question_data['title']
-    new_question['message'] = new_question_data['message']
-    new_question['image'] = new_question_data['image']
-    table.append(new_question)
-    write_to_csv(table, 'data/question.csv')
+    new_question_data["submission_time"] = datetime.now()
+    cursor.execute("""UPDATE question
+                      SET submission_time = %(submission_time)s, view_number = 0, vote_number = 0,
+                          title = %(title)s, message = %(message)s, image = %(image)s""", new_question_data)
     return redirect('/question/{}'.format(question_id))
 
 
 @connection_handler
 def upvote_question(id_, csv, vote):
-    table = read_from_csv(csv)
-    for record in table:
-        print(record)
-        if record['ID'] == id_:
-            view_counter = int(record["view_number"]) - 1
-            record["view_number"] = str(view_counter)
-            # if vote == "up":
-            record['vote_number'] = str(int(record["vote_number"]) + (1 if vote == "up" else -1))
-            break
-            # else:
-            # record['vote_number'] = str(int(record["vote_number"]) - 1)
-            # break
-    write_to_csv(table, csv)
+    if vote == "up":
+        cursor.execute("""UPDATE question
+                          SET vote_number = vote_number + 1
+                          WHERE id = %d;""", id_)
+    else:
+        cursor.execute("""UPDATE question
+                          SET vote_number = vote_number - 1
+                          WHERE id = %d;""", id_)
     return redirect("/question/{}".format(id_))
