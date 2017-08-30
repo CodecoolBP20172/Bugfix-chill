@@ -96,9 +96,21 @@ def comment_to_question(question_id):
     return render_template("form.html", question_id=question_id, form_type="comment_to_question")
 
 
+@app.route("/question/<question_id>/new-comment", methods=["POST"])
+def add_comment_to_question(question_id):
+    message = request.form.get("message")
+    return question.comment_question(question_id, message)
+
+
 @app.route("/answer/<answer_id>/new-comment")
 def comment_to_answer(answer_id):
     return render_template("form.html", answer_id=answer_id, form_type="comment_to_answer")
+
+
+@app.route("/answer/<answer_id>/new-comment", methods=["POST"])
+def add_comment_to_answer(answer_id):
+    message = request.form.get("message")
+    return answer.comment_answer(answer_id, message)
 
 
 if __name__ == "__main__":

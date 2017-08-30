@@ -29,3 +29,13 @@ def upvote(cursor, id_, question_id, vote):
         current_vote -= 1
         cursor.execute("UPDATE answer SET vote_number = (%s) WHERE id = (%s);", (current_vote, id_))
     return redirect("/question/{}".format(question_id))
+
+
+@connection_handler
+def comment_answer(cursor, answer_id, message):
+    cursor.execute("INSERT INTO comment (question_id, answer_id, message, submission_time, edited_count)"
+                   "VALUES (%s, %s, %s, %s, %s);", (None, answer_id, message, datetime.now(), 0))
+    cursor.execute("SELECT question_id FROM answer WHERE id=%s;", answer_id)
+    question_id = cursor.fetchall()
+    question_id = question_id[0]["question_id"]
+    return redirect("/question/{}".format(question_id))
