@@ -28,7 +28,7 @@
         {% endif %}
         {% if form_type == "edit_question" %}
             <h1>Edit a question</h1>
-                <form action="/question/{{ question['ID'] }}/edit" method="post">
+                <form action="/question/{{ question['id'] }}/edit" method="post">
                     {% autoescape false%}
                         <p>
                             <label for="title">Question title</label><br>
