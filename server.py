@@ -97,7 +97,7 @@ def comment_to_question(question_id):
 
 
 @app.route("/answer/<answer_id>/new-comment")
-def comment_to_answer(question_id):
+def comment_to_answer(answer_id):
     return render_template("form.html", answer_id=answer_id, form_type="comment_to_answer")
 
 
