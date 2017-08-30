@@ -70,7 +70,7 @@ def new_question():
     return render_template("/form.html", id=new_id, form_type="add_question")
 
 
-@connection_handler
+
 def question_to_display_format(question):
     tmp_dict = dict(question)
     # tmp_dict["submission_time"] = date_from_timestamp(tmp_dict["submission_time"])
@@ -79,30 +79,22 @@ def question_to_display_format(question):
     return tmp_dict
 
 
-@connection_handler
+
 def answer_to_display_format(answer):
     answer["message"] = answer["message"].replace('\\n', '<br>')
     return answer
 
 
 @connection_handler
-def display_question(question_id):
-    table = read_from_csv('data/question.csv')
-    answers_list = list()
-    question_to_display = None
-    for question in table:
-        if question["ID"] == question_id:
-            view_counter = int(question["view_number"]) + 1
-            question["view_number"] = str(view_counter)
-            question_to_display = question_to_display_format(question)
-            break
-    answer_table = read_from_csv('data/answer.csv')
-    for answer in answer_table:
-        answer["submission_time"] = date_from_timestamp(answer["submission_time"])
-        if answer["question_id"] == question_id:
-            answers_list.append(answer_to_display_format(answer))
-    write_to_csv(table, 'data/question.csv')
-    return render_template("display.html", question=question_to_display, answers_list=answers_list)
+def display_question(cursor, question_id):
+    cursor.execute("SELECT * FROM question WHERE id = (%s);", (question_id))
+    question_dict = cursor.fetchall()
+    question_dict = question_dict[0]
+    print(question_dict)
+    cursor.execute("SELECT * FROM answer WHERE question_id = (%s);", (question_id))
+    answer_list = cursor.fetchall()
+    print(answer_list)
+    return render_template("display.html", question=question_dict, answers_list=answer_list)
 
 
 @connection_handler

@@ -10,27 +10,23 @@ def post_an_answer(cursor, question_id, message, image):
     return redirect("/question/{}".format(question_id))
 
 
-def delete_answer(answer_id):
-    table = common.read_from_csv('data/answer.csv')
-    for item in table:
-        if item["ID"] == answer_id:
-            question_id = item['question_id']
-            table.remove(item)
-            break
-    common.write_to_csv(table, 'data/answer.csv')
-    return redirect('/question/{}'.format(question_id))
+@connection_handler
+def delete_answer(cursor, answer_id):
+    cursor.execute("DELETE FROM comment WHERE answer_id = (%s);", (answer_id))
+    cursor.execute("DELETE FROM answer WHERE id = (%s);", (answer_id))
+    return redirect("/question/{}".format(question_id))
 
 
-def upvote(id_, csv, question_id, vote):
-    table = common.read_from_csv(csv)
-    for record in table:
-        print(record)
-        if record['ID'] == id_:
-            if vote == "up":
-                record['vote_number'] = str(int(record["vote_number"]) + 1)
-                break
-            else:
-                record['vote_number'] = str(int(record["vote_number"]) - 1)
-                break
-    common.write_to_csv(table, csv)
+@connection_handler
+def upvote(cursor, id_, question_id, vote):
+    cursor.execute("SELECT vote_number FROM answer WHERE id = (%s);", (id_))
+    current_vote = cursor.fetchall()
+    current_vote = current_vote[0]["vote_number"]
+    print(current_vote)
+    if vote == "up":
+        current_vote += 1
+        cursor.execute("UPDATE answer SET vote_number = (%s) WHERE id = (%s);", (current_vote, id_))
+    else:
+        current_vote -= 1
+        cursor.execute("UPDATE answer SET vote_number = (%s) WHERE id = (%s);", (current_vote, id_))
     return redirect("/question/{}".format(question_id))
