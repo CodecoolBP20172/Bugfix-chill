@@ -84,8 +84,9 @@
                     </td>
                 </tr>
             </table>
-            <form action="{{ url_for('delete_answer', answer_id=answer['id'] ) }}">
+            <form action="{{ url_for('delete_answer', answer_id=answer['id'] ) }}" method="POST">
                 <p>
+                    <input type="hidden" name="question_id" value="{{ question['id'] }}"/>
                     <button type="Submit">Delete answer</button>
                 </p>
                 </form>

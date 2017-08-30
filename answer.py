@@ -11,7 +11,7 @@ def post_an_answer(cursor, question_id, message, image):
 
 
 @connection_handler
-def delete_answer(cursor, answer_id):
+def delete_answer(cursor, answer_id, question_id):
     cursor.execute("DELETE FROM comment WHERE answer_id = (%s);", (answer_id))
     cursor.execute("DELETE FROM answer WHERE id = (%s);", (answer_id))
     return redirect("/question/{}".format(question_id))
@@ -21,7 +21,9 @@ def delete_answer(cursor, answer_id):
 def upvote(cursor, id_, question_id, vote):
     cursor.execute("SELECT vote_number FROM answer WHERE id = (%s);", (id_))
     current_vote = cursor.fetchall()
-    current_vote = current_vote[0]["vote_number"]
+    print(current_vote)
+    current_vote = current_vote[0]
+    current_vote = current_vote["vote_number"]
     print(current_vote)
     if vote == "up":
         current_vote += 1
