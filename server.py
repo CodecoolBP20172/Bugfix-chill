@@ -85,7 +85,7 @@ def upvote_answer():
     vote = request.form.get("vote")
     question_id = request.form.get("question_id")
     answer_id = request.form.get("answer_id")
-    return answer.upvote(answer_id, "data/answer.csv", question_id, vote)
+    return answer.upvote(answer_id, question_id, vote)
 
 
 if __name__ == "__main__":

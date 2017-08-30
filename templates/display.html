@@ -18,10 +18,10 @@
                 <td>
                     <b>Votes:</b> {{question["vote_number"]}}
                 <td>
-                    <a href="/question/{{ question['ID'] }}/edit"><img src="/static/edit.svg" width="20" height="20" alt="Edit"></a>
+                    <a href="/question/{{ question['id'] }}/edit"><img src="/static/edit.svg" width="20" height="20" alt="Edit"></a>
                 </td>
                 <td>
-                    <a href="/question/{{ question['ID'] }}/delete"><img src="/static/waste-bin.svg" width="20" height="20" alt="Delete"></a>
+                    <a href="/question/{{ question['id'] }}/delete"><img src="/static/waste-bin.svg" width="20" height="20" alt="Delete"></a>
                 </td>
             </tr>
         </table>
@@ -44,7 +44,7 @@
             <tr>
                 <td>
                     <form action="/upvote_question" method="POST">
-                    <input type="hidden" name="question_id" value="{{ question['ID'] }}"/>
+                    <input type="hidden" name="question_id" value="{{ question['id'] }}"/>
                     <input type="hidden" name="vote" value="up"/>
                         <p>
                             <button type="Submit"><img src="/static/upvote.png" height="20" width="20" /></button>
@@ -53,7 +53,7 @@
                 </td>
                 <td>
                     <form action="/upvote_question" method="POST">
-                    <input type="hidden" name="question_id" value="{{ question['ID'] }}"/>
+                    <input type="hidden" name="question_id" value="{{ question['id'] }}"/>
                     <input type="hidden" name="vote" value="down"/>
                         <p>
                             <button type="Submit"><img src="/static/downvote.png" height="20" width="20" /></button>
@@ -62,7 +62,7 @@
                 </td>
             </tr>
         </table>
-            <form action="{{ url_for('new_answer', question_id=question['ID'] ) }}">
+            <form action="{{ url_for('new_answer', question_id=question['id'] ) }}">
                 <p>
                     <button type="Submit">Answer this question</button>
                 </p>
@@ -84,7 +84,7 @@
                     </td>
                 </tr>
             </table>
-            <form action="{{ url_for('delete_answer', answer_id=answer['ID'] ) }}">
+            <form action="{{ url_for('delete_answer', answer_id=answer['id'] ) }}">
                 <p>
                     <button type="Submit">Delete answer</button>
                 </p>
@@ -92,14 +92,14 @@
                 <table>
                     <tr>
                         <td><form action="/upvote_answer" method="POST">
-                                <input type="hidden" name="question_id" value="{{ question['ID'] }}"/>
-                                <input type="hidden" name="answer_id" value="{{ answer['ID'] }}"/>
+                                <input type="hidden" name="question_id" value="{{ question['id'] }}"/>
+                                <input type="hidden" name="answer_id" value="{{ answer['id'] }}"/>
                                 <input type="hidden" name="vote" value="up"/>
                                 <button type="submit"><img src="/static/upvote.png" height="20" width="20" /></button>
                         </form></td>
                         <td><form action="/upvote_answer" method="POST">
-                                <input type="hidden" name="question_id" value="{{ question['ID'] }}"/>
-                                <input type="hidden" name="answer_id" value="{{ answer['ID'] }}"/>
+                                <input type="hidden" name="question_id" value="{{ question['id'] }}"/>
+                                <input type="hidden" name="answer_id" value="{{ answer['id'] }}"/>
                                 <input type="hidden" name="vote" value="down"/>
                                 <button type="submit"><img src="/static/downvote.png" height="20" width="20" /></button>
                         </form></td>
