@@ -11,9 +11,9 @@ def post_an_answer(cursor, question_id, message, image):
 
 
 @connection_handler
-def delete_answer(cursor, answer_id, question_id):
-    cursor.execute("DELETE FROM comment WHERE answer_id = (%s);", (answer_id))
-    cursor.execute("DELETE FROM answer WHERE id = (%s);", (answer_id))
+def delete_answer(cursor, answer_id):
+    # cursor.execute("DELETE FROM comment WHERE answer_id = %s;", answer_id)
+    cursor.execute("DELETE FROM answer WHERE id = %s;", answer_id)
 
 
 @connection_handler

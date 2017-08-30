@@ -17,32 +17,27 @@ def question_index(cursor, criteria, order):
 
 @connection_handler
 def delete_question(cursor, question_id):
-    cursor.execute("""DELETE FROM question_tag
-                      WHERE question_id = %s RETURNING *;""", question_id)
-    deleted_tag = cursor.fetchall()
-    cursor.execute("""DELETE FROM question
-                      WHERE id = %s RETURNING *;""", question_id)
-    cursor.execute("""DELETE FROM comment
-                      WHERE id = %s;""", question_id)
-    deleted_question = cursor.fetchall()
-    print (deleted_tag, deleted_question)
+    cursor.execute("DELETE FROM question_tag WHERE question_id = %s;", question_id)
+    cursor.execute("DELETE FROM comment WHERE question_id = %s;", question_id)
+    cursor.execute("DELETE FROM question WHERE id = %s;", question_id)
 
 
 @connection_handler
 def delete_answers_for_question_id(cursor, question_id):
-    cursor.execute("SELECT answer WHERE question_id = (%s);", (question_id))
+    cursor.execute("SELECT id FROM answer WHERE question_id = %s;", question_id)
     deleted_answers = cursor.fetchall()
-    for answer in deleted_answers:
-        print (answer)
-        answer.delete_answer(answer_id["id"], question_id)
+    for answer_id in deleted_answers:
+        cursor.execute("DELETE FROM comment WHERE answer_id = %(id)s;", answer_id)
+        cursor.execute("DELETE FROM answer WHERE id = %(id)s;", answer_id)
+        # answer.delete_answer(answer_id['id'])
 
 
 # deleting a question by id
 # deletes the answers for the deleted question too
 # redirects to /list
 def delete_question_with_answers(question_id):
-    delete_question(question_id)
     delete_answers_for_question_id(question_id)
+    delete_question(question_id)
     return redirect('/list')
 
 
