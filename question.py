@@ -57,7 +57,7 @@ def edit_question(cursor, question_id, edited_question):
 
 
 @connection_handler
-def question_for_edit(question_id):
+def question_for_edit(cursor, question_id):
     cursor.execute("""SELECT *
                       FROM question
                       WHERE id = %s
@@ -68,7 +68,7 @@ def question_for_edit(question_id):
 
 # redirects to the question submitting page with a new id for the question
 @connection_handler
-def new_question():
+def new_question(cursor):
     cursor.execute("""INSERT INTO question
                       (title)
                       VALUES (NULL)
@@ -92,7 +92,7 @@ def display_question(cursor, question_id):
 
 
 @connection_handler
-def add_question(question_id, new_question_data):
+def add_question(cursor, question_id, new_question_data):
     new_question_data["submission_time"] = datetime.now()
     cursor.execute("""UPDATE question
                       SET submission_time = %(submission_time)s, view_number = 0, vote_number = 0,
@@ -101,7 +101,7 @@ def add_question(question_id, new_question_data):
 
 
 @connection_handler
-def upvote_question(id_, csv, vote):
+def upvote_question(cursor, id_, vote):
     if vote == "up":
         cursor.execute("""UPDATE question
                           SET vote_number = vote_number + 1

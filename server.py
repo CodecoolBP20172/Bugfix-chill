@@ -78,7 +78,7 @@ def delete_answer(answer_id):
 def upvote_question():
     vote = request.form.get("vote")
     id_ = request.form.get("question_id")
-    return question.upvote_question(id_, "data/question.csv", vote)
+    return question.upvote_question(id_, vote)
 
 
 @app.route("/upvote_answer", methods=["POST"])
