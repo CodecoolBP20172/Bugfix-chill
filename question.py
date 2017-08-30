@@ -107,10 +107,10 @@ def add_question(cursor, question_id, new_question_data):
 def upvote_question(cursor, id_, vote):
     if vote == "up":
         cursor.execute("""UPDATE question
-                          SET vote_number = vote_number + 1
+                          SET vote_number = vote_number + 1, view_number = view_number -1
                           WHERE id = %s;""", id_)
     else:
         cursor.execute("""UPDATE question
-                          SET vote_number = vote_number - 1
+                          SET vote_number = vote_number - 1, view_number = view_number -1
                           WHERE id = %s;""", id_)
     return redirect("/question/{}".format(id_))
