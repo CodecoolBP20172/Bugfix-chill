@@ -6,11 +6,8 @@ import answer
 
 # the main list.html page
 @connection_handler
-def question_index(cursor, criteria, order):
-    cursor.execute("""SELECT *
-                      FROM question;""")
-    table = cursor.fetchall()
-    # table = ordering(table, criteria, order)
+def question_index(cursor, criteria, order, limit=0):
+    table = ordering(criteria, order, limit)
     header = ["id", "submission_time", "view_number", "vote_number", "title", "message", "image"]
     return render_template('list.html', table=table, header=header, order=order)
 
