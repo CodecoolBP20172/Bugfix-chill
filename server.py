@@ -72,7 +72,7 @@ def add_answer():
 @app.route('/answer/<answer_id>/delete', methods=["POST"])
 def delete_answer(answer_id):
     question_id = request.form.get("question_id")
-    answer.delete_answer(answer_id, question_id)
+    answer.delete_answer(answer_id)
     return redirect("/question/{}".format(question_id))
 
 
