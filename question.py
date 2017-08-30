@@ -8,33 +8,32 @@ import datetime
 def question_index(cursor, criteria, order):
     cursor.execute("SELECT * FROM question;")
     table = cursor.fetchall()
-    for question in table:
-        question = question_to_display_format(question)
-        # table = ordering(table, criteria, order)
-    header = ["ID", "submission_time", "view_number", "vote_number", "title", "message", "image"]
+    # table = ordering(table, criteria, order)
+    header = ["id", "submission_time", "view_number", "vote_number", "title", "message", "image"]
     return render_template('list.html', table=table, header=header, order=order)
 
 
-def delete_question(question_id):
-    table = read_from_csv('data/question.csv')
-    for question in table:
-        if question["ID"] == question_id:
-            table.remove(question)
-            break
-    write_to_csv(table, 'data/question.csv')
+@connection_handler
+def delete_question(cursor, question_id):
+    cursor.execute("DELETE FROM question_tag WHERE question_id = %s RETURNING *;", question_id)
+    deleted_tag = cursor.fetchall()
+    cursor.execute("DELETE FROM question WHERE id = %s RETURNING *;", question_id)
+    deleted_question = cursor.fetchall()
+    print (deleted_tag, deleted_question)
 
 
-def delete_answers_for_question_id(question_id):
-    answer_table = read_from_csv('data/answer.csv')
-    for answer in answer_table:
-        if answer['question_id'] == question_id:
-            answer_table.remove(answer)
-    write_to_csv(answer_table, 'data/answer.csv')
+@connection_handler
+def delete_answers_for_question_id(cursor, question_id):
+    cursor.execute("DELETE FROM answer WHERE question_id = %s RETURNING *;", question_id)
+    deleted_answers = cursor.fetchall()
+    for answer in deleted_answers:
+        print (answer)
 
 
 # deleting a question by id
 # deletes the answers for the deleted question too
 # redirects to /list
+# @connection_handler
 def delete_question_with_answers(question_id):
     delete_question(question_id)
     delete_answers_for_question_id(question_id)
@@ -44,6 +43,7 @@ def delete_question_with_answers(question_id):
 # editing a question by id
 # replaces the question with the one gets from the form
 # redirects to /list
+@connection_handler
 def edit_question(question_id, edited_question):
     table = read_from_csv('data/question.csv')
     for question in table:
@@ -55,6 +55,7 @@ def edit_question(question_id, edited_question):
     return redirect('/')
 
 
+@connection_handler
 def question_for_edit(question_id):
     table = read_from_csv('data/question.csv')
     question_to_return = None
@@ -66,12 +67,14 @@ def question_for_edit(question_id):
 
 
 # redirects to the question submitting page with a new id for the question
+@connection_handler
 def new_question():
     table = read_from_csv('data/question.csv')
     new_id = id_generation(table)
     return render_template("/form.html", id=new_id, form_type="add_question")
 
 
+@connection_handler
 def question_to_display_format(question):
     tmp_dict = dict(question)
     # tmp_dict["submission_time"] = date_from_timestamp(tmp_dict["submission_time"])
@@ -80,11 +83,13 @@ def question_to_display_format(question):
     return tmp_dict
 
 
+@connection_handler
 def answer_to_display_format(answer):
     answer["message"] = answer["message"].replace('\\n', '<br>')
     return answer
 
 
+@connection_handler
 def display_question(question_id):
     table = read_from_csv('data/question.csv')
     answers_list = list()
@@ -104,6 +109,7 @@ def display_question(question_id):
     return render_template("display.html", question=question_to_display, answers_list=answers_list)
 
 
+@connection_handler
 def add_question(question_id, new_question_data):
     table = read_from_csv('data/question.csv')
     new_question = dict()
@@ -119,6 +125,7 @@ def add_question(question_id, new_question_data):
     return redirect('/question/{}'.format(question_id))
 
 
+@connection_handler
 def upvote_question(id_, csv, vote):
     table = read_from_csv(csv)
     for record in table:

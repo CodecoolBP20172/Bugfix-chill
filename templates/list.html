@@ -46,8 +46,8 @@
                     {% endif %}
                 {% endfor %}
                 {% if row: %}
-                    <td><a href="/question/{{ row['ID'] }}/edit"><img src="static/edit.svg" width="20" height="20" alt="Edit"></a></td>
-                    <td><a href="/question/{{ row['ID'] }}/delete"><img src="static/waste-bin.svg" width="20" height="20" alt="Delete"></a></td>
+                    <td><a href="/question/{{ row['id'] }}/edit"><img src="static/edit.svg" width="20" height="20" alt="Edit"></a></td>
+                    <td><a href="/question/{{ row['id'] }}/delete"><img src="static/waste-bin.svg" width="20" height="20" alt="Delete"></a></td>
                 {% endif%}
             </tr>
             {% endfor %}
