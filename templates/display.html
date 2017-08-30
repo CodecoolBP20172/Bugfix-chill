@@ -35,7 +35,7 @@
                 {{ question["message"] }}
             {% endautoescape %}
         </p>
-        {% if question['image'] != '' %}
+        {% if question['image'] != None %}
             <p>
                 <img src="{{question['image']}}" height=20% width="20%" />
             </p>

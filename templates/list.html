@@ -37,7 +37,7 @@
                         {% endautoescape %}
                     {% elif key in ("image") %}
                         <td align="center">
-                            {% if row['image'] != '' %}
+                            {% if row['image'] != None %}
                                 <img src="{{row['image']}}" height="110%" width="110%" />
                             {% endif %}
                         </td>

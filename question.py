@@ -84,7 +84,7 @@ def display_question(cursor, question_id):
                       WHERE id = %s;""", question_id)
     cursor.execute("SELECT * FROM question WHERE id = (%s);", (question_id))
     question_dict = cursor.fetchall()
-    print(question_dict[0])
+    print(question_dict)
     cursor.execute("SELECT * FROM answer WHERE question_id = (%s);", (question_id))
     answer_list = cursor.fetchall()
     print(answer_list)
