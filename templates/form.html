@@ -69,14 +69,10 @@
         {% endif %}
         {% if form_type == "comment_to_question" %}
             <h1>Add a comment to this question</h1>
-                <form action="/add_comment_to_question" method="POST">
+                <form action="/question/{{ question_id }}/new-comment" method="POST">
                 <p>
                         <label for="message">Comment this question</label><br>
-                        <textarea  name="comment_to_question" rows="5" cols="50"></textarea>
-                </p>
-                <p>
-                        <label for="image">Image link</label><br>
-                        <textarea name="image" rows="5" cols="50"></textarea>
+                        <textarea  name="message" rows="5" cols="50"></textarea>
                 </p>
                 <input type="hidden" name="question_id" value="{{ question_id }}"/>
                 <button type="submit">Add comment</button>
@@ -84,19 +80,15 @@
         {% endif %}
         {% if form_type == "comment_to_answer" %}
             <h1>Add a comment to this answer</h1>
-                <form action="/add_comment_to_answer" method="POST">
+                <form action="/answer/{{ answer_id }}/new-comment" method="POST">
                 <p>
                         <label for="message">Comment this answer</label><br>
-                        <textarea  name="comment_to_answer" rows="5" cols="50"></textarea>
+                        <textarea  name="message" rows="5" cols="50"></textarea>
                 </p>
-                <p>
-                        <label for="image">Image link</label><br>
-                        <textarea name="image" rows="5" cols="50"></textarea>
-                </p>
-                <input type="hidden" name="answer" value="{{ answer }}"/>
+                <input type="hidden" name="question" value="{{ question_id }}"/>
                 <button type="submit">Add comment</button>
                 </form>
         {% endif %}
-        
+
     </body>
 </html>

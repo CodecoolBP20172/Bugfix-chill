@@ -85,13 +85,19 @@ def display_question(cursor, question_id):
                       WHERE id = (%s)
                       ORDER BY id;""", (question_id))
     question_dict = cursor.fetchall()
-    print(question_dict)
     cursor.execute("""SELECT *
                       FROM answer
                       WHERE question_id = (%s);""", (question_id))
     answer_list = cursor.fetchall()
-    print(answer_list)
-    return render_template("display.html", question=question_dict[0], answers_list=answer_list)
+    cursor.execute("""SELECT *
+                      FROM comment
+                      WHERE question_id = (%s);""", (question_id))
+    question_comments = cursor.fetchall()
+    cursor.execute("""SELECT *
+                      FROM comment
+                      WHERE question_id IS NULL;""")
+    answer_comments = cursor.fetchall()
+    return render_template("display.html", question=question_dict[0], answers_list=answer_list, question_comments=question_comments, answer_comments=answer_comments)
 
 
 @connection_handler
@@ -115,3 +121,11 @@ def upvote_question(cursor, id_, vote):
                           SET vote_number = vote_number - 1, view_number = view_number -1
                           WHERE id = %s;""", id_)
     return redirect("/question/{}".format(id_))
+
+
+@connection_handler
+def comment_question(cursor, question_id, message):
+    print(message)
+    cursor.execute("INSERT INTO comment (question_id, answer_id, message, submission_time, edited_count)"
+                   "VALUES (%s, %s, %s, %s, %s);", (question_id, None, message, datetime.now(), 0))
+    return redirect("/question/{}".format(question_id))
