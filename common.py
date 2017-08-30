@@ -37,3 +37,19 @@ def id_generation(table):
     except ValueError:
         generated_id = 0
     return(generated_id)
+
+
+@connection_handler
+def ordering(cursor, criteria, order, limit):
+    if criteria and order:
+        order_dict = {'criteria': criteria, 'order': order, 'limit': limit}
+        if limit:
+            cursor.execute("SELECT * FROM question ORDER BY {criteria} {order} LIMIT {limit}; \
+                        ".format(criteria=order_dict['criteria'], order=order_dict['order'], limit=order_dict['limit']))
+        else:
+            cursor.execute("SELECT * FROM question ORDER BY {criteria} {order}; \
+                        ".format(criteria=order_dict['criteria'], order=order_dict['order']))
+    else:
+        cursor.execute("SELECT * FROM question ORDER BY id ASC;")
+    table = cursor.fetchall()
+    return table
