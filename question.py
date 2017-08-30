@@ -71,8 +71,8 @@ def question_for_edit(cursor, question_id):
 def new_question(cursor):
     cursor.execute("""SELECT id
                       FROM question
-                      ORDER BY id desc
-                      LIMIT 1""")
+                      ORDER BY id DESC
+                      LIMIT 1;""")
     new_question_template = cursor.fetchall()
     return render_template("/form.html", id=new_question_template[0]["id"]+1, form_type="add_question")
 
@@ -82,10 +82,10 @@ def display_question(cursor, question_id):
     print("question_id: {}".format(question_id))
     cursor.execute("""UPDATE question
                       SET view_number = view_number + 1
-                      WHERE id = %s;""", question_id)
+                      WHERE id = (%s);""", question_id)
     cursor.execute("""SELECT *
                       FROM question
-                      WHERE id = %s
+                      WHERE id = (%s)
                       ORDER BY id;""", question_id)
     question_dict = cursor.fetchall()
     print("question_dict: {}".format(question_dict))
@@ -108,7 +108,7 @@ def display_question(cursor, question_id):
 
 @connection_handler
 def add_question(cursor, new_question_data):
-    new_question_data["submission_time"] = datetime.now()
+    new_question_data["submission_time"] = datetime.now().replace(microsecond=0)
     cursor.execute("INSERT INTO question \
                     (submission_time, vote_number, view_number, title, message, image) \
                     VALUES (%(submission_time)s, 0, 0, %(title)s, %(message)s, {image}); \

@@ -32,10 +32,10 @@ def add_new_question(question_id):
     new_question_dict = dict()
     keys_of_form = request.form.keys()
     for key in keys_of_form:
-        print(key)
+        # print(key)
         new_question_dict.update({key: request.form[key]})
     new_question_dict.update({"id": question_id})
-    print(new_question_dict)
+    # print(new_question_dict)
     return question.add_question(new_question_dict)
 
 
