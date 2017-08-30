@@ -62,6 +62,15 @@
                 </td>
             </tr>
         </table>
+            <p>
+                Comments:
+            </p>
+            {% for dict in question_comments%}
+            <p>
+                {{ dict["message"]}} , Submission time: {{ dict["submission_time"] }}, Edited: {{ dict["edited_count"] }}
+            </p>
+            {% endfor%}
+                    <a href="/question/{{ question['id'] }}/new-comment">Add comment to question</a>
             <form action="{{ url_for('new_answer', question_id=question['id'] ) }}">
                 <p>
                     <button type="Submit">Answer this question</button>
@@ -88,6 +97,7 @@
                 <p>
                     <input type="hidden" name="question_id" value="{{ question['id'] }}"/>
                     <button type="Submit">Delete answer</button>
+                    <a href="/answer/{{ answer['id'] }}/new-comment">Add comment to answser</a>
                 </p>
                 </form>
                 <table>
@@ -106,6 +116,16 @@
                         </form></td>
                     </tr>
                 </table>
+                Comments:
+                {% for answer_dict in answer_comments %}
+                <p>
+                {% if answer_dict['answer_id'] == answer['id'] %}
+                <p>
+                    {{ answer_dict["message"]}} , Submission time: {{ answer_dict["submission_time"] }}, Edited: {{ answer_dict["edited_count"] }}
+                {% endif %}
+                </p>
+                </p>
+                {% endfor %}
         {% endfor %}
         <p>
             <a href="/"><button>Back to the Questions page</button></a>

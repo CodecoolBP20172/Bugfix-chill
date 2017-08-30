@@ -1,15 +1,14 @@
 <!DOCTYPE html>
-{% if order == 'ascending' %}
-    {% set ordering = 'descending' %}
-{% elif order == 'descending' %}
-    {% set ordering = 'ascending' %}
+{% if order == 'DESC' %}
+    {% set ordering = 'ASC' %}
 {% else %}
-    {% set ordering = 'descending' %}
+    {% set ordering = 'DESC' %}
 {% endif%}
 <html>
     <head>
         <meta charset="utf-8">
         <title>Askmate</title>
+        <link rel="stylesheet" href="style.css">
     </head>
     <body>
         <h1>Questions</h1>
@@ -19,22 +18,31 @@
                     <a href="{{ url_for('new_question_form') }}"><input type="submit" value="Ask a question"></a>
                 </td>
                 <td>
-                    <a href="/list"><input type="submit" value="See full list"></a>
+                    <a href="{{url_for('index_list', criteria='id', order=ordering)}}"><input type="submit" value="See full list"></a>
                 </td>
                 <td>
                     <a href="/"><input type="submit" value="Latest 5 Questions"></a>
                 </td>
             </tr>
         </table>
-
         <table border="1" cellpadding="10">
+            {% if limit == 5 %}
             <tr>
-                <th><a href="{{url_for('index', criteria='ID', order=ordering )}}"> ID </th>
+                <th><a href="{{url_for('index', criteria='id', order=ordering )}}"> ID </th>
                 <th><a href="{{url_for('index', criteria='submission_time', order=ordering )}}"> Submission time </th>
                 <th><a href="{{url_for('index', criteria='view_number', order=ordering )}}"> View number </th>
                 <th><a href="{{url_for('index', criteria='vote_number', order=ordering )}}"> Vote number </th>
                 <th> Title </th>
             </tr>
+            {% else %}
+            <tr>
+                <th><a href="{{url_for('index_list', criteria='id', order=ordering )}}"> ID </th>
+                <th><a href="{{url_for('index_list', criteria='submission_time', order=ordering )}}"> Submission time </th>
+                <th><a href="{{url_for('index_list', criteria='view_number', order=ordering )}}"> View number </th>
+                <th><a href="{{url_for('index_list', criteria='vote_number', order=ordering )}}"> Vote number </th>
+                <th> Title </th>
+            </tr>
+            {% endif %}
             {% for row in table %}
             <tr>
                 {% for key in header %}

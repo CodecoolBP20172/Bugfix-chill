@@ -7,14 +7,14 @@ import answer
 # the main list.html page
 @connection_handler
 def question_index(cursor, criteria, order, limit=0):
-    cursor.execute("SELECT * \
-                      FROM question \
-                      ORDER BY id desc \
-                      {limit_val};".format(limit_val='' if limit == 0 else " LIMIT 5"))
-    table = cursor.fetchall()
-    # table = ordering(table, criteria, order)
+    # cursor.execute("SELECT * \
+    #                   FROM question \
+    #                   ORDER BY id desc \
+    #                   {limit_val};".format(limit_val='' if limit == 0 else " LIMIT 5"))
+    # table = cursor.fetchall()
+    table = ordering(criteria, order, limit)
     header = ["id", "submission_time", "view_number", "vote_number", "title", "message", "image"]
-    return render_template('list.html', table=table, header=header, order=order)
+    return render_template('list.html', table=table, header=header, order=order, limit=limit)
 
 
 @connection_handler
@@ -94,7 +94,16 @@ def display_question(cursor, question_id):
                       WHERE question_id = (%s);""", (question_id))
     answer_list = cursor.fetchall()
     print("answer_list: {}".format(answer_list))
-    return render_template("display.html", question=question_dict[0], answers_list=answer_list)
+    cursor.execute("""SELECT *
+                      FROM comment
+                      WHERE question_id = (%s);""", (question_id))
+    question_comments = cursor.fetchall()
+    cursor.execute("""SELECT *
+                      FROM comment
+                      WHERE question_id IS NULL;""")
+    answer_comments = cursor.fetchall()
+    return render_template("display.html", question=question_dict[0], answers_list=answer_list,
+                           question_comments=question_comments, answer_comments=answer_comments)
 
 
 @connection_handler
@@ -113,3 +122,11 @@ def upvote_question(cursor, id_, vote):
                     SET vote_number = vote_number + {vote_var}, view_number = view_number -1 \
                     WHERE id = %s;".format(vote_var=1 if vote == "up" else -1), id_)
     return redirect("/question/{}".format(id_))
+
+
+@connection_handler
+def comment_question(cursor, question_id, message):
+    print(message)
+    cursor.execute("INSERT INTO comment (question_id, answer_id, message, submission_time, edited_count)"
+                   "VALUES (%s, %s, %s, %s, %s);", (question_id, None, message, datetime.now(), 0))
+    return redirect("/question/{}".format(question_id))

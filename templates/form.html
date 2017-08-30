@@ -67,5 +67,28 @@
                 <a href="/question/{{ question_id }}"><button>Back to the Question</button></a>
             </p>
         {% endif %}
+        {% if form_type == "comment_to_question" %}
+            <h1>Add a comment to this question</h1>
+                <form action="/question/{{ question_id }}/new-comment" method="POST">
+                <p>
+                        <label for="message">Comment this question</label><br>
+                        <textarea  name="message" rows="5" cols="50"></textarea>
+                </p>
+                <input type="hidden" name="question_id" value="{{ question_id }}"/>
+                <button type="submit">Add comment</button>
+                </form>
+        {% endif %}
+        {% if form_type == "comment_to_answer" %}
+            <h1>Add a comment to this answer</h1>
+                <form action="/answer/{{ answer_id }}/new-comment" method="POST">
+                <p>
+                        <label for="message">Comment this answer</label><br>
+                        <textarea  name="message" rows="5" cols="50"></textarea>
+                </p>
+                <input type="hidden" name="question" value="{{ question_id }}"/>
+                <button type="submit">Add comment</button>
+                </form>
+        {% endif %}
+
     </body>
 </html>
