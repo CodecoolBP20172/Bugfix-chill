@@ -11,7 +11,7 @@ def question_index(cursor, criteria, order):
     for question in table:
         question = question_to_display_format(question)
         # table = ordering(table, criteria, order)
-    header = ["ID", "submission_time", "view_number", "vote_number", "title", "message", "image"]
+    header = ["id", "submission_time", "view_number", "vote_number", "title", "message", "image"]
     return render_template('list.html', table=table, header=header, order=order)
 
 
