@@ -51,11 +51,12 @@ def delete_question_with_answers(question_id):
 # redirects to /list
 @connection_handler
 def edit_question(cursor, question_id, edited_question):
-    if question_id == edited_question['id']:
-        cursor.execute("""UPDATE question
-                          SET title = %(title)s, message = %(message)s, image = %(image)s
-                          WHERE iD = %(id)s
-                          RETURNING *;""", edited_question)
+    #if question_id == edited_question['id']:
+    cursor.execute("""UPDATE question
+                      SET title = %s, message = %s, image = %s
+                      WHERE id = %s
+                      ;""", (edited_question["title"], edited_question["message"], edited_question["image"],
+                             question_id))
     return redirect('/')
 
 
@@ -64,8 +65,9 @@ def question_for_edit(cursor, question_id):
     cursor.execute("""SELECT *
                       FROM question
                       WHERE id = %s
-                      RETURNING *;""", question_id)
+                      ;""", question_id)
     question_to_return = cursor.fetchall()
+    question_to_return = question_to_return[0]
     return render_template("form.html", question=question_to_return, form_type="edit_question")
 
 
