@@ -6,7 +6,8 @@ import datetime
 # the main list.html page
 @connection_handler
 def question_index(cursor, criteria, order):
-    cursor.execute("SELECT * FROM question;")
+    cursor.execute("""SELECT *
+                      FROM question;""")
     table = cursor.fetchall()
     # table = ordering(table, criteria, order)
     header = ["id", "submission_time", "view_number", "vote_number", "title", "message", "image"]
@@ -15,16 +16,19 @@ def question_index(cursor, criteria, order):
 
 @connection_handler
 def delete_question(cursor, question_id):
-    cursor.execute("DELETE FROM question_tag WHERE question_id = %s RETURNING *;", question_id)
+    cursor.execute("""DELETE FROM question_tag
+                      WHERE question_id = %s RETURNING *;""", question_id)
     deleted_tag = cursor.fetchall()
-    cursor.execute("DELETE FROM question WHERE id = %s RETURNING *;", question_id)
+    cursor.execute("""DELETE FROM question
+                      WHERE id = %s RETURNING *;""", question_id)
     deleted_question = cursor.fetchall()
     print (deleted_tag, deleted_question)
 
 
 @connection_handler
 def delete_answers_for_question_id(cursor, question_id):
-    cursor.execute("DELETE FROM answer WHERE question_id = %s RETURNING *;", question_id)
+    cursor.execute("""DELETE FROM answer
+                      WHERE question_id = %s RETURNING *;""", question_id)
     deleted_answers = cursor.fetchall()
     for answer in deleted_answers:
         print (answer)
