@@ -12,9 +12,8 @@
     </head>
     <body>
         <h1>Askmate</h1>
-        <h2>Questions</h2>
         <table>
-            <tr>
+            <tr id="buttons">
                 <td>
                     <a href="{{ url_for('new_question_form') }}"><input type="submit" value="Ask a question"></a>
                 </td>
@@ -28,26 +27,29 @@
         </table>
         <table border="1" cellpadding="10">
             {% if limit == 5 %}
-            <tr class=header>
-                <th><a href="{{url_for('index', criteria='submission_time', order=ordering )}}"> Submission time </th>
+            <tr class="header">
+                <th class=table_head_start><a href="{{url_for('index', criteria='submission_time', order=ordering )}}"> Submission time </th>
                 <th><a href="{{url_for('index', criteria='view_number', order=ordering )}}"> View number </th>
                 <th><a href="{{url_for('index', criteria='vote_number', order=ordering )}}"> Vote number </th>
                 <th> Title </th>
                 <th> Edit </th>
-                <th> Delete </th>
+                <th class="table_head_end"> Delete </th>
             </tr>
+            <tr class="spacer"></tr>
             {% else %}
-            <tr class=header>
-                <th><a href="{{url_for('index_list', criteria='submission_time', order=ordering )}}"> Submission time </th>
+            <tr class="header">
+                <th class=table_head_start><a href="{{url_for('index_list', criteria='submission_time', order=ordering )}}"> Submission time </th>
                 <th><a href="{{url_for('index_list', criteria='view_number', order=ordering )}}"> View number </th>
                 <th><a href="{{url_for('index_list', criteria='vote_number', order=ordering )}}"> Vote number </th>
                 <th> Title </th>
                 <th> Edit </th>
-                <th> Delete </th>
-            </tr class=header>
+                <th class="table_head_end"> Delete </th>
+            </tr>
+            <tr class="spacer"></tr>
+
             {% endif %}
             {% for row in table %}
-            <tr id=content>
+            <tr id="content">
                 {% for key in header %}
                     {% if key == "title": %}
                         <td align="center"><a href="{{url_for('display_question_by_id', question_id = row['id'])}}"> {{ row["title"] }} </a></td>
@@ -61,6 +63,7 @@
                     <td><a href="/question/{{ row['id'] }}/delete"><img src="static/delete.png" width="20" height="20" alt="Delete"></a></td>
                 {% endif%}
             </tr>
+            <tr class="spacer"></tr>
             {% endfor %}
         </table>
     </body>
