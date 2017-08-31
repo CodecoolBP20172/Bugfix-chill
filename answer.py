@@ -51,8 +51,8 @@ def upvote(cursor, id_, question_id, vote):
 
 @connection_handler
 def comment_answer(cursor, answer_id, message):
-    cursor.execute("""INSERT INTO comment (question_id, answer_id, message, submission_time, edited_count)"
-                   "VALUES (%s, %s, %s, %s, %s);""", (None, answer_id, message, datetime.now(), 0))
+    cursor.execute("""INSERT INTO comment (question_id, answer_id, message, submission_time, edited_count)
+                      VALUES (%s, %s, %s, %s, %s);""", (None, answer_id, message, datetime.now(), 0))
     cursor.execute("""SELECT question_id
                       FROM answer
                       WHERE id=%s;""", (answer_id,))
