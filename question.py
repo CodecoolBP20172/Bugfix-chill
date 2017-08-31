@@ -14,14 +14,14 @@ def question_index(cursor, criteria, order, limit=0):
 
 @connection_handler
 def delete_question(cursor, question_id):
-    cursor.execute("DELETE FROM question_tag WHERE question_id = %s;", question_id)
-    cursor.execute("DELETE FROM comment WHERE question_id = %s;", question_id)
-    cursor.execute("DELETE FROM question WHERE id = %s;", question_id)
+    cursor.execute("DELETE FROM question_tag WHERE question_id = %s;", (question_id,))
+    cursor.execute("DELETE FROM comment WHERE question_id = %s;", (question_id,))
+    cursor.execute("DELETE FROM question WHERE id = %s;", (question_id,))
 
 
 @connection_handler
 def delete_answers_for_question_id(cursor, question_id):
-    cursor.execute("SELECT id FROM answer WHERE question_id = %s;", question_id)
+    cursor.execute("SELECT id FROM answer WHERE question_id = %s;", (question_id,))
     deleted_answers = cursor.fetchall()
     for answer_id in deleted_answers:
         cursor.execute("DELETE FROM comment WHERE answer_id = %(id)s;", answer_id)
@@ -55,7 +55,7 @@ def question_for_edit(cursor, question_id):
     cursor.execute("""SELECT *
                       FROM question
                       WHERE id = %s
-                      ;""", question_id)
+                      ;""", (question_id,))
     question_to_return = cursor.fetchall()
     question_to_return = question_to_return[0]
     return render_template("form.html", question=question_to_return, form_type="edit_question")
@@ -77,21 +77,21 @@ def display_question(cursor, question_id):
     print("question_id: {}".format(question_id))
     cursor.execute("""UPDATE question
                       SET view_number = view_number + 1
-                      WHERE id = (%s);""", question_id)
+                      WHERE id = %s;""", (question_id,))
     cursor.execute("""SELECT *
                       FROM question
-                      WHERE id = (%s)
-                      ORDER BY id;""", question_id)
+                      WHERE id = %s 
+                      ORDER BY id;""", (question_id,))
     question_dict = cursor.fetchall()
     print("question_dict: {}".format(question_dict))
     cursor.execute("""SELECT *
                       FROM answer
-                      WHERE question_id = (%s);""", (question_id))
+                    WHERE question_id = (%s);""", (question_id,))
     answer_list = cursor.fetchall()
     print("answer_list: {}".format(answer_list))
     cursor.execute("""SELECT *
                       FROM comment
-                      WHERE question_id = (%s);""", (question_id))
+                      WHERE question_id = (%s);""", (question_id,))
     question_comments = cursor.fetchall()
     cursor.execute("""SELECT *
                       FROM comment
