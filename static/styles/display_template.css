@@ -3,6 +3,7 @@ body {
   }
 
 h1, h2 {
+    overflow-wrap: break-word;
     font: bold 40px arial, sans-serif;
     text-transform: uppercase;
     text-align: left;
@@ -15,7 +16,10 @@ h3{
     text-align: left;
     text-decoration: underline;
 }
-
+p
+{
+  overflow-wrap: break-word;  
+}
 p, pre, b, a{
     font-family: Courier, "Times New Roman", sans-serif;
     font-size: 15px;
