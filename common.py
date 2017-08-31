@@ -45,7 +45,6 @@ def ordering(cursor, criteria, order, limit):
     return table
 
 
-<<<<<<< HEAD
 @connection_handler
 def remove_comment(cursor, comment_id):
     cursor.execute("SELECT question_id FROM comment WHERE id= (%s);", (comment_id,))
@@ -60,7 +59,8 @@ def remove_comment(cursor, comment_id):
     question_id = question_id[0]["question_id"]
     cursor.execute("DELETE FROM comment WHERE id = (%s);", (comment_id,))
     return redirect("/question/{}".format(question_id))
-=======
+
+
 def url_validation(criteria, order):
     valid_criteria = ['submission_time', 'view_number', 'vote_number']
     valid_order = ['ASC', 'DESC']
@@ -68,4 +68,3 @@ def url_validation(criteria, order):
         return True
     else:
         return False
->>>>>>> 676c0bc5660c05d9ebc66f26d990ddf1382c75ad
