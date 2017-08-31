@@ -6,9 +6,25 @@ h1, h2 {
     font: bold 40px arial, sans-serif;
     text-transform: uppercase;
     text-align: left;
-    border-bottom: solid
+    text-decoration: underline;
   }
 
+h3{
+    font: 15px arial, sans-serif;
+    text-transform: uppercase;
+    text-align: left;
+    text-decoration: underline;
+}
+
+p, pre, b, a{
+    font-family: Courier, "Times New Roman", sans-serif;
+    font-size: 15px;
+}
+
+b{
+    font: 15px arial, sans-serif;
+    font-size: 20px
+}
 
 a
 {

@@ -5,7 +5,7 @@
         <title>
             {{question["title"]}}
         </title>
-        <link rel="stylesheet" type="text/css" href="{{url_for('static', filename='styles/display_template.css')}}">        
+        <link rel="stylesheet" type="text/css" href="{{url_for('static', filename='styles/display_template.css')}}">
     </head>
     <body>
         <table>
@@ -63,9 +63,9 @@
                 </td>
             </tr>
         </table>
-            <p>
+            <h3>
                 Comments:
-            </p>
+            </h3>
             {% for dict in question_comments%}
             <p>
                 {{ dict["message"]}} , Submission time: {{ dict["submission_time"] }}, Edited: {{ dict["edited_count"] }}
@@ -87,11 +87,11 @@
                 </tr>
                 <tr>
                     <td>
-                        <pre>   <b>Answer</b>: {{answer['message']}}</pre>
+                        <p>   <b>Answer</b>: {{answer['message']}}</p>
                     </td>
                     <td>
                         {% if question['image'] != '' %}
-                            <pre>   <img src="{{answer['image']}}" height=20% width="20%" /></pre>
+                            <p>   <img src="{{answer['image']}}" height=20% width="20%" /></p>
                         {% endif %}
                     </td>
                 </tr>
@@ -119,7 +119,9 @@
                         </form></td>
                     </tr>
                 </table>
-                Comments:
+                <h3>
+                    Comments:
+                </h3>
                 {% for answer_dict in answer_comments %}
                 <p>
                 {% if answer_dict['answer_id'] == answer['id'] %}
