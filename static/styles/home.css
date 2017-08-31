@@ -1,14 +1,14 @@
 body {
-    background:#ccc;
+    background:#F7F7FF;
   }
 
 h1 {
-    font: bold 100px arial, sans-serif;
+    font: bold 80px arial, sans-serif;
     text-transform: uppercase;
     text-align: center;
-    background-color: #3F3F3F;
+    background-color: #3D3A37;
     color: transparent;
-    text-shadow: 2px 2px 3px rgba(255,255,255,0.5);
+    text-shadow: 4px 4px 3px rgba(255,255,255, 0.5);
     -webkit-background-clip: text;
        -moz-background-clip: text;
             background-clip: text;
@@ -17,6 +17,17 @@ h1 {
  table {
    margin: auto;
    width: auto;
+   border: none;
+ }
+
+tr.header th {
+   background-color: #9B1D20;
+   border: 2px;
+   border-radius: 10px;
+   color: white;
+}
+ #content td {
+   border: 1px dashed #9B1D20;
  }
 
   a:hover {
