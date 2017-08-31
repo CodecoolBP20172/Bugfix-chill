@@ -7,11 +7,6 @@ import answer
 # the main list.html page
 @connection_handler
 def question_index(cursor, criteria, order, limit=0):
-    # cursor.execute("SELECT * \
-    #                   FROM question \
-    #                   ORDER BY id desc \
-    #                   {limit_val};".format(limit_val='' if limit == 0 else " LIMIT 5"))
-    # table = cursor.fetchall()
     table = ordering(criteria, order, limit)
     header = ["id", "submission_time", "view_number", "vote_number", "title", "message", "image"]
     return render_template('list.html', table=table, header=header, order=order, limit=limit)

@@ -25,26 +25,14 @@ def connection_handler(function):
     return wrapper
 
 
-""" I think id_generation is not nessescary anymore as the tables generate the ids with a sequence """
-
-
-def id_generation(table):
-    try:
-        id_list = []
-        for data in table:
-            id_list.append(int(data['ID']))
-        generated_id = max(id_list) + 1
-    except ValueError:
-        generated_id = 0
-    return(generated_id)
-
-
 @connection_handler
 def ordering(cursor, criteria, order, limit):
     if criteria and order:
         order_dict = {'criteria': criteria, 'order': order, 'limit': limit}
         if limit:
-            cursor.execute("SELECT * FROM question ORDER BY {criteria} {order} LIMIT {limit}; \
+            cursor.execute("SELECT * FROM question WHERE id IN \
+                        (SELECT id FROM question ORDER BY id DESC LIMIT 5) \
+                        ORDER BY {criteria} {order}; \
                         ".format(criteria=order_dict['criteria'], order=order_dict['order'], limit=order_dict['limit']))
         else:
             cursor.execute("SELECT * FROM question ORDER BY {criteria} {order}; \
