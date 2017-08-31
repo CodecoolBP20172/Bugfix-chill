@@ -117,7 +117,7 @@ def question_for_edit(cursor, question_id):
 def upvote_question(cursor, id_, vote):
     cursor.execute("UPDATE question \
                     SET vote_number = vote_number + {vote_var}, view_number = view_number -1 \
-                    WHERE id = %s;".format(vote_var=1 if vote == "up" else -1), id_)
+                    WHERE id = %s;".format(vote_var=1 if vote == "up" else -1), (id_,))
     return redirect("/question/{}".format(id_))
 
 

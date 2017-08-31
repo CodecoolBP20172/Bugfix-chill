@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html>
+    <link rel="stylesheet" type="text/css" href="{{url_for('static', filename='styles/display_template.css')}}">                
     <head>
         <meta charset="utf-8">
         <title>New question</title>
@@ -88,6 +89,20 @@
                 <input type="hidden" name="question" value="{{ question_id }}"/>
                 <button type="submit">Add comment</button>
                 </form>
+        {% endif %}
+        {% if form_type == "edit_comment" %}
+            <h1>Edit this comment</h1>
+                <form action="/comments/{{ comment_id }}/edit" method="post">
+                    {% autoescape false%}
+                        <p>
+                            <textarea name="message" rows="5" cols="50" required>{{ comment_data["message"] }}</textarea>
+                        </p>
+                        <button>Update</button>
+                    {% endautoescape %}
+                </form>
+                <p>
+                    <a href="/"><button >Back to the Questions page</button></a>
+                </p>
         {% endif %}
 
     </body>

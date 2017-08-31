@@ -145,6 +145,22 @@ def add_comment_to_answer(answer_id):
     return answer.comment_answer(answer_id, message)
 
 
+@app.route("/comments/<comment_id>/delete")
+def delete_comment(comment_id):
+    return common.remove_comment(comment_id)
+
+
+@app.route("/comments/<comment_id>/edit")
+def render_comment_edit(comment_id):
+    return common.edit_comment(comment_id)
+
+
+@app.route('/comments/<comment_id>/edit', methods=['POST'])
+def submit_edited_comment(comment_id):
+    message = request.form.get("message")
+    return common.submit_comment_edited(comment_id, message)
+
+
 if __name__ == "__main__":
     app.secret_key = "this!is!the!secret!key"
     app.run(
