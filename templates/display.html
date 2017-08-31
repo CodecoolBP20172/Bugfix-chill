@@ -68,6 +68,7 @@
             {% for dict in question_comments%}
             <p>
                 {{ dict["message"]}} , Submission time: {{ dict["submission_time"] }}, Edited: {{ dict["edited_count"] }}
+                <a href="/comments/{{ dict['id'] }}/delete"><img src="/static/waste-bin.svg" width="20" height="20" alt="Delete"></a>                
             </p>
             {% endfor%}
                     <a href="/question/{{ question['id'] }}/new-comment">Add comment to question</a>
@@ -122,6 +123,7 @@
                 {% if answer_dict['answer_id'] == answer['id'] %}
                 <p>
                     {{ answer_dict["message"]}} , Submission time: {{ answer_dict["submission_time"] }}, Edited: {{ answer_dict["edited_count"] }}
+                    <a href="/comments/{{ answer_dict['id'] }}/delete"><img src="/static/waste-bin.svg" width="20" height="20" alt="Delete"></a>                    
                 {% endif %}
                 </p>
                 </p>

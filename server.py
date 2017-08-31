@@ -120,6 +120,10 @@ def add_comment_to_answer(answer_id):
     return answer.comment_answer(answer_id, message)
 
 
+@app.route("/comments/<comment_id>/delete")
+def delete_comment(comment_id): 
+    return common.remove_comment(comment_id)
+
 if __name__ == "__main__":
     app.secret_key = "this!is!the!secret!key"
     app.run(
