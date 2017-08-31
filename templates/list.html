@@ -29,7 +29,6 @@
         <table border="1" cellpadding="10">
             {% if limit == 5 %}
             <tr>
-                <th><a href="{{url_for('index', criteria='id', order=ordering )}}"> ID </th>
                 <th><a href="{{url_for('index', criteria='submission_time', order=ordering )}}"> Submission time </th>
                 <th><a href="{{url_for('index', criteria='view_number', order=ordering )}}"> View number </th>
                 <th><a href="{{url_for('index', criteria='vote_number', order=ordering )}}"> Vote number </th>
@@ -37,7 +36,6 @@
             </tr>
             {% else %}
             <tr>
-                <th><a href="{{url_for('index_list', criteria='id', order=ordering )}}"> ID </th>
                 <th><a href="{{url_for('index_list', criteria='submission_time', order=ordering )}}"> Submission time </th>
                 <th><a href="{{url_for('index_list', criteria='view_number', order=ordering )}}"> View number </th>
                 <th><a href="{{url_for('index_list', criteria='vote_number', order=ordering )}}"> Vote number </th>
@@ -50,7 +48,7 @@
                     {% if key == "title": %}
                         <td align="center"><a href="{{url_for('display_question_by_id', question_id = row['id'])}}"> {{ row["title"] }} </a></td>
 
-                    {% elif key not in ("message", "image") %}
+                    {% elif key not in ("message", "image", "id") %}
                         <td align="center">{{ row[key] }}</td>
                     {% endif %}
                 {% endfor %}

@@ -6,7 +6,7 @@ import answer
 
 # the main list.html page
 @connection_handler
-def question_index(cursor, criteria, order, limit=0):
+def question_index(cursor, criteria=None, order=None, limit=0):
     table = ordering(criteria, order, limit)
     header = ["id", "submission_time", "view_number", "vote_number", "title", "message", "image"]
     return render_template('list.html', table=table, header=header, order=order, limit=limit)
@@ -108,7 +108,9 @@ def add_question(cursor, new_question_data):
                     (submission_time, vote_number, view_number, title, message, image) \
                     VALUES (%(submission_time)s, 0, 0, %(title)s, %(message)s, {image}); \
                     ".format(image='NULL' if new_question_data["image"] == '' else '%(image)s'), new_question_data)
-    return redirect('/question/{}'.format(new_question_data["id"]))
+    cursor.execute("SELECT * FROM question ORDER BY id DESC LIMIT 1")
+    new_question = cursor.fetchall()
+    return redirect('/question/{}'.format(new_question[0]['id']))
 
 
 @connection_handler

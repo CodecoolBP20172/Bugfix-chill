@@ -42,3 +42,12 @@ def ordering(cursor, criteria, order, limit):
         ".format(limit_val='' if limit == 0 else " LIMIT 5"))
     table = cursor.fetchall()
     return table
+
+
+def url_validation(criteria, order):
+    valid_criteria = ['submission_time', 'view_number', 'vote_number']
+    valid_order = ['ASC', 'DESC']
+    if criteria and order and (criteria in valid_criteria and order in valid_order):
+        return True
+    else:
+        return False

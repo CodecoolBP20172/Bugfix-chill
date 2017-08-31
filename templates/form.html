@@ -7,7 +7,7 @@
     <body>
         {% if form_type == "add_question" %}
             <h1>Ask a question</h1>
-                <form action="/add_question/{{ id }}" method="post">
+                <form action="/new_question" method="post">
                     <p>
                         <label for="title">Question title</label><br>
                         <textarea name="title" minlength="10" cols="50" required></textarea>
