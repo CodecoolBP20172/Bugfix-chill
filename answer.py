@@ -6,7 +6,7 @@ from common import *
 @connection_handler
 def post_an_answer(cursor, question_id, message, image):
     cursor.execute("INSERT INTO answer (submission_time, vote_number, question_id, message, image) VALUES "
-                   "(%s, %s, %s, %s, %s);", (datetime.now(), 0, question_id, message, image))
+                   "(%s, %s, %s, %s, %s);", (datetime.now().replace(microsecond=0), 0, question_id, message, image))
     return redirect("/question/{}".format(question_id))
 
 
