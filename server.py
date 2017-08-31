@@ -7,6 +7,12 @@ import answer
 app = Flask(__name__)
 
 
+"""
+Main page url Functions
+"""
+
+
+# main page showing only top 5 latest question comments
 @app.route('/')
 def index():
     criteria = request.args.get("criteria")
@@ -18,6 +24,7 @@ def index():
     return question.question_index(criteria, order, limit)
 
 
+# main page listing all the questions
 @app.route('/list')
 def index_list():
     criteria = request.args.get("criteria")
@@ -26,6 +33,11 @@ def index_list():
     if not valid_url:
         return question.question_index()
     return question.question_index(criteria, order)
+
+
+"""
+Functins handleing interactions with questions
+"""
 
 
 @app.route('/new-question')
@@ -66,6 +78,18 @@ def del_question_by_id(question_id):
     return question.delete_question_with_answers(question_id)
 
 
+@app.route("/upvote_question", methods=["POST"])
+def upvote_question():
+    vote = request.form.get("vote")
+    id_ = request.form.get("question_id")
+    return question.upvote_question(id_, vote)
+
+
+"""
+Functions responding to answer URL's
+"""
+
+
 @app.route('/question/<question_id>/new-answer')
 def new_answer(question_id):
     return render_template("form.html", question_id=question_id, form_type="answer")
@@ -86,19 +110,17 @@ def delete_answer(answer_id):
     return redirect("/question/{}".format(question_id))
 
 
-@app.route("/upvote_question", methods=["POST"])
-def upvote_question():
-    vote = request.form.get("vote")
-    id_ = request.form.get("question_id")
-    return question.upvote_question(id_, vote)
-
-
 @app.route("/upvote_answer", methods=["POST"])
 def upvote_answer():
     vote = request.form.get("vote")
     question_id = request.form.get("question_id")
     answer_id = request.form.get("answer_id")
     return answer.upvote(answer_id, question_id, vote)
+
+
+"""
+Functions related to comments
+"""
 
 
 @app.route("/question/<question_id>/new-comment")
