@@ -12,6 +12,9 @@ def index():
     criteria = request.args.get("criteria")
     order = request.args.get("order")
     limit = 5
+    valid_url = common.url_validation(criteria, order)
+    if not valid_url:
+        return question.question_index(limit=limit)
     return question.question_index(criteria, order, limit)
 
 
@@ -19,6 +22,9 @@ def index():
 def index_list():
     criteria = request.args.get("criteria")
     order = request.args.get("order")
+    valid_url = common.url_validation(criteria, order)
+    if not valid_url:
+        return question.question_index()
     return question.question_index(criteria, order)
 
 
@@ -27,15 +33,12 @@ def new_question_form():
     return question.new_question()
 
 
-@app.route('/add_question/<question_id>', methods=['POST'])
-def add_new_question(question_id):
+@app.route('/new_question', methods=['POST'])
+def add_new_question():
     new_question_dict = dict()
     keys_of_form = request.form.keys()
     for key in keys_of_form:
-        # print(key)
         new_question_dict.update({key: request.form[key]})
-    new_question_dict.update({"id": question_id})
-    # print(new_question_dict)
     return question.add_question(new_question_dict)
 
 
