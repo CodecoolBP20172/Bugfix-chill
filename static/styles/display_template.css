@@ -1,8 +1,9 @@
 body {
     background:#D7D7DB;
+    position: relative;
   }
 
-h1, h2 {
+h1 {
   font-weight: bold;
   font-size: 50px;
   text-transform: uppercase;
@@ -14,11 +15,24 @@ h1, h2 {
      -moz-background-clip: text;
           background-clip: text;
   }
+h2 {
+  font-weight: bold;
+  text-align: center;
+  font-size: 40px;
+  color: white;
+  background-color: #9B1D20;
+  border-radius: 10px;
+  padding: 10px;
+}
 
-h3{
+#answer_header {
     text-transform: uppercase;
     text-align: left;
     text-decoration: underline;
+    color: white;
+    background-color: #9B1D20;
+    border-radius: 10px;
+    padding: 10px;
 }
 
 form p {
@@ -48,8 +62,8 @@ label {
 p {
   overflow-wrap: break-word;  
 }
-p, pre, b, a{
-    font-family: Courier, "Times New Roman", sans-serif;
+
+p, pre, b, a {
     font-size: 15px;
 }
 
@@ -59,12 +73,34 @@ p, pre, b, a{
   left: 470px;
 }
 
-
 b{
-    font: 15px arial, sans-serif;
-    font-size: 20px
+    font-weight: bold;
 }
 
-  a:hover {
-    background-color: #a6a6a6;
-  }
+a:hover {
+  background-color: #a6a6a6;
+}
+
+#answer_question, #comment_question, #comment_answer, #delete_answer {
+  background-color: #4D7EA8;
+  padding: 5px;
+  border-radius: 10px;
+  color: white;
+  text-align: left;
+  text-decoration: none;
+}
+
+
+#message, #answer_to_question {
+  font-size: 20px;
+  text-indent: 10px;
+  padding: 10px;
+  background-color: white;
+  border-radius: 10px;
+}
+
+#back_from_display {
+  position: fixed;
+  top: 3%;
+  right: 2%;
+}

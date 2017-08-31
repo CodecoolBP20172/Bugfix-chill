@@ -125,5 +125,6 @@ def upvote_question(cursor, id_, vote):
 def comment_question(cursor, question_id, message):
     print(message)
     cursor.execute("INSERT INTO comment (question_id, answer_id, message, submission_time, edited_count)"
-                   "VALUES (%s, %s, %s, %s, %s);", (question_id, None, message, datetime.now(), 0))
+                   "VALUES (%s, %s, %s, %s, %s);",
+                   (question_id, None, message, datetime.now().replace(microsecond=0), 0))
     return redirect("/question/{}".format(question_id))
