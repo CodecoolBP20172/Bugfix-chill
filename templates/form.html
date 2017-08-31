@@ -14,18 +14,18 @@
                         <textarea name="title" minlength="10" cols="50" required></textarea>
                     </p>
                     <p>
-                        <label for="message">Question Body</label><br>
+                        <label for="message">Question body</label><br>
                         <textarea name="message" rows="5" cols="50" required></textarea>
                     </p>
                     <p>
                         <label for="image">Image link</label><br>
-                        <textarea name="image" rows="5" cols="50"></textarea>
+                        <textarea id="last_text" name="image" rows="5" cols="50"></textarea>
                     </p>
-                    <button type="submit">Create</button>
+                    <div id="create">
+                    <button type="submit"><abbr title="Create question"><img src="static/tick.png" width="30" height="30" alt="Create"></abbr></button>
+                    </div>
                 </form>
-                <p>
-                    <a href="/"><button>Back to the Questions page</button></a>
-                </p>
+                <a id="back"href="/"><abbr title="Back to the question page"><img src="static/leftarrow.png" width="30" height="30" alt="Back"></abbr></a>
         {% endif %}
         {% if form_type == "edit_question" %}
             <h1>Edit a question</h1>
