@@ -5,6 +5,7 @@
         <title>
             {{question["title"]}}
         </title>
+        <link rel="stylesheet" type="text/css" href="{{url_for('static', filename='styles/display_template.css')}}">        
     </head>
     <body>
         <table>
@@ -99,7 +100,7 @@
                 <p>
                     <input type="hidden" name="question_id" value="{{ question['id'] }}"/>
                     <button type="Submit">Delete answer</button>
-                    <a href="/answer/{{ answer['id'] }}/new-comment">Add comment to answser</a>
+                    <a href="/answer/{{ answer['id'] }}/new-comment">Add comment to answer</a>
                 </p>
                 </form>
                 <table>
@@ -132,7 +133,7 @@
                 {% endfor %}
         {% endfor %}
         <p>
-            <a href="/"><button>Back to the Questions page</button></a>
+            <a href="/">Back to the Questions page</a>
         </p>
 
         <footer>
