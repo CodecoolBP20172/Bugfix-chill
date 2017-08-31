@@ -79,20 +79,20 @@ def display_question(cursor, question_id):
                       WHERE id = %s;""", (question_id,))
     cursor.execute("""SELECT *
                       FROM question
-                      WHERE id = %s 
+                      WHERE id = %s
                       ORDER BY id;""", (question_id,))
     question_dict = cursor.fetchall()
     cursor.execute("""SELECT *
                       FROM answer
-                    WHERE question_id = (%s);""", (question_id,))
+                    WHERE question_id = (%s) ORDER BY id;""", (question_id,))
     answer_list = cursor.fetchall()
     cursor.execute("""SELECT *
                       FROM comment
-                      WHERE question_id = (%s);""", (question_id,))
+                      WHERE question_id = (%s) ORDER BY id;""", (question_id,))
     question_comments = cursor.fetchall()
     cursor.execute("""SELECT *
                       FROM comment
-                      WHERE question_id IS NULL;""")
+                      WHERE question_id IS NULL ORDER BY id;""")
     answer_comments = cursor.fetchall()
     return render_template("display.html", question=question_dict[0], answers_list=answer_list,
                            question_comments=question_comments, answer_comments=answer_comments)
@@ -114,7 +114,7 @@ def add_question(cursor, new_question_data):
 def upvote_question(cursor, id_, vote):
     cursor.execute("UPDATE question \
                     SET vote_number = vote_number + {vote_var}, view_number = view_number -1 \
-                    WHERE id = %s;".format(vote_var=1 if vote == "up" else -1), id_)
+                    WHERE id = %s;".format(vote_var=1 if vote == "up" else -1), (id_,))
     return redirect("/question/{}".format(id_))
 
 
