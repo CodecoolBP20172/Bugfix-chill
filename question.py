@@ -99,13 +99,6 @@ def edit_question(cursor, question_id, edited_question):
                       WHERE id = %s
                       ;""", (edited_question["title"], edited_question["message"], edited_question["image"],
                              question_id))
-    print(edited_question)
-    print(question_id)
-    print()
-    print()
-    print()
-    print()
-    print()
     return redirect('/question/{}'.format(question_id))
 
 
