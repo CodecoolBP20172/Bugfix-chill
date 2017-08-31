@@ -45,6 +45,13 @@ label {
   top: 450px;
   left: 850px;
 }
+p {
+  overflow-wrap: break-word;  
+}
+p, pre, b, a{
+    font-family: Courier, "Times New Roman", sans-serif;
+    font-size: 15px;
+}
 
 #back {
   position: absolute;
@@ -58,17 +65,6 @@ b{
     font-size: 20px
 }
 
-/* a
-{
-  text-decoration: none;
-  float: right;
-  border: 1px solid black;
-  border-radius: 5px;
-  color: black;
-  margin-right: 50px;
-  padding: 1px 2px;
-  background-color: #cccccc;
-} */
   a:hover {
     background-color: #a6a6a6;
   }

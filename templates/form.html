@@ -11,11 +11,11 @@
                 <form action="/new_question" method="post">
                     <p>
                         <label for="title">Question title</label><br>
-                        <textarea name="title" minlength="10" cols="50" required></textarea>
+                        <textarea name="title" minlength="10" cols="50" maxlength="140" required></textarea>
                     </p>
                     <p>
-                        <label for="message">Question body</label><br>
-                        <textarea name="message" rows="5" cols="50" required></textarea>
+                        <label for="message">Question Body</label><br>
+                        <textarea name="message" rows="5" cols="50" maxlength="140" required></textarea>
                     </p>
                     <p>
                         <label for="image">Image link</label><br>
@@ -33,15 +33,19 @@
                     {% autoescape false%}
                         <p>
                             <label for="title">Question title</label><br>
-                            <textarea name="title" minlength="10" rows="1" cols="50" required>{{ question["title"] }}</textarea>
+                            <textarea name="title" minlength="10" rows="1" cols="50" maxlength="140" required>{{ question["title"] }}</textarea>
                         </p>
                         <p>
                             <label for="message">Question Body</label><br>
-                            <textarea name="message" rows="5" cols="50" required>{{ question["message"] }}</textarea>
+                            <textarea name="message" rows="5" cols="50" maxlength="140" required>{{ question["message"] }}</textarea>
                         </p>
                         <p>
                             <label for="image">Image link</label><br>
-                            <textarea name="image" rows="5" cols="50"></textarea>
+                            {% if question["image"] != None %}
+                                <textarea name="image" rows="5" cols="50">{{ question["image"] }}</textarea>
+                            {% else %}
+                                <textarea name="image" rows="5" cols="50"></textarea>
+                            {% endif %}
                         </p>
                         <button>Update</button>
                     {% endautoescape %}
@@ -55,7 +59,7 @@
             <form action="/add_answer" method="post">
                 <p>
                         <label for="message">Answer</label><br>
-                        <textarea name="answer" rows="5" cols="50"></textarea>
+                        <textarea name="answer" rows="5" cols="50" minlength="10" maxlength="140"></textarea>
                     </p>
                     <p>
                         <label for="image">Image link</label><br>
@@ -73,7 +77,7 @@
                 <form action="/question/{{ question_id }}/new-comment" method="POST">
                 <p>
                         <label for="message">Comment this question</label><br>
-                        <textarea  name="message" rows="5" cols="50"></textarea>
+                        <textarea  name="message" rows="5" cols="50" minlength="10" maxlength="140"></textarea>
                 </p>
                 <input type="hidden" name="question_id" value="{{ question_id }}"/>
                 <button type="submit">Add comment</button>
@@ -84,7 +88,7 @@
                 <form action="/answer/{{ answer_id }}/new-comment" method="POST">
                 <p>
                         <label for="message">Comment this answer</label><br>
-                        <textarea  name="message" rows="5" cols="50"></textarea>
+                        <textarea  name="message" rows="5" cols="50" minlength="10" maxlength="140"></textarea>
                 </p>
                 <input type="hidden" name="question" value="{{ question_id }}"/>
                 <button type="submit">Add comment</button>
@@ -95,7 +99,7 @@
                 <form action="/comments/{{ comment_id }}/edit" method="post">
                     {% autoescape false%}
                         <p>
-                            <textarea name="message" rows="5" cols="50" required>{{ comment_data["message"] }}</textarea>
+                            <textarea name="message" rows="5" cols="50" minlength="10" maxlength="140" required>{{ comment_data["message"] }}</textarea>
                         </p>
                         <button>Update</button>
                     {% endautoescape %}
