@@ -56,6 +56,10 @@ tr.header a {
   text-decoration: none;
 }
 
+tr.header a:hover {
+  text-decoration: underline;
+}
+
 #content td {
   border:none;
   background-color: white; 
