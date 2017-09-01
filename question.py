@@ -37,7 +37,6 @@ def add_question(cursor, new_question_data):
 
 @connection_handler
 def display_question(cursor, question_id):
-    print("question_id: {}".format(question_id))
     cursor.execute("""UPDATE question
                       SET view_number = view_number + 1
                       WHERE id = %s;""", (question_id,))
@@ -46,12 +45,10 @@ def display_question(cursor, question_id):
                       WHERE id = %s
                       ORDER BY id;""", (question_id,))
     question_dict = cursor.fetchall()
-    print("question_dict: {}".format(question_dict))
     cursor.execute("""SELECT *
                       FROM answer
                     WHERE question_id = (%s);""", (question_id,))
     answer_list = cursor.fetchall()
-    print("answer_list: {}".format(answer_list))
     cursor.execute("""SELECT *
                       FROM comment
                       WHERE question_id = (%s);""", (question_id,))
@@ -123,7 +120,6 @@ def upvote_question(cursor, id_, vote):
 
 @connection_handler
 def comment_question(cursor, question_id, message):
-    print(message)
     cursor.execute("INSERT INTO comment (question_id, answer_id, message, submission_time, edited_count)"
                    "VALUES (%s, %s, %s, %s, %s);",
                    (question_id, None, message, datetime.now().replace(microsecond=0), 0))
