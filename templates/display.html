@@ -138,8 +138,10 @@
                 {% endif %}
             {% endfor %}
         {% endif %}
-        <p>
-            <a id="back_from_display" href="/"><abbr title="Back to the question page"><img src="{{url_for('static', filename='leftarrow.png')}}" width='40' height='40' alt='Back'></abbr></a>
-        </p>
+        <p></p>
+        <a id="answer_question" href="{{url_for('new_answer', question_id=question['id'])}}">Add another answer for this question</a>
+        <p></p>
+        <a id="back_from_display" href="/"><abbr title="Back to the question page"><img src="{{url_for('static', filename='leftarrow.png')}}" width='40' height='40' alt='Back'></abbr></a>
+
     </body>
 </html>
