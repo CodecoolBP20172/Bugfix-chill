@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html>
-    <link rel="stylesheet" type="text/css" href="{{url_for('static', filename='styles/display_template.css')}}">                
+    <link rel="stylesheet" type="text/css" href="{{url_for('static', filename='styles/display_template.css')}}">
     <head>
         <meta charset="utf-8">
         <title>New question</title>
@@ -44,7 +44,7 @@
                             {% if question["image"] != None %}
                                 <textarea name="image" rows="5" cols="50">{{ question["image"] }}</textarea>
                             {% else %}
-                                <textarea name="image" rows="5" cols="50"></textarea>
+                                <textarea name="image" rows="1" cols="50"></textarea>
                             {% endif %}
                         </p>
                         <button>Update</button>
@@ -63,7 +63,7 @@
                     </p>
                     <p>
                         <label for="image">Image link</label><br>
-                        <textarea name="image" rows="5" cols="50"></textarea>
+                        <textarea name="image" rows="1" cols="50"></textarea>
                     </p>
                     <input type="hidden" name="question_id" value="{{ question_id }}"/>
                     <button type="submit">Add answer</button>

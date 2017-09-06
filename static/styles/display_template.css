@@ -27,7 +27,7 @@ h2 {
 
 #answer_header {
     text-transform: uppercase;
-    text-align: left;
+    text-align: center;
     text-decoration: underline;
     color: white;
     background-color: #9B1D20;
@@ -60,7 +60,7 @@ label {
   left: 850px;
 }
 p {
-  overflow-wrap: break-word;  
+  overflow-wrap: break-word;
 }
 
 p, pre, b, a {
@@ -101,6 +101,25 @@ a:hover {
 
 #back_from_display {
   position: fixed;
-  top: 3%;
-  right: 2%;
+  /*top: 3%;
+  right: 2%;*/
+}
+
+#logo {
+    text-decoration: none;
+}
+
+#logo_h3{
+    margin-top: 10px;
+    margin-bottom: 0px;
+    font: bold 40px arial, sans-serif;
+    text-transform: uppercase;
+    text-align: left;
+    background-color: #3D3A37;
+    color: transparent;
+    text-shadow: 4px 4px 3px rgba(255,255,255, 0.5);
+    -webkit-background-clip: text;
+       -moz-background-clip: text;
+            background-clip: text;
+
 }

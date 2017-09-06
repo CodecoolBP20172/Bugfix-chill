@@ -35,6 +35,26 @@ def add_question(cursor, new_question_data):
     return redirect('/question/{}'.format(new_question[0]['id']))
 
 
+# answer_list contains all the answers to a particular question
+# answer_comments contains all comments connecting to the question's answers
+# returns answers_comment_count that is a dictionary where the keys are the answer_id
+# and the value is the number of comments connecting to that answer
+def get_answer_comment_len(answer_list, answer_comments):
+    if len(answer_list) == 0:
+        return 0
+    comment_counter = 0
+    answer_id_list = list()
+    answers_comment_count = dict()
+    for answer in answer_list:
+        answer_id_list.append(answer["id"])
+        answers_comment_count.update({answer["id"]: 0})
+    for comment in answer_comments:
+        if comment["answer_id"] in answer_id_list:
+            answers_comment_count[comment["answer_id"]] += 1
+    print("answers_comment_count: {}".format(answers_comment_count))
+    return answers_comment_count
+
+
 @connection_handler
 def display_question(cursor, question_id):
     cursor.execute("""UPDATE question
@@ -49,16 +69,20 @@ def display_question(cursor, question_id):
                       FROM answer
                     WHERE question_id = (%s);""", (question_id,))
     answer_list = cursor.fetchall()
+    print("image: {}".format(answer_list[0]["image"]))
     cursor.execute("""SELECT *
                       FROM comment
                       WHERE question_id = (%s);""", (question_id,))
     question_comments = cursor.fetchall()
     cursor.execute("""SELECT *
                       FROM comment
-                      WHERE question_id IS NULL;""")
+                      WHERE answer_id IN (SELECT id FROM answer WHERE question_id = (%s));""", (question_id,))
     answer_comments = cursor.fetchall()
+    print("answer comments: {}".format(answer_comments))
+    answer_comment_count = get_answer_comment_len(answer_list, answer_comments)
     return render_template("display.html", question=question_dict[0], answers_list=answer_list,
-                           question_comments=question_comments, answer_comments=answer_comments)
+                           question_comments=question_comments, answer_comments=answer_comments,
+                           answer_comment_count=answer_comment_count)
 
 
 @connection_handler
