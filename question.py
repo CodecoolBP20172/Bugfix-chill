@@ -66,13 +66,9 @@ def display_question(cursor, question_id):
     question_dict = cursor.fetchall()
     cursor.execute("""SELECT *
                       FROM answer
-                    WHERE question_id = (%s);""", (question_id,))
+                    WHERE question_id = (%s)
+                    ORDER BY vote_number DESC;""", (question_id,))
     answer_list = cursor.fetchall()
-    for answer in answer_list:
-        if answer['image'] != '':
-            print("image: {}, type: {}".format(answer["image"], type(answer["image"])))
-        else:
-            print("image is an enmpty string: \'\'")
     cursor.execute("""SELECT *
                       FROM comment
                       WHERE question_id = (%s);""", (question_id,))

@@ -123,3 +123,9 @@ a:hover {
             background-clip: text;
 
 }
+
+#comment_message{
+    font-size: 125%;
+    margin-top: 10px;
+    margin-bottom: 10px;
+}

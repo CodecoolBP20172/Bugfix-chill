@@ -8,7 +8,9 @@
         <link rel="stylesheet" type="text/css" href="{{url_for('static', filename='styles/display_template.css')}}">
     </head>
     <body>
-        <a href="/" id="logo"><h3 id="logo_h3">Askmate</h3><a/>
+        <a href="/" id="logo">
+            <h3 id="logo_h3">Askmate</h3>
+        </a>
         <h2>
             {% autoescape false %}
                 {{ question["title"] }}
@@ -33,10 +35,14 @@
                     <b>Views:</b> {{question["view_number"]}}
                 </td>
                 <td>
-                    <a href="/question/{{ question['id'] }}/edit"><abbr title="Edit question"></abbr><img src="/static/edit.svg" width="20" height="20" alt="Edit"></a>
+                    <a href="/question/{{ question['id'] }}/edit">
+                        <abbr title="Edit question"></abbr><img src="/static/edit.svg" width="20" height="20" alt="Edit">
+                    </a>
                 </td>
                 <td>
-                    <a href="/question/{{ question['id'] }}/delete"><abbr title="Delete question"></abbr><img src="/static/delete.png" width="20" height="20" alt="Delete"></a>
+                    <a href="/question/{{ question['id'] }}/delete">
+                        <abbr title="Delete question"></abbr><img src="/static/delete.png" width="20" height="20" alt="Delete">
+                    </a>
                 </td>
             </tr>
         </table>
@@ -70,13 +76,22 @@
                 Comments to question:
             </h4>
             {% for dict in question_comments%}
-            <p>
-                <tr>{{ dict["message"]}}</tr>
-                <a href="/comments/{{ dict['id'] }}/edit"><abbr title="Edit comment"></abbr><img src="/static/edit.svg" width="20" height="20" alt="Edit"></a>
-                <a href="/comments/{{ dict['id'] }}/delete"><abbr title="Delete comment"></abbr><img src="/static/delete.png" width="20" height="20" alt="Delete"></a><br>
-                <tr>Submission time: {{ dict["submission_time"] }}</tr><br>
-                <tr>Edited: {{ dict["edited_count"] }}</tr>
-            </p>
+                    <p id=comment_message>
+                        {{ dict["message"]}}
+                        <a href="/comments/{{ dict['id'] }}/edit"><abbr title="Edit comment">
+                            </abbr><img src="/static/edit.svg" width="20" height="20" alt="Edit">
+                        </a>
+                        <a href="/comments/{{ dict['id'] }}/delete">
+                                <abbr title="Delete comment"></abbr><img src="/static/delete.png" width="20" height="20" alt="Delete">
+                        </a>
+                    </p>
+
+                    <p>
+                        <b>Submission time: </b>{{ dict["submission_time"] }}
+                    </p>
+                    <p>
+                        <b>Edited: </b>{{ dict["edited_count"] }}
+                    </p>
             {% endfor %}
         {% endif %}
             <a id="comment_question" href="/question/{{ question['id'] }}/new-comment">Add comment to question</a>
@@ -118,7 +133,7 @@
                     <p>
                         <input type="hidden" name="question_id" value="{{ question['id'] }}"/>
                         <button id="delete_answer"type="Submit">Delete answer</button>
-                        <a id="comment_answer"href="/answer/{{ answer['id'] }}/new-comment">Add comment to answer</a>
+                        <a id="comment_answer"href="/answer/{{ answer['id'] }}/new-comment">Comment this answer</a>
                     </p>
                 </form>
                 {% if answer_comment_count[answer['id']] != 0 %}
@@ -128,11 +143,18 @@
                     {% for comment_dict in answer_comments %}
                         <p></p>
                         {% if comment_dict['answer_id'] == answer['id'] %}
-                            <tr class="comment">{{ comment_dict["message"]}}</tr>
-                            <a href="/comments/{{ comment_dict['id'] }}/edit"><abbr title="Edit comment"></abbr><img src="/static/edit.svg" width="20" height="20" alt="Edit"></a>
-                            <a href="/comments/{{ comment_dict['id'] }}/delete"><abbr title="Delete comment"></abbr><img src="/static/delete.png" width="20" height="20" alt="Delete"></a><br>
-                            <tr><b>Submission time:</b> {{ comment_dict["submission_time"] }}</tr><br>
-                            <tr><b>Edited:</b> {{ comment_dict["edited_count"] }} </tr><br>
+                            <p id="comment_message" class="comment">
+                                {{ comment_dict["message"]}}
+                                <a href="/comments/{{ comment_dict['id'] }}/edit"><abbr title="Edit comment"></abbr><img src="/static/edit.svg" width="20" height="20" alt="Edit"></a>
+                                <a href="/comments/{{ comment_dict['id'] }}/delete"><abbr title="Delete comment"></abbr><img src="/static/delete.png" width="20" height="20" alt="Delete"></a><br>
+                            </p>
+                            <p>
+                                <b>Submission time:</b> {{ comment_dict["submission_time"] }}
+                            </p>
+                            <p>
+                                <b>Edited:</b> {{ comment_dict["edited_count"] }}
+                            </p>
+                            <br>
                         {% endif %}
                     {% endfor %}
                 {% endif %}
