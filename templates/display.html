@@ -88,7 +88,7 @@
             {% for answer in answers_list %}
                 <div>
                     <p id="answer_to_question"> {{answer['message']}}</p>
-                    {% if question['image'] != '' %}
+                    {% if answer['image'] != '' %}
                         <p><img src="{{answer['image']}}" height=20% width="20%" /></p>
                     {% endif %}
                     <p><b>Submitted:</b> {{ answer['submission_time'] }}</p>
