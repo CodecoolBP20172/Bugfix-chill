@@ -143,18 +143,20 @@
                     {% for comment_dict in answer_comments %}
                         <p></p>
                         {% if comment_dict['answer_id'] == answer['id'] %}
-                            <p id="comment_message" class="comment">
-                                {{ comment_dict["message"]}}
-                                <a href="/comments/{{ comment_dict['id'] }}/edit"><abbr title="Edit comment"></abbr><img src="/static/edit.svg" width="20" height="20" alt="Edit"></a>
-                                <a href="/comments/{{ comment_dict['id'] }}/delete"><abbr title="Delete comment"></abbr><img src="/static/delete.png" width="20" height="20" alt="Delete"></a><br>
-                            </p>
-                            <p>
-                                <b>Submission time:</b> {{ comment_dict["submission_time"] }}
-                            </p>
-                            <p>
-                                <b>Edited:</b> {{ comment_dict["edited_count"] }}
-                            </p>
-                            <br>
+                            <div id='comment_indent_div'>
+                                <p id="comment_message" class="comment">
+                                    {{ comment_dict["message"]}}
+                                    <a href="/comments/{{ comment_dict['id'] }}/edit"><abbr title="Edit comment"></abbr><img src="/static/edit.svg" width="20" height="20" alt="Edit"></a>
+                                    <a href="/comments/{{ comment_dict['id'] }}/delete"><abbr title="Delete comment"></abbr><img src="/static/delete.png" width="20" height="20" alt="Delete"></a><br>
+                                </p>
+                                <p>
+                                    <b>Submission time:</b> {{ comment_dict["submission_time"] }}
+                                </p>
+                                <p>
+                                    <b>Edited:</b> {{ comment_dict["edited_count"] }}
+                                </p>
+                                <br>
+                            </div>
                         {% endif %}
                     {% endfor %}
                 {% endif %}
