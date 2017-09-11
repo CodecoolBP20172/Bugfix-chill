@@ -2,6 +2,7 @@ from flask import Flask, render_template, redirect, request, session, url_for
 import common
 import question
 import answer
+import users
 
 
 app = Flask(__name__)
@@ -33,6 +34,23 @@ def index_list():
     if not valid_url:
         return question.question_index()
     return question.question_index(criteria, order)
+
+
+"""
+Functions related to users
+"""
+
+
+@app.route('/registration')
+def registration_page():
+    return render_template("registration.html")
+
+
+@app.route('/registration', methods=['POST'])
+def redirect_to_register():
+    user_name = request.form.get("user_name")
+    password = request.form.get("password")
+    return users.register_user(user_name, password)
 
 
 """
