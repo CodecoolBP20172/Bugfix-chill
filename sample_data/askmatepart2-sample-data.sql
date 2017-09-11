@@ -25,7 +25,7 @@ CREATE TABLE question (
     vote_number integer,
     title text,
     message text,
-    image text,
+    image text
 );
 
 DROP TABLE IF EXISTS public.answer;
@@ -68,8 +68,9 @@ DROP TABLE IF EXISTS public.users;
 DROP SEQUENCE IF EXISTS public.users_id_seq;
 CREATE TABLE users (
     id serial NOT NULL,
+    username VARCHAR(15) NOT NULL,
     password VARCHAR(10) NOT NULL,
-    registration_date timestamp without time zone,
+    registration_date timestamp without time zone
 );
 
 
@@ -88,6 +89,9 @@ ALTER TABLE ONLY question_tag
 
 ALTER TABLE ONLY tag
     ADD CONSTRAINT pk_tag_id PRIMARY KEY (id);
+
+ALTER TABLE ONLY users
+    ADD CONSTRAINT pk_users_id PRIMARY KEY (id);
 
 ALTER TABLE ONLY comment
     ADD CONSTRAINT fk_answer_id FOREIGN KEY (answer_id) REFERENCES answer(id);
@@ -134,3 +138,5 @@ SELECT pg_catalog.setval('tag_id_seq', 3, true);
 INSERT INTO question_tag VALUES (0, 1);
 INSERT INTO question_tag VALUES (1, 3);
 INSERT INTO question_tag VALUES (2, 3);
+
+INSERT INTO users VALUES (1, 'Xattus', 'admin', '2017-09-11 20:26:00')
