@@ -16,8 +16,6 @@ def delete_answer(cursor, answer_id):
                       FROM answer
                       WHERE id = (%s);""", (answer_id,))
     question_id = cursor.fetchall()
-    cursor.execute("""DELETE FROM comment
-                      WHERE answer_id = (%s);""", (answer_id,))
     cursor.execute("""DELETE FROM answer
                       WHERE id = (%s);""", (answer_id,))
     cursor.execute("""UPDATE question
