@@ -94,7 +94,7 @@ ALTER TABLE ONLY tag
     ADD CONSTRAINT pk_tag_id PRIMARY KEY (id);
 
 ALTER TABLE ONLY users
-    ADD CONSTRAINT pk_usersname PRIMARY KEY (id);
+    ADD CONSTRAINT pk_username PRIMARY KEY (username);
 
 ALTER TABLE ONLY comment
     ADD CONSTRAINT fk_answer_id FOREIGN KEY (answer_id) REFERENCES answer(id) ON UPDATE CASCADE ON DELETE CASCADE;
