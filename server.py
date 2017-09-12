@@ -41,8 +41,8 @@ def login():
     if request.method == 'POST':
         username = request.form['username']
         password = request.form['password']
-        login_validation = users.login_to_page(username, password)
-        if login_validation:
+        login = users.login_to_page(username, password)
+        if login:
             session['username'] = username
             return redirect(url_for('index'))
     return render_template("login.html")

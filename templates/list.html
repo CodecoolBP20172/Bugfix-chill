@@ -13,6 +13,13 @@
     
     <body>
         <h1>Askmate</h1>
+        {% if not session %}
+        <a id="login" href="{{ url_for('login') }}">Login</a>
+        {% endif %}
+        {% if session %}
+                <div id="logged_in">Logged in as {{ session['username'] }}</div>
+                <a id="login" href="{{ url_for('logout') }}">Logout</a>
+        {% endif %}
         <a href="{{ url_for('new_question_form') }}" id="add"><abbr title="Add new question"><img src="static/Add.png" width="30" height="30" alt="Add new question"></abbr></a>
         {% if limit == 5 %}
         <a href="{{url_for('index_list', criteria='id', order=ordering)}}" id="full_list"><abbr title="See full list"><img src="static/downarrow.png"width="30" height="30" alt="See full list"></abbr></a>
