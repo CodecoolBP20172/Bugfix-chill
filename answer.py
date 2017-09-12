@@ -5,8 +5,9 @@ from common import *
 
 @connection_handler
 def post_an_answer(cursor, question_id, message, image):
-    cursor.execute("INSERT INTO answer (submission_time, vote_number, question_id, message, image) VALUES "
-                   "(%s, %s, %s, %s, %s);", (datetime.now().replace(microsecond=0), 0, question_id, message, image))
+    cursor.execute("INSERT INTO answer (submission_time, vote_number, question_id, message, image, username) VALUES "
+                   "(%s, %s, %s, %s, %s, %s);", (datetime.now().replace(microsecond=0), 0, question_id, message,
+                                                 image, session["username"]))
     return redirect("/question/{}".format(question_id))
 
 
@@ -52,9 +53,9 @@ def upvote(cursor, id_, question_id, vote, username):
 
 @connection_handler
 def comment_answer(cursor, answer_id, message):
-    cursor.execute("""INSERT INTO comment (question_id, answer_id, message, submission_time, edited_count)
-                      VALUES (%s, %s, %s, %s, %s);""",
-                   (None, answer_id, message, datetime.now().replace(microsecond=0), 0))
+    cursor.execute("""INSERT INTO comment (question_id, answer_id, message, submission_time, edited_count, username)
+                      VALUES (%s, %s, %s, %s, %s, %s);""",
+                   (None, answer_id, message, datetime.now().replace(microsecond=0), 0, session["username"]),)
     cursor.execute("""SELECT question_id
                       FROM answer
                       WHERE id=%s;""", (answer_id,))

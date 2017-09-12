@@ -16,6 +16,7 @@ Main page url Functions
 # main page showing only top 5 latest question comments
 @app.route('/')
 def index():
+    print(session)
     criteria = request.args.get("criteria")
     order = request.args.get("order")
     limit = 5
@@ -70,10 +71,7 @@ def registration():
         new_user = users.register_user(user_name, password)
         if new_user:
             return redirect("/")
-    return render_template("registration.html", new_user=new_user)
-
-
-
+    return render_template("registration.html", new_user=new_user, password=password)
 
 
 """
@@ -92,6 +90,7 @@ def add_new_question():
     keys_of_form = request.form.keys()
     for key in keys_of_form:
         new_question_dict.update({key: request.form[key]})
+    print(new_question_dict)
     return question.add_question(new_question_dict)
 
 

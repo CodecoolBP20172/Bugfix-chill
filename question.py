@@ -77,20 +77,28 @@ def display_question(cursor, question_id):
                       FROM comment
                       WHERE answer_id IN (SELECT id FROM answer WHERE question_id = (%s));""", (question_id,))
     answer_comments = cursor.fetchall()
+    
     answer_comment_count = get_answer_comment_len(answer_list, answer_comments)
     get_reputation = cursor.execute("""SELECT reputation
                                        FROM users
                                        WHERE username IN
-                                       (SELECT username FROM question WHERE id = (%s));""", question_id)
+                                       (SELECT username FROM question WHERE id = (%s));""", (question_id,))
     reputation = cursor.fetchall()
-    return render_template("display.html", question=question_dict[0], answers_list=answer_list,
-                           question_comments=question_comments, answer_comments=answer_comments,
-                           answer_comment_count=answer_comment_count, reputation=reputation[0])
-
+    print(reputation)
+    if reputation != []:
+        return render_template("display.html", question=question_dict[0], answers_list=answer_list,
+                               question_comments=question_comments, answer_comments=answer_comments,
+                               answer_comment_count=answer_comment_count, reputation=reputation[0])
+    else:
+        return render_template("display.html", question=question_dict[0], answers_list=answer_list,
+                               question_comments=question_comments, answer_comments=answer_comments,
+                               answer_comment_count=answer_comment_count, reputation=reputation)
 
 # deleting a question by id
 # deletes the answers for the deleted question too
 # redirects to /list
+
+
 def delete_question_with_answers(question_id):
     cursor.execute("DELETE FROM question WHERE id = %s;", (question_id,))
     return redirect('/list')
@@ -133,7 +141,7 @@ def upvote_question(cursor, id_, vote, username):
 
 @connection_handler
 def comment_question(cursor, question_id, message):
-    cursor.execute("INSERT INTO comment (question_id, answer_id, message, submission_time, edited_count)"
-                   "VALUES (%s, %s, %s, %s, %s);",
-                   (question_id, None, message, datetime.now().replace(microsecond=0), 0))
+    cursor.execute("INSERT INTO comment (question_id, answer_id, message, submission_time, edited_count, username)"
+                   "VALUES (%s, %s, %s, %s, %s, %s);",
+                   (question_id, None, message, datetime.now().replace(microsecond=0), 0, session["username"]),)
     return redirect("/question/{}".format(question_id))
