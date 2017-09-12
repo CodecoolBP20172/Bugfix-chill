@@ -13,6 +13,5 @@ def login_to_page(cursor, username, password):
     table = cursor.fetchall()
     if table:
         if table[0]['password'] == password:
-            session['username'] = username
-            return redirect(url_for('index'))
-    return redirect("login.html")
+            return True
+    return False

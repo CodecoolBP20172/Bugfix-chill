@@ -2,6 +2,7 @@ from flask import Flask, render_template, redirect, request, session, url_for
 import common
 import question
 import answer
+import users
 
 
 app = Flask(__name__)
@@ -35,16 +36,16 @@ def index_list():
     return question.question_index(criteria, order)
 
 
-@app.route('/login')
+@app.route('/login', methods=['GET', 'POST'])
 def login():
+    if request.method == 'POST':
+        username = request.form['username']
+        password = request.form['password']
+        login_validation = users.login_to_page(username, password)
+        if login_validation:
+            session['username'] = username
+            return redirect(url_for('index'))
     return render_template("login.html")
-
-
-@app.route('/login', methods=['POST'])
-def login():
-    username = request.form['username']
-    password = request.form['password']
-    return users.login_to_page(username, password)
 
 
 @app.route('/logout')
