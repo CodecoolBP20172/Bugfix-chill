@@ -116,13 +116,13 @@ def question_for_edit(cursor, question_id):
 
 
 @connection_handler
-def upvote_question(cursor, id_, vote, user_id):
+def upvote_question(cursor, id_, vote, username):
     cursor.execute("UPDATE question \
                     SET vote_number = vote_number + {vote_var}, view_number = view_number -1 \
                     WHERE id = %s;".format(vote_var=1 if vote == "up" else -1), (id_,))
     cursor.execute("""UPDATE users
                       SET reputation = reputation + {rep}
-                      WHERE id = %s;""".format(rep=15 if vote == "up" else -2), (user_id,))
+                      WHERE username = %s;""".format(rep=15 if vote == "up" else -2), (username,))
     return redirect("/question/{}".format(id_))
 
 
