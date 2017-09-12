@@ -43,13 +43,14 @@ Functions related to users
 
 @app.route('/registration', methods=['GET', 'POST'])
 def registration():
+    new_user = True
     if request.method == 'POST':
         user_name = request.form.get("user_name")
         password = request.form.get("password")
         new_user = users.register_user(user_name, password)
         if new_user:
             return redirect("/")
-    return render_template("registration.html")
+    return render_template("registration.html", new_user=new_user)
 
 
 

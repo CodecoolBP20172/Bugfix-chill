@@ -8,6 +8,11 @@
     <body>
             <h1>Register new user</h1>
                 <form action="/registration" method="post">
+                    {% if not new_user %}
+                    <p>
+                        <font size="3" color="red">User already exists!</font>
+                    </p>
+                    {% endif %}
                     <p>
                         <label for="user_name">User name</label><br>
                         <input name="user_name" maxlength=15 required>
