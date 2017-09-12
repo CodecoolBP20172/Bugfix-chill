@@ -61,7 +61,7 @@ tr.header a:hover {
 }
 
 
-#login {
+#login, #register_button {
   font-size: 20px;
   text-decoration: none;
   background-color: white;
@@ -71,6 +71,10 @@ tr.header a:hover {
   position: absolute;
   top: 20px;
   right: 20px;
+}
+
+#register_button {
+  right: 100px;
 }
 
 #content td {
