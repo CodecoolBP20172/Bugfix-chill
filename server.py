@@ -189,7 +189,7 @@ User related url functions
 
 @app.route('/user_list')
 def user_list():
-    return user.list_users()
+    return users.list_users()
 
 
 if __name__ == "__main__":
