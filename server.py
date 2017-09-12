@@ -2,6 +2,7 @@ from flask import Flask, render_template, redirect, request, session, url_for
 import common
 import question
 import answer
+import user
 
 
 app = Flask(__name__)
@@ -159,6 +160,16 @@ def render_comment_edit(comment_id):
 def submit_edited_comment(comment_id):
     message = request.form.get("message")
     return common.submit_comment_edited(comment_id, message)
+
+
+'''
+User related url functions
+'''
+
+
+@app.route('/user_list')
+def user_list():
+    return user.list_users()
 
 
 if __name__ == "__main__":
