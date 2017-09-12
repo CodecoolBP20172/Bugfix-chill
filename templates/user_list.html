@@ -1,0 +1,33 @@
+<!Doctype html>
+<html>
+
+<head>
+    <meta charset='utf-8'>
+    <title>Askmate user-list</title>
+    <link rel="stylesheet" type="text/css" href="{{url_for('static', filename='styles/display_template.css')}}">
+</head>
+
+<body>
+    <a href="/" id="logo">
+        <h3 id="logo_h3">Askmate</h3>
+    </a>
+    <table>
+        {% for header in user_headers %}
+        <th>
+            {{ header }}
+        </th>
+        {% endfor %}
+        {% for row in user_dict %}
+        <tr>
+            {% for header in user_headers %}
+            <td>
+                {{row[header]}}
+            </td>
+            {% endfor %}
+        </tr>
+        {% endfor %}
+    </table>
+    <a href='/'>Back to the main page</a>
+</body>
+
+</html>
