@@ -1,0 +1,112 @@
+#logo_h3{
+    margin-top: 10px;
+    margin-bottom: 0px;
+    font: bold 40px arial, sans-serif;
+    text-transform: uppercase;
+    text-align: left;
+    background-color: #3D3A37;
+    color: transparent;
+    text-shadow: 4px 4px 3px rgba(255,255,255, 0.5);
+    -webkit-background-clip: text;
+       -moz-background-clip: text;
+            background-clip: text;
+
+}
+
+body {
+    background:#D7D7DB;
+}
+
+h1 {
+    font: bold 80px arial, sans-serif;
+    text-transform: uppercase;
+    text-align: center;
+    background-color: #3D3A37;
+    color: transparent;
+    text-shadow: 4px 4px 3px rgba(255,255,255, 0.5);
+    -webkit-background-clip: text;
+       -moz-background-clip: text;
+            background-clip: text;
+}
+
+
+table {
+   margin-left: auto;
+   margin-right: auto;
+   margin-top: 10px;
+   width: auto;
+   border: none;
+   border-collapse: collapse;
+}
+
+.spacer {
+  padding: 10px;
+  background-color: #D7D7DB;
+  display: block;
+}
+
+.table_head_start {
+  border-top-left-radius: 10px;
+  border-bottom-left-radius: 10px;
+}
+
+.table_head_end {
+  border-top-right-radius: 10px;
+  border-bottom-right-radius: 10px;
+}
+
+tr.header th {
+  background-color: #9B1D20;
+  color: white;
+  border-width: 0;
+}
+
+.header {
+  margin: 25px;
+  position: relative;
+}
+
+tr.header a {
+  color: white;
+  text-decoration: none;
+}
+
+tr.header a:hover {
+  text-decoration: underline;
+}
+
+#content td {
+  border:none;
+  background-color: white;
+  padding: 25px;
+}
+
+#content td:first-child {
+   border-top-left-radius: 10px;
+   border-bottom-left-radius:  10px;
+}
+
+#content td:last-child {
+  border-top-right-radius: 10px;
+  border-bottom-right-radius: 10px;
+}
+
+#content img {
+  margin: auto;
+}
+
+a:visited {
+  color: blue;
+}
+
+#add {
+  position: absolute;
+  top: 203px;
+  right: 100px;
+}
+
+#full_list, #latest_five_question {
+  position: absolute;
+  top: 203px;
+  right: 50px;
+}

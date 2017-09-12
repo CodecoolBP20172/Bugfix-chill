@@ -10,7 +10,7 @@
         <title>Askmate</title>
         <link rel="stylesheet" type="text/css" href="{{url_for('static', filename='styles/home.css')}}">
     </head>
-    
+
     <body>
         <h1>Askmate</h1>
         <a href="{{ url_for('new_question_form') }}" id="add"><abbr title="Add new question"><img src="static/Add.png" width="30" height="30" alt="Add new question"></abbr></a>
@@ -38,25 +38,25 @@
                 <th class="table_head_end"> Delete </th>
             </tr>
             <tr class="spacer"></tr>
+        {% endif %}
+        {% for row in table %}
+        <tr id="content">
+            {% for key in header %}
+                {% if key == "title": %}
+                    <td align="center"><a href="{{url_for('display_question_by_id', question_id = row['id'])}}"> {{ row["title"] }} </a></td>
 
-            {% endif %}
-            {% for row in table %}
-            <tr id="content">
-                {% for key in header %}
-                    {% if key == "title": %}
-                        <td align="center"><a href="{{url_for('display_question_by_id', question_id = row['id'])}}"> {{ row["title"] }} </a></td>
-
-                    {% elif key not in ("message", "image", "id") %}
-                        <td align="center">{{ row[key] }}</td>
-                    {% endif %}
-                {% endfor %}
-                {% if row: %}
-                    <td><a href="/question/{{ row['id'] }}/edit"><abbr title="Edit"><img src="static/edit.svg" width="20" height="20" alt="Edit"></abbr></a></td>
-                    <td><a href="/question/{{ row['id'] }}/delete"><abbr title="Delete"><img src="static/delete.png" width="20" height="20" alt="Delete"></abbr></a></td>
-                {% endif%}
-            </tr>
-            <tr class="spacer"></tr>
+                {% elif key not in ("message", "image", "id") %}
+                    <td align="center">{{ row[key] }}</td>
+                {% endif %}
             {% endfor %}
+            {% if row: %}
+                <td><a href="/question/{{ row['id'] }}/edit"><abbr title="Edit"><img src="static/edit.svg" width="20" height="20" alt="Edit"></abbr></a></td>
+                <td><a href="/question/{{ row['id'] }}/delete"><abbr title="Delete"><img src="static/delete.png" width="20" height="20" alt="Delete"></abbr></a></td>
+            {% endif%}
+        </tr>
+        <tr class="spacer"></tr>
+        {% endfor %}
         </table>
+        <a href='/user_list'>Check Users</a>
     </body>
 </html>

@@ -4,7 +4,7 @@
 <head>
     <meta charset='utf-8'>
     <title>Askmate user-list</title>
-    <link rel="stylesheet" type="text/css" href="{{url_for('static', filename='styles/display_template.css')}}">
+    <link rel="stylesheet" type="text/css" href="{{url_for('static', filename='styles/user_list.css')}}">
 </head>
 
 <body>
@@ -13,12 +13,13 @@
     </a>
     <table>
         {% for header in user_headers %}
-        <th>
+        <th class=header>
             {{ header }}
         </th>
         {% endfor %}
+        <tr class="spacer"></tr>
         {% for row in user_dict %}
-        <tr>
+        <tr id="content">
             {% for header in user_headers %}
             <td>
                 {{row[header]}}
@@ -27,6 +28,7 @@
         </tr>
         {% endfor %}
     </table>
+    <a href="/">Back to the main page</a>
 </body>
 
 </html>

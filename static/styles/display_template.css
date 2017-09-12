@@ -91,7 +91,7 @@ a:hover {
 }
 
 
-#message, #answer_to_question {
+#message, #answer_to_question, #answer_to_question p{
   font-size: 20px;
   text-indent: 10px;
   padding: 10px;
@@ -125,12 +125,12 @@ a:hover {
 }
 
 #comment_message{
-    font-size: 125%;
+    font-size: 15px;
     margin-top: 10px;
     margin-bottom: 10px;
-    margin-left: 10px;
 }
 
-#comment_indent_div{
-
+#comment{
+    font-size: 17px;
+    margin-left: 10px;
 }
