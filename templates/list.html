@@ -10,7 +10,7 @@
         <title>Askmate</title>
         <link rel="stylesheet" type="text/css" href="{{url_for('static', filename='styles/home.css')}}">
     </head>
-    
+
     <body>
         <h1>Askmate</h1>
         <a href="{{ url_for('new_question_form') }}" id="add"><abbr title="Add new question"><img src="static/Add.png" width="30" height="30" alt="Add new question"></abbr></a>
@@ -58,5 +58,6 @@
             <tr class="spacer"></tr>
             {% endfor %}
         </table>
+        <a href='/user_list'>User list</a>
     </body>
 </html>
