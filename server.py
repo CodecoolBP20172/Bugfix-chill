@@ -182,6 +182,16 @@ def submit_edited_comment(comment_id):
     return common.submit_comment_edited(comment_id, message)
 
 
+'''
+User related url functions
+'''
+
+
+@app.route('/user_list')
+def user_list():
+    return user.list_users()
+
+
 if __name__ == "__main__":
     app.secret_key = "this!is!the!secret!key"
     app.run(
