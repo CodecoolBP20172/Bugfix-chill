@@ -6,6 +6,17 @@ from datetime import datetime
 
 
 @connection_handler
+def login_to_page(cursor, username, password):
+    cursor.execute("""SELECT username, password
+                      FROM users
+                      WHERE username = %s;""", (username,))
+    table = cursor.fetchall()
+    if table:
+        if table[0]['password'] == password:
+            return True
+    return False
+
+
 def register_user(cursor, user_name, password):
     cursor.execute("""SELECT username
                       FROM users;""")
@@ -19,7 +30,7 @@ def register_user(cursor, user_name, password):
                       VALUES(%s, %s, %s);""", (user_name, password, datetime.now().replace(microsecond=0)))
     return True
 
-  
+
 @connection_handler
 def list_users(cursor):
     cursor.execute('SELECT username, password, registration_date, reputation \

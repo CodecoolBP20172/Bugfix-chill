@@ -35,10 +35,24 @@ h2 {
     padding: 10px;
 }
 
+p {
+  text-align: center;
+}
+
 form p {
   text-align: center;
   font-size: 20px;
   position: relative;
+}
+
+.login-input {
+  overflow: hidden;
+  text-align: center;
+  border-radius: 10px 10px 0 0;
+  background-color: #9B1D20;
+  color: white;
+  margin: 0 auto;
+  width: 20%;
 }
 
 label {
@@ -50,6 +64,14 @@ label {
   border-top-right-radius: 10px;
 }
 
+.login-input label, .login-input input {
+  width: 100%;
+}
+
+.login-input label {
+  padding: 10px 0;
+}
+
 #last_text {
   position: relative;
 }
@@ -59,6 +81,11 @@ label {
   top: 450px;
   left: 850px;
 }
+
+#login_button {
+  align-self: auto;
+}
+
 p {
   overflow-wrap: break-word;
 }

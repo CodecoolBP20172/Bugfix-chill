@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <title>Login page</title>
+        <link rel="stylesheet" type="text/css" href="../static/styles/display_template.css">
+    </head>
+    <body>
+        <h1>Login page</h1>
+        {% if not login %}
+            <p>
+                <font size="3" color="red">Invalid username or password!</font>
+            </p>
+        {% endif %}
+        <form action="/login" method="POST">
+            <p>
+                <div class="login-input">
+                    <label class="login" for="username">User name</label><br>
+                    <input name="username" type="text" maxlength="15">
+                </div>
+            </p>
+            <p>
+                <div class="login-input">
+                    <label class="login" for="password">Password</label><br>
+                    <input name="password" type="password" maxlength="10">
+                </div>
+            </p>
+            <p>
+                <abbr title="Login"><button id="login_button" type="submit">Login</button></abbr>
+            </p>
+        </form>
+    </body>
+</html>

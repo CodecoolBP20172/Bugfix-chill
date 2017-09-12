@@ -36,6 +36,26 @@ def index_list():
     return question.question_index(criteria, order)
 
 
+@app.route('/login', methods=['GET', 'POST'])
+def login():
+    login = True
+    if request.method == 'POST':
+        username = request.form['username']
+        password = request.form['password']
+        login = users.login_to_page(username, password)
+        if login:
+            session['username'] = username
+            return redirect(url_for('index'))
+    return render_template("login.html", login=login)
+
+
+@app.route('/logout')
+def logout():
+    # remove the username from the session if it's there
+    session.pop('username', None)
+    return redirect(url_for('index'))
+
+
 """
 Functions related to users
 """
