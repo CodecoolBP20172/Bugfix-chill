@@ -25,7 +25,8 @@ CREATE TABLE question (
     vote_number integer,
     title text,
     message text,
-    image text
+    image text,
+    user_id integer
 );
 
 DROP TABLE IF EXISTS public.answer;
@@ -36,7 +37,8 @@ CREATE TABLE answer (
     vote_number integer,
     question_id integer,
     message text,
-    image text
+    image text,
+    user_id integer
 );
 
 DROP TABLE IF EXISTS public.comment;
@@ -47,7 +49,8 @@ CREATE TABLE comment (
     answer_id integer,
     message text,
     submission_time timestamp without time zone,
-    edited_count integer
+    edited_count integer DEFAULT 0,
+    user_id integer
 );
 
 
@@ -70,18 +73,9 @@ CREATE TABLE users (
     id serial NOT NULL,
     username VARCHAR(15) NOT NULL,
     password VARCHAR(10) NOT NULL,
-    registration_date timestamp without time zone
+    registration_date timestamp without time zone,
+    reputation integer DEFAULT 0
 );
-
-ALTER TABLE ONLY answer
-    ADD COLUMN user_id integer;
-
-ALTER TABLE ONLY comment
-    ADD COLUMN user_id integer;
-
-ALTER TABLE ONLY question
-    ADD COLUMN user_id integer;
-
 
 
 ALTER TABLE ONLY answer
