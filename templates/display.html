@@ -29,6 +29,12 @@
         <table>
             <tr>
                 <td>
+                    <b>Submitted by:</b> {{question["username"]}}
+                </td>
+                <td>
+                    <b>Reputation:</b> {{reputation["reputation"]}}
+                </td>
+                <td>
                     <b>Submitted:</b> {{question["submission_time"]}}
                 </td>
                 <td>
@@ -108,7 +114,9 @@
                     {% if answer['image'] != '' %}
                         <p><img src="{{answer['image']}}" height=20% width="20%" /></p>
                     {% endif %}
-                    <p><b>Submitted:</b> {{ answer['submission_time'] }}</p>
+                    <p><b>Submitted by:</b>{{answer['username']}}
+                       <b> Reputation:</b> {{reputation['reputation']}}
+                       <b> Submitted:</b> {{ answer['submission_time'] }}</p>
                 </div>
                 <table>
                     <tr>

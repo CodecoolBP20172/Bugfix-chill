@@ -78,9 +78,15 @@ def display_question(cursor, question_id):
                       WHERE answer_id IN (SELECT id FROM answer WHERE question_id = (%s));""", (question_id,))
     answer_comments = cursor.fetchall()
     answer_comment_count = get_answer_comment_len(answer_list, answer_comments)
+    get_reputation = cursor.execute("""SELECT reputation
+                                   FROM users
+                                   WHERE username IN (SELECT username FROM question
+                                                      WHERE id = (%s));""", question_id)
+    reputation = cursor.fetchall()
+    print(reputation)
     return render_template("display.html", question=question_dict[0], answers_list=answer_list,
                            question_comments=question_comments, answer_comments=answer_comments,
-                           answer_comment_count=answer_comment_count)
+                           answer_comment_count=answer_comment_count, reputation=reputation)
 
 
 # deleting a question by id
