@@ -66,8 +66,8 @@ def display_question(cursor, question_id):
     question_dict = cursor.fetchall()
     cursor.execute("""SELECT *
                       FROM answer
-                    WHERE question_id = (%s)
-                    ORDER BY vote_number DESC;""", (question_id,))
+                      WHERE question_id = (%s)
+                      ORDER BY vote_number DESC;""", (question_id,))
     answer_list = cursor.fetchall()
     cursor.execute("""SELECT *
                       FROM comment
@@ -78,33 +78,21 @@ def display_question(cursor, question_id):
                       WHERE answer_id IN (SELECT id FROM answer WHERE question_id = (%s));""", (question_id,))
     answer_comments = cursor.fetchall()
     answer_comment_count = get_answer_comment_len(answer_list, answer_comments)
+    get_reputation = cursor.execute("""SELECT reputation
+                                       FROM users
+                                       WHERE username IN
+                                       (SELECT username FROM question WHERE id = (%s));""", question_id)
+    reputation = cursor.fetchall()
     return render_template("display.html", question=question_dict[0], answers_list=answer_list,
                            question_comments=question_comments, answer_comments=answer_comments,
-                           answer_comment_count=answer_comment_count)
-
-
-@connection_handler
-def delete_question(cursor, question_id):
-    cursor.execute("DELETE FROM question_tag WHERE question_id = %s;", (question_id,))
-    cursor.execute("DELETE FROM comment WHERE question_id = %s;", (question_id,))
-    cursor.execute("DELETE FROM question WHERE id = %s;", (question_id,))
-
-
-@connection_handler
-def delete_answers_for_question_id(cursor, question_id):
-    cursor.execute("SELECT id FROM answer WHERE question_id = %s;", (question_id,))
-    deleted_answers = cursor.fetchall()
-    for answer_id in deleted_answers:
-        cursor.execute("DELETE FROM comment WHERE answer_id = %(id)s;", answer_id)
-        cursor.execute("DELETE FROM answer WHERE id = %(id)s;", answer_id)
+                           answer_comment_count=answer_comment_count, reputation=reputation[0])
 
 
 # deleting a question by id
 # deletes the answers for the deleted question too
 # redirects to /list
 def delete_question_with_answers(question_id):
-    delete_answers_for_question_id(question_id)
-    delete_question(question_id)
+    cursor.execute("DELETE FROM question WHERE id = %s;", (question_id,))
     return redirect('/list')
 
 
@@ -133,10 +121,13 @@ def question_for_edit(cursor, question_id):
 
 
 @connection_handler
-def upvote_question(cursor, id_, vote):
+def upvote_question(cursor, id_, vote, username):
     cursor.execute("UPDATE question \
                     SET vote_number = vote_number + {vote_var}, view_number = view_number -1 \
                     WHERE id = %s;".format(vote_var=1 if vote == "up" else -1), (id_,))
+    cursor.execute("""UPDATE users
+                      SET reputation = reputation + {rep}
+                      WHERE username = %s;""".format(rep=15 if vote == "up" else -2), (username,))
     return redirect("/question/{}".format(id_))
 
 
