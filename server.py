@@ -35,19 +35,16 @@ def index_list():
     return question.question_index(criteria, order)
 
 
-@app.route('/login', methods=['GET', 'POST'])
+@app.route('/login')
 def login():
-    if request.method == 'POST':
-        session['username'] = request.form['username']
-        session['password'] = request.form['password']
-        cursor.execute("""SELECT username, password
-                          FROM users
-                          WHERE username = %s;""", (session['username'],))
-        table = cursor.fetchall()
-        if table:
-            if table[0]['password'] == session['password']:
-                return redirect(url_for('index'))
     return render_template("login.html")
+
+
+@app.route('/login', methods=['POST'])
+def login():
+    username = request.form['username']
+    password = request.form['password']
+    return users.login_to_page(username, password)
 
 
 @app.route('/logout')
