@@ -14,12 +14,13 @@
     <body>
         <h1>Askmate</h1>
         {% if not session %}
-        <a id="login" href="{{ url_for('login') }}">Login</a>
+        <a id="login_button" href="{{ url_for('login') }}">Login</a>
         <a id="register_button" href="{{ url_for('registration') }}" id="register">Register</a>
         {% endif %}
         {% if session %}
                 <div id="logged_in">Logged in as {{ session['username'] }}</div>
-                <a id="login" href="{{ url_for('logout') }}">Logout</a>
+                <a id="userpage_button" href="/user/{{session['username']}}">My profile</a>
+                <a id="login_button" href="{{ url_for('logout') }}">Logout</a>
         {% endif %}
         <a href="{{ url_for('new_question_form') }}" id="add"><abbr title="Add new question"><img src="static/Add.png" width="30" height="30" alt="Add new question"></abbr></a>
         {% if limit == 5 %}
