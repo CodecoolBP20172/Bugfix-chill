@@ -15,7 +15,8 @@ def register_user(cursor, user_name, password):
         existing_users.append(dictionary["name"])
     print(existing_users)
     if user_name in existing_users:
-        return render_template("registration.html")
+        warning = True
+        return render_template("registration.html", warning)
     else:
         cursor.execute("""INSERT INTO users (name, password, registration_time)
                           VALUES(%s, %s, %s);""", (user_name, password, datetime.now().replace(microsecond=0)))

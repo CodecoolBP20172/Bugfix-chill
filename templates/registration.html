@@ -8,13 +8,18 @@
     <body>
             <h1>Register new user</h1>
                 <form action="/registration" method="post">
+                    {% if warning %}
+                    <p>
+                        <font size="3" color="red">Username already in use!</font>
+                    </p>
+                    {% endif %}
                     <p>
                         <label for="user_name">User name</label><br>
-                        <input name="user_name" maxlength=20 required>
+                        <input name="user_name" maxlength=15 required>
                     </p>
                     <p>
                         <label for="password">Password</label><br>
-                        <input name="password" type="password" maxlength=20 required>
+                        <input name="password" type="password" maxlength=10 required>
                     </p>
                     <div id="create">
                     <button type="submit"><abbr title="Register user"><img src="static/tick.png" width="30" height="30" alt="Create"></abbr></button>
