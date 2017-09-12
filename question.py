@@ -81,9 +81,8 @@ def display_question(cursor, question_id):
     get_reputation = cursor.execute("""SELECT reputation
                                    FROM users
                                    WHERE username IN (SELECT username FROM question
-                                                      WHERE id = (%s));""", question_id)
+                                                      WHERE id = (%s));""", (question_id,))
     reputation = cursor.fetchall()
-    print(reputation)
     return render_template("display.html", question=question_dict[0], answers_list=answer_list,
                            question_comments=question_comments, answer_comments=answer_comments,
                            answer_comment_count=answer_comment_count, reputation=reputation)
