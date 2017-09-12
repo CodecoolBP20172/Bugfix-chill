@@ -7,17 +7,14 @@ from datetime import datetime
 
 @connection_handler
 def register_user(cursor, user_name, password):
-    cursor.execute("""SELECT name
+    cursor.execute("""SELECT username
                       FROM users;""")
     table = cursor.fetchall()
     existing_users = []
     for dictionary in table:
-        existing_users.append(dictionary["name"])
-    print(existing_users)
+        existing_users.append(dictionary["username"])
     if user_name in existing_users:
-        warning = True
-        return render_template("registration.html", warning)
-    else:
-        cursor.execute("""INSERT INTO users (name, password, registration_time)
-                          VALUES(%s, %s, %s);""", (user_name, password, datetime.now().replace(microsecond=0)))
-        return redirect("/")
+        return False
+    cursor.execute("""INSERT INTO users (username, password, registration_date)
+                      VALUES(%s, %s, %s);""", (user_name, password, datetime.now().replace(microsecond=0)))
+    return True

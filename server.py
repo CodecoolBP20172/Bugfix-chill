@@ -41,16 +41,18 @@ Functions related to users
 """
 
 
-@app.route('/registration')
-def registration_page():
+@app.route('/registration', methods=['GET', 'POST'])
+def registration():
+    if request.method == 'POST':
+        user_name = request.form.get("user_name")
+        password = request.form.get("password")
+        new_user = users.register_user(user_name, password)
+        if new_user:
+            return redirect("/")
     return render_template("registration.html")
 
 
-@app.route('/registration', methods=['POST'])
-def redirect_to_register():
-    user_name = request.form.get("user_name")
-    password = request.form.get("password")
-    return users.register_user(user_name, password)
+
 
 
 """
