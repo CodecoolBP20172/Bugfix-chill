@@ -83,28 +83,11 @@ def display_question(cursor, question_id):
                            answer_comment_count=answer_comment_count)
 
 
-@connection_handler
-def delete_question(cursor, question_id):
-    cursor.execute("DELETE FROM question_tag WHERE question_id = %s;", (question_id,))
-    cursor.execute("DELETE FROM comment WHERE question_id = %s;", (question_id,))
-    cursor.execute("DELETE FROM question WHERE id = %s;", (question_id,))
-
-
-@connection_handler
-def delete_answers_for_question_id(cursor, question_id):
-    cursor.execute("SELECT id FROM answer WHERE question_id = %s;", (question_id,))
-    deleted_answers = cursor.fetchall()
-    for answer_id in deleted_answers:
-        cursor.execute("DELETE FROM comment WHERE answer_id = %(id)s;", answer_id)
-        cursor.execute("DELETE FROM answer WHERE id = %(id)s;", answer_id)
-
-
 # deleting a question by id
 # deletes the answers for the deleted question too
 # redirects to /list
 def delete_question_with_answers(question_id):
-    delete_answers_for_question_id(question_id)
-    delete_question(question_id)
+    cursor.execute("DELETE FROM question WHERE id = %s;", (question_id,))
     return redirect('/list')
 
 
