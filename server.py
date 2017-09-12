@@ -103,7 +103,8 @@ def del_question_by_id(question_id):
 def upvote_question():
     vote = request.form.get("vote")
     id_ = request.form.get("question_id")
-    return question.upvote_question(id_, vote)
+    username = request.form.get("username")
+    return question.upvote_question(id_, vote, username)
 
 
 """
@@ -136,7 +137,8 @@ def upvote_answer():
     vote = request.form.get("vote")
     question_id = request.form.get("question_id")
     answer_id = request.form.get("answer_id")
-    return answer.upvote(answer_id, question_id, vote)
+    username = request.form.get("username")
+    return answer.upvote(answer_id, question_id, vote, username)
 
 
 """
