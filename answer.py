@@ -24,13 +24,16 @@ def delete_answer(cursor, answer_id):
 
 
 @connection_handler
-def upvote(cursor, id_, question_id, vote):
+def upvote(cursor, id_, question_id, vote, username):
     cursor.execute("""SELECT vote_number
                       FROM answer
                       WHERE id = (%s);""", (id_,))
     current_vote = cursor.fetchall()
     current_vote = current_vote[0]
     current_vote = current_vote["vote_number"]
+    cursor.execute("""UPDATE users
+                      SET reputation = reputation + {rep}
+                      WHERE username = %s;""".format(rep=10 if vote == "up" else -2), (username,))
     if vote == "up":
         current_vote += 1
         cursor.execute("""UPDATE answer
