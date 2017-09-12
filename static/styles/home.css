@@ -61,7 +61,7 @@ tr.header a:hover {
 }
 
 
-#login, #register_button {
+#login_button, #register_button, #userpage_button {
   font-size: 20px;
   text-decoration: none;
   background-color: white;
@@ -77,10 +77,20 @@ tr.header a:hover {
   right: 100px;
 }
 
+#userpage_button {
+  right: 110px;
+}
+
 #content td {
   border:none;
   background-color: white; 
   padding: 25px;
+}
+
+#logged_in {
+  position: absolute;
+  top: 20px;
+  left: 20px;
 }
 
 #content td:first-child {
