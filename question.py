@@ -79,11 +79,16 @@ def display_question(cursor, question_id):
     answer_comments = cursor.fetchall()
     answer_comment_count = get_answer_comment_len(answer_list, answer_comments)
     get_reputation = cursor.execute("""SELECT reputation
+<<<<<<< HEAD
+                                   FROM users
+                                   WHERE username IN (SELECT username FROM question
+                                                      WHERE id = (%s));""", (question_id,))
+=======
                                        FROM users
                                        WHERE username IN
                                        (SELECT username FROM question WHERE id = (%s));""", question_id)
+>>>>>>> 75ea8e1ca43b0e2d5740f41f8c1b93f102c5be01
     reputation = cursor.fetchall()
-    print(reputation)
     return render_template("display.html", question=question_dict[0], answers_list=answer_list,
                            question_comments=question_comments, answer_comments=answer_comments,
                            answer_comment_count=answer_comment_count, reputation=reputation[0])
