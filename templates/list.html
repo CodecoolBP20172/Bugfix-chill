@@ -51,10 +51,8 @@
                 <th><a href="{{url_for('index_list', criteria='view_number', order=ordering )}}"> View number </th>
                 <th><a href="{{url_for('index_list', criteria='vote_number', order=ordering )}}"> Vote number </th>
                 <th> Title </th>
-                {% if session %}
-                    <th> Edit </th>
-                    <th class="table_head_end"> Delete </th>
-                {% endif %}
+                <th> Edit </th>
+                <th class="table_head_end"> Delete </th>
             </tr>
             <tr class="spacer"></tr>
 
