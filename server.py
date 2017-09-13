@@ -71,7 +71,7 @@ def registration():
         new_user = users.register_user(user_name, password)
         if new_user:
             return redirect("/")
-    return render_template("registration.html", new_user=new_user, password=password)
+    return render_template("registration.html", new_user=new_user)
 
 
 """
