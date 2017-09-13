@@ -72,6 +72,7 @@ def registration():
         user_name = request.form.get("user_name")
         password = request.form.get("password")
         hashed_password = common.get_hashed_password(password)
+        print(hashed_password)
         new_user = users.register_user(user_name, hashed_password)
         if new_user:
             return redirect("/")
@@ -168,6 +169,19 @@ def upvote_answer():
     username = request.form.get("username")
     return answer.upvote(answer_id, question_id, vote, username)
 
+
+@app.route("/answer/<answer_id>/edit")
+def edit_answer(answer_id):
+    return answer.edit_answer(answer_id)
+
+
+@app.route("/answer/<answer_id>/edit_answer", methods=["POST"])
+def save_edited_answer(answer_id):
+    message = request.form.get("message")
+    image = request.form.get("image")
+    answer_id = request.form.get("answer_id")
+    question_id = request.form.get("question_id")
+    return answer.edited_answer(message, image, answer_id, question_id)
 
 """
 Functions related to comments
