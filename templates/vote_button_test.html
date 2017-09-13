@@ -1,0 +1,17 @@
+<!Doctype html>
+<html>
+<head>
+    <meta charset='utf-8'>
+    <title>vote button test</title>
+</head>
+<body>
+    <button id="target" type="button">Click Me</button>
+    <div id="output">10</div>
+    <script src="http://code.jquery.com/jquery-1.4.3.min.js"></script>
+    <script>
+        $('#target').click(function() {
+        $('#output').html(function(i, val) { return val*1+1 });
+        });
+    </script>
+</body>
+</html>
