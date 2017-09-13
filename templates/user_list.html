@@ -4,30 +4,31 @@
 <head>
     <meta charset='utf-8'>
     <title>Askmate user-list</title>
-    <link rel="stylesheet" type="text/css" href="{{url_for('static', filename='styles/display_template.css')}}">
+    <link rel="stylesheet" type="text/css" href="{{url_for('static', filename='styles/home.css')}}">
 </head>
 
 <body>
     <a href="/" id="logo">
         <h3 id="logo_h3">Askmate</h3>
     </a>
-    <table>
-        {% for header in user_headers %}
-        <th>
-            {{ header }}
-        </th>
-        {% endfor %}
-        {% for row in user_dict %}
-        <tr>
-            {% for header in user_headers %}
-            <td>
-                {{row[header]}}
-            </td>
-            {% endfor %}
+    <table border="1" cellpadding="10">
+        <tr class="header">
+            <th class=table_head_start> Username </th>
+            <th> Registration date </th>
+            <th class="table_head_end"> Reputation </th>
+        <tr class="spacer"></tr>
         </tr>
+        {% for row in user_dict %}
+            <tr>
+                {% for header in user_headers %}
+                    <td>
+                        {{row[header]}}
+                    </td>
+                {% endfor %}
+            </tr>
         {% endfor %}
     </table>
-    <a href='/'>Back to the main page</a>
+    <a id="back_from_display" href="/"><abbr title="Back to the home page"><img src="{{url_for('static', filename='leftarrow.png')}}" width='40' height='40' alt='Back'></abbr></a>
 </body>
 
 </html>
