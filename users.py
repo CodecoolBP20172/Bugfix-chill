@@ -6,15 +6,11 @@ from datetime import datetime
 
 
 @connection_handler
-def login_to_page(cursor, username, password):
-    cursor.execute("""SELECT username, password
+def get_user_by_name(cursor, username):
+    cursor.execute("""SELECT username, password, id
                       FROM users
                       WHERE username = %s;""", (username,))
-    table = cursor.fetchall()
-    if table:
-        if table[0]['password'] == password:
-            return True
-    return False
+    return cursor.fetchone()
 
 
 @connection_handler
