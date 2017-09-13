@@ -78,7 +78,6 @@ def registration():
     return render_template("registration.html", new_user=new_user)
 
 
-<<<<<<< HEAD
 @app.route('/user/<username>')
 def userpage(username):
     users_question, users_answer, users_comments = users.get_user_stuffs(username)
@@ -88,9 +87,6 @@ def userpage(username):
     print(users_comments)
     return render_template("userpage.html", questions=users_question, question_keys=question_keys, answers=users_answer, answer_keys=answer_keys, comments=users_comments)
 
-
-=======
->>>>>>> development
 """
 Functins handleing interactions with questions
 """
