@@ -14,6 +14,9 @@ h1 {
             background-clip: text;
 }
 
+h2 {
+  text-align: center;
+}
 
 table {
    margin-left: auto;
@@ -121,4 +124,24 @@ a:visited {
   position: absolute;
   top: 203px;
   right: 50px;
+}
+
+#logo {
+  text-decoration: none;
+}
+
+
+#logo_h3{
+  margin-top: 10px;
+  margin-bottom: 0px;
+  font: bold 40px arial, sans-serif;
+  text-transform: uppercase;
+  text-align: left;
+  background-color: #3D3A37;
+  color: transparent;
+  text-shadow: 4px 4px 3px rgba(255,255,255, 0.5);
+  -webkit-background-clip: text;
+     -moz-background-clip: text;
+          background-clip: text;
+
 }
