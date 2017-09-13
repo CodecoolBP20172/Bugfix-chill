@@ -94,12 +94,12 @@ def display_question(cursor, question_id):
                                question_comments=question_comments, answer_comments=answer_comments,
                                answer_comment_count=answer_comment_count, reputation=reputation)
 
+
 # deleting a question by id
 # deletes the answers for the deleted question too
 # redirects to /list
-
-
-def delete_question_with_answers(question_id):
+@connection_handler
+def delete_question_with_answers(cursor, question_id):
     cursor.execute("DELETE FROM question WHERE id = %s;", (question_id,))
     return redirect('/list')
 
