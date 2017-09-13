@@ -60,6 +60,23 @@ tr.header a:hover {
   text-decoration: underline;
 }
 
+
+#login, #register_button {
+  font-size: 20px;
+  text-decoration: none;
+  background-color: white;
+  color: #9B1D20;
+  padding: 10px;
+  border-radius: 5px;
+  position: absolute;
+  top: 20px;
+  right: 20px;
+}
+
+#register_button {
+  right: 100px;
+}
+
 #content td {
   border:none;
   background-color: white; 

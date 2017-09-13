@@ -2,7 +2,7 @@ from flask import Flask, render_template, redirect, request, session, url_for
 import common
 import question
 import answer
-import user
+import users
 
 
 app = Flask(__name__)
@@ -34,6 +34,46 @@ def index_list():
     if not valid_url:
         return question.question_index()
     return question.question_index(criteria, order)
+
+
+@app.route('/login', methods=['GET', 'POST'])
+def login():
+    login = True
+    if request.method == 'POST':
+        username = request.form['username']
+        password = request.form['password']
+        login = users.login_to_page(username, password)
+        if login:
+            session['username'] = username
+            return redirect(url_for('index'))
+    return render_template("login.html", login=login)
+
+
+@app.route('/logout')
+def logout():
+    # remove the username from the session if it's there
+    session.pop('username', None)
+    return redirect(url_for('index'))
+
+
+"""
+Functions related to users
+"""
+
+
+@app.route('/registration', methods=['GET', 'POST'])
+def registration():
+    new_user = True
+    if request.method == 'POST':
+        user_name = request.form.get("user_name")
+        password = request.form.get("password")
+        new_user = users.register_user(user_name, password)
+        if new_user:
+            return redirect("/")
+    return render_template("registration.html", new_user=new_user)
+
+
+
 
 
 """
@@ -83,7 +123,8 @@ def del_question_by_id(question_id):
 def upvote_question():
     vote = request.form.get("vote")
     id_ = request.form.get("question_id")
-    return question.upvote_question(id_, vote)
+    username = request.form.get("username")
+    return question.upvote_question(id_, vote, username)
 
 
 """
@@ -116,7 +157,8 @@ def upvote_answer():
     vote = request.form.get("vote")
     question_id = request.form.get("question_id")
     answer_id = request.form.get("answer_id")
-    return answer.upvote(answer_id, question_id, vote)
+    username = request.form.get("username")
+    return answer.upvote(answer_id, question_id, vote, username)
 
 
 """
@@ -169,7 +211,7 @@ User related url functions
 
 @app.route('/user_list')
 def user_list():
-    return user.list_users()
+    return users.list_users()
 
 
 if __name__ == "__main__":

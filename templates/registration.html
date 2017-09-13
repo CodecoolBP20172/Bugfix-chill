@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+    <link rel="stylesheet" type="text/css" href="{{url_for('static', filename='styles/display_template.css')}}">
+    <head>
+        <meta charset="utf-8">
+        <title>New user registration</title>
+    </head>
+    <body>
+            <h1>Register new user</h1>
+                <form action="/registration" method="post">
+                    {% if not new_user %}
+                    <p>
+                        <font size="3" color="red">User already exists!</font>
+                    </p>
+                    {% endif %}
+                    <p>
+                        <label for="user_name">User name</label><br>
+                        <input name="user_name" maxlength=15 required>
+                    </p>
+                    <p>
+                        <label for="password">Password</label><br>
+                        <input name="password" type="password" maxlength=10 required>
+                    </p>
+                    <div id="create">
+                    <button type="submit"><abbr title="Register user"><img src="static/tick.png" width="30" height="30" alt="Create"></abbr></button>
+                    </div>
+                </form>
+                <a id="back"href="/"><abbr title="Back to the question page"><img src="static/leftarrow.png" width="30" height="30" alt="Back"></abbr></a>
+
+    </body>
+</html>
