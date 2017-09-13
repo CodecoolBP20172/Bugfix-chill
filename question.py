@@ -145,3 +145,14 @@ def comment_question(cursor, question_id, message):
                    "VALUES (%s, %s, %s, %s, %s, %s);",
                    (question_id, None, message, datetime.now().replace(microsecond=0), 0, session["username"]),)
     return redirect("/question/{}".format(question_id))
+
+
+@connection_handler
+def search_phrase(cursor, search_phrase):
+    cursor.execute("""SELECT *
+                      FROM question
+                      WHERE title LIKE  %(searched)s  ;""", {'searched': "%"+search_phrase+"%"})
+    table = cursor.fetchall()
+    header = ["id", "submission_time", "view_number", "vote_number", "title", "message", "image"]
+    search = True
+    return render_template('list.html', table=table, header=header, search=search)

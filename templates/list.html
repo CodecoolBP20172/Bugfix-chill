@@ -13,6 +13,12 @@
 
     <body>
         <h1>Askmate</h1>
+        <form action="/search">
+            <p>
+                <input name="search_phrase" type="text">
+                <button type="submit">Search</button>
+            </p>
+        </form>
         {% if not session['username'] %}
         <a id="login" href="{{ url_for('login') }}">Login</a>
         <a id="register_button" href="{{ url_for('registration') }}" id="register">Register</a>
@@ -76,5 +82,10 @@
             {% endfor %}
         </table>
         <a href='/user_list'>User list</a>
+        {% if search %}
+            <p>
+                <a href="{{url_for('index')}}" >Back to index</a>
+            </p>
+        {% endif %}
     </body>
 </html>
