@@ -73,7 +73,9 @@ def registration():
     return render_template("registration.html", new_user=new_user)
 
 
-
+@app.route('/user_list')
+def user_list():
+    return users.list_users()
 
 
 """
@@ -124,7 +126,8 @@ def upvote_question():
     vote = request.form.get("vote")
     id_ = request.form.get("question_id")
     username = request.form.get("username")
-    return question.upvote_question(id_, vote, username)
+    question.upvote_question(id_, vote, username)
+    return True
 
 
 """
@@ -202,16 +205,6 @@ def render_comment_edit(comment_id):
 def submit_edited_comment(comment_id):
     message = request.form.get("message")
     return common.submit_comment_edited(comment_id, message)
-
-
-'''
-User related url functions
-'''
-
-
-@app.route('/user_list')
-def user_list():
-    return users.list_users()
 
 
 if __name__ == "__main__":

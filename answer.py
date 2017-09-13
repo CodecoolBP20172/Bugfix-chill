@@ -47,7 +47,7 @@ def upvote(cursor, id_, question_id, vote, username):
     cursor.execute("""UPDATE question
                       SET view_number = view_number - 1
                       WHERE id = (%s);""", (question_id,))
-    return redirect("/question/{}".format(question_id))
+    # return redirect("/question/{}".format(question_id))
 
 
 @connection_handler

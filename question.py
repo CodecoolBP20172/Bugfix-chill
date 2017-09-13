@@ -128,7 +128,8 @@ def upvote_question(cursor, id_, vote, username):
     cursor.execute("""UPDATE users
                       SET reputation = reputation + {rep}
                       WHERE username = %s;""".format(rep=15 if vote == "up" else -2), (username,))
-    return redirect("/question/{}".format(id_))
+    # return redirect("/question/{}".format(id_))
+    return True
 
 
 @connection_handler
