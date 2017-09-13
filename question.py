@@ -65,9 +65,9 @@ def display_question(cursor, question_id):
                       WHERE id = %s
                       ORDER BY id;""", (question_id,))
     question_dict = cursor.fetchall()
-    cursor.execute("""SELECT *
-                      FROM answer
-                      INNER JOIN users ON answer.username = users.username
+    cursor.execute("""SELECT a.id, a.submission_time, a.vote_number, a.question_id, a.message, a.image, a.username, users. reputation
+                      FROM answer a
+                      INNER JOIN users ON a.username = users.username
                       WHERE question_id = (%s)
                       ORDER BY vote_number DESC;""", (question_id,))
     answer_list = cursor.fetchall()
