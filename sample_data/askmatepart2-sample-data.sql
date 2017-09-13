@@ -74,7 +74,8 @@ CREATE TABLE users (
     username VARCHAR(15) unique NOT NULL,
     password VARCHAR(10) NOT NULL,
     registration_date timestamp without time zone,
-    reputation integer DEFAULT 0
+    reputation integer DEFAULT 0,
+    salt VARCHAR(3)
 );
 
 
