@@ -13,12 +13,14 @@
 
     <body>
         <h1>Askmate</h1>
-        <form action="/search">
-            <p>
-                <input name="search_phrase" type="text">
-                <button type="submit">Search</button>
-            </p>
-        </form>
+        <div id="search">
+            <form action="/search">
+                <p>
+                    <input name="search_phrase" type="text">
+                    <button type="submit">Search</button>
+                </p>
+            </form>
+        </div>
         {% if not session['username'] %}
         <a id="login_button" href="{{ url_for('login') }}">Login</a>
         <a id="register_button" href="{{ url_for('registration') }}" id="register">Register</a>
