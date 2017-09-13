@@ -20,7 +20,7 @@
             </p>
         </form>
         {% if not session['username'] %}
-        <a id="login" href="{{ url_for('login') }}">Login</a>
+        <a id="login_button" href="{{ url_for('login') }}">Login</a>
         <a id="register_button" href="{{ url_for('registration') }}" id="register">Register</a>
         {% endif %}
         {% if session['username'] %}
