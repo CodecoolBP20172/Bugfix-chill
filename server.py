@@ -126,8 +126,7 @@ def upvote_question():
     vote = request.form.get("vote")
     id_ = request.form.get("question_id")
     username = request.form.get("username")
-    question.upvote_question(id_, vote, username)
-    return True
+    return question.upvote_question(id_, vote, username)
 
 
 """
