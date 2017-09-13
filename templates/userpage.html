@@ -43,6 +43,7 @@
                     <th> Vote number </th>
                     <th> Message </th>
                     <th> Question title </th>
+                    <th> Edit </th>
                     <th class="table_head_end"> Delete </th>
                 </tr>
                 <tr class="spacer"></tr>
@@ -55,7 +56,7 @@
                             <td align="center">{{ answer[key] }}</td>
                         {% endif %}
                         {% endfor %}
-                    <!-- <td><a href="/question/{{ answer['id'] }}/edit"><abbr title="Edit"><img src="static/edit.svg" width="20" height="20" alt="Edit"></abbr></a></td> -->
+                    <td><a href="/question/{{ answer['id'] }}/edit"><abbr title="Edit"><img src="/static/edit.svg" width="20" height="20" alt="Edit"></abbr></a></td>
                     <td><a href="/answer/{{ answer['id'] }}/delete"><abbr title="Delete"><img src="/static/delete.png" width="20" height="20" alt="Delete"></abbr></a></td>
                     </tr>
                     <tr class="spacer"></tr>
