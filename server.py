@@ -169,6 +169,19 @@ def upvote_answer():
     return answer.upvote(answer_id, question_id, vote, username)
 
 
+@app.route("/answer/<answer_id>/edit")
+def edit_answer(answer_id):
+    return answer.edit_answer(answer_id)
+
+
+@app.route("/answer/<answer_id>/edit_answer", methods=["POST"])
+def save_edited_answer(answer_id):
+    message = request.form.get("message")
+    image = request.form.get("image")
+    answer_id = request.form.get("answer_id")
+    question_id = request.form.get("question_id")
+    return answer.edited_answer(message, image, answer_id, question_id)
+
 """
 Functions related to comments
 """

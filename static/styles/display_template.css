@@ -108,7 +108,7 @@ a:hover {
   background-color: #a6a6a6;
 }
 
-#answer_question, #comment_question, #comment_answer, #delete_answer {
+#answer_question, #comment_question, #comment_answer, #delete_answer, #edit_answer {
   background-color: #4D7EA8;
   padding: 5px;
   border-radius: 10px;
