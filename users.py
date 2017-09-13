@@ -38,3 +38,26 @@ def list_users(cursor):
     user_dict = cursor.fetchall()
     user_headers = ["username", "password", "registration_date", "reputation"]
     return render_template('user_list.html', user_dict=user_dict, user_headers=user_headers)
+
+
+@connection_handler
+def get_user_stuffs(cursor, username):
+    cursor.execute("""SELECT submission_time, view_number, vote_number, title
+                   FROM question
+                   WHERE question.username = 'Xattus';""")
+    users_questions = cursor.fetchall()
+    cursor.execute("""SELECT answer.submission_time, answer.vote_number, answer.message, question.title
+                   FROM answer
+                   JOIN question
+                   ON (answer.question_id = question.id)
+                   WHERE answer.username = 'Xattus';""")
+    users_answers = cursor.fetchall()
+    cursor.execute("""SELECT comment.submission_time, comment.message, question.id, answer.id
+                   FROM comment
+                   JOIN question
+                   ON (comment.question_id = question.id)
+                   join answer
+                   ON (comment.answer_id = answer.id)
+                   WHERE comment.username = 'Xattus';""")
+    users_comments = cursor.fetchall()
+    return users_questions, users_answers, users_comments
