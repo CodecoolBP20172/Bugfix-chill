@@ -72,11 +72,12 @@ def registration():
             return redirect("/")
     return render_template("registration.html", new_user=new_user)
 
+
 @app.route('/user/<username>')
 def userpage(username):
-    pass
-
-
+    users_question, users_answer, users_comments = users.get_user_stuffs(username)
+    print (users_question)
+    return render_template("userpage.html", questions=users_question, answers=users_answer, comments=users_comments)
 
 
 """
