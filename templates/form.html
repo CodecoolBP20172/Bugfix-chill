@@ -113,14 +113,17 @@
                 <h1>Edit this answer</h1>
                     <form action="/answer/{{ answer['id']  }}/edit_answer" method="POST">
                         <p>
-                                <textarea name="message" rows="5" cols="50" minlength="10" maxlength="140" required>{{ answer["message"] }}</textarea>
+                            <label for="message">Message</label><br>
+                            <textarea name="message" rows="5" cols="50" minlength="10" maxlength="140" required>{{ answer["message"] }}</textarea>
                         </p>
                         <p>
-                                <textarea name="image" rows="5" cols="50" minlength="10" maxlength="140">{{ answer["image"] }}</textarea>
+                            <label for="image">Image link</label><br>
+                            <textarea name="image" rows="5" cols="50" minlength="10" maxlength="140">{{ answer["image"] }}</textarea>
                         </p>
                         <input type="hidden" name="question_id" value="{{ answer['question_id'] }}"/>
                         <input name="answer_id" type="hidden" value="{{ answer['id']  }}">
-                        <button type="Submit">Update</button>
+                        <button type="Submit">Update</button><br>
+                        <a href="/"><button >Back to the Questions page</button></a>                        
                     </form>
         {% endif %}
 
