@@ -59,7 +59,7 @@
                 <td>
                     <b>Votes:</b> {{question["vote_number"]}}
                 </td>
-                {% if session %}
+                {% if session and session["username"] != question["username"] %}
                     <td>
                         <form action="/upvote_question" method="POST">
                             <input type="hidden" name="question_id" value="{{ question['id'] }}"/>
@@ -126,7 +126,7 @@
                 <table>
                     <tr>
                         <td><b>Votes:</b> {{answer["vote_number"]}}</td>
-                        {% if session %}
+                        {% if session and session["username"] != answer["username"] %}
                         <td>
                             <form action="/upvote_answer" method="POST">
                                 <input type="hidden" name="question_id" value="{{ question['id'] }}"/>
