@@ -41,20 +41,20 @@ def list_users(cursor):
 def get_user_stuffs(cursor, username):
     cursor.execute("""SELECT id, submission_time, view_number, vote_number, title
                    FROM question
-                   WHERE question.username = 'Xattus';""")
+                   WHERE question.username = %(user)s;""", {"user": username})
     users_questions = cursor.fetchall()
     cursor.execute("""SELECT answer.submission_time, answer.vote_number, answer.message, question.title, answer.question_id
                    FROM answer
                    JOIN question
                    ON (answer.question_id = question.id)
-                   WHERE answer.username = 'Xattus';""")
+                   WHERE answer.username = %(user)s;""", {"user": username})
     users_answers = cursor.fetchall()
-    cursor.execute("""SELECT comment.submission_time, comment.message, question.id, answer.id
+    cursor.execute("""SELECT comment.id, comment.submission_time, comment.message, question.id AS question_id, answer.id AS answer_id, answer.question_id AS other_question_id
                    FROM comment
-                   JOIN question
+                   LEFT JOIN question
                    ON (comment.question_id = question.id)
-                   join answer
+                   LEFT JOIN answer
                    ON (comment.answer_id = answer.id)
-                   WHERE comment.username = 'Xattus';""")
+                   WHERE comment.username = %(user)s;""", {"user": username})
     users_comments = cursor.fetchall()
     return users_questions, users_answers, users_comments
