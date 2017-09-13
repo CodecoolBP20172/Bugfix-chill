@@ -42,11 +42,11 @@ def list_users(cursor):
 
 @connection_handler
 def get_user_stuffs(cursor, username):
-    cursor.execute("""SELECT submission_time, view_number, vote_number, title
+    cursor.execute("""SELECT id, submission_time, view_number, vote_number, title
                    FROM question
                    WHERE question.username = 'Xattus';""")
     users_questions = cursor.fetchall()
-    cursor.execute("""SELECT answer.submission_time, answer.vote_number, answer.message, question.title
+    cursor.execute("""SELECT answer.submission_time, answer.vote_number, answer.message, question.title, answer.question_id
                    FROM answer
                    JOIN question
                    ON (answer.question_id = question.id)
