@@ -19,11 +19,11 @@
                 <button type="submit">Search</button>
             </p>
         </form>
-        {% if not session %}
+        {% if not session['username'] %}
         <a id="login" href="{{ url_for('login') }}">Login</a>
         <a id="register_button" href="{{ url_for('registration') }}" id="register">Register</a>
         {% endif %}
-        {% if session %}
+        {% if session['username'] %}
                 <div id="logged_in">Logged in as {{ session['username'] }}</div>
                 <a id="login" href="{{ url_for('logout') }}">Logout</a>
         {% endif %}

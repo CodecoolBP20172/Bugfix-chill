@@ -42,10 +42,13 @@ def login():
     if request.method == 'POST':
         username = request.form['username']
         password = request.form['password']
-        login = users.login_to_page(username, password)
-        if login:
-            session['username'] = username
-            return redirect(url_for('index'))
+        user = users.get_user_by_name(username)
+        if user:
+            valid_password = common.check_password(password, user['password'])
+            if valid_password:
+                session['username'] = username
+                session['user_id'] = user['id']
+                return redirect(url_for('index'))
     return render_template("login.html", login=login)
 
 
@@ -53,6 +56,7 @@ def login():
 def logout():
     # remove the username from the session if it's there
     session.pop('username', None)
+    session.pop('user_id', None)
     return redirect(url_for('index'))
 
 
@@ -67,7 +71,8 @@ def registration():
     if request.method == 'POST':
         user_name = request.form.get("user_name")
         password = request.form.get("password")
-        new_user = users.register_user(user_name, password)
+        hashed_password = common.get_hashed_password(password)
+        new_user = users.register_user(user_name, hashed_password)
         if new_user:
             return redirect("/")
     return render_template("registration.html", new_user=new_user)
