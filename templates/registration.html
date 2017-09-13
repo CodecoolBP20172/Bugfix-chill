@@ -14,16 +14,20 @@
                     </p>
                     {% endif %}
                     <p>
-                        <label for="user_name">User name</label><br>
-                        <input name="user_name" maxlength=15 required>
+                        <div class="register-input">
+                            <label for="user_name">User name</label><br>
+                            <input name="user_name" maxlength=15 required placeholder="username...">
+                        </div>
                     </p>
                     <p>
-                        <label for="password">Password</label><br>
-                        <input name="password" type="password" maxlength=10 required>
+                        <div class="register-input">
+                            <label for="password">Password</label><br>
+                            <input name="password" type="password" maxlength=10 required placeholder="password...">
+                        </div>
                     </p>
-                    <div id="create">
-                    <button type="submit"><abbr title="Register user"><img src="static/tick.png" width="30" height="30" alt="Create"></abbr></button>
-                    </div>
+                    <p>
+                        <abbr title="Register user"><button type="submit">Register</button></abbr>
+                    </p>
                 </form>
                 <a id="back"href="/"><abbr title="Back to the question page"><img src="static/leftarrow.png" width="30" height="30" alt="Back"></abbr></a>
 

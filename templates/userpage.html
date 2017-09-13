@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+    <link rel="stylesheet" type="text/css" href="{{url_for('static', filename='styles/home.css')}}">
+</head>
+<body>
+    <a href="/" id="logo">
+    <h3 id="logo_h3">Askmate</h3></a>
+    <h3>User: {{ session['username'] }}</h3>
+    {% if questions %}
+        <h2>Questions</h2>
+        <table border="1" cellpadding="10">
+                <tr class="header">
+                    <th class=table_head_start> Submission time </th>
+                    <th> View number </th>
+                    <th> Vote number </th>
+                    <th> Title </th>
+                    <th> Edit </th>
+                    <th class="table_head_end"> Delete </th>
+                </tr>
+                <tr class="spacer"></tr>
+            {% for question in questions %}
+                <tr id="content">
+                    {% for key in question_keys %}
+                        {% if key == "title": %}
+                            <td align="center"><a href="{{url_for('display_question_by_id', question_id = question['id'])}}"> {{ question["title"] }} </a></td>
+                        {% else %}   
+                            <td align="center">{{ question[key] }}</td>
+                        {% endif %}
+                        {% endfor %}
+                    <td><a href="/question/{{ question['id'] }}/edit"><abbr title="Edit"><img src="/static/edit.svg" width="20" height="20" alt="Edit"></abbr></a></td>
+                    <td><a href="/question/{{ question['id'] }}/delete"><abbr title="Delete"><img src="/static/delete.png" width="20" height="20" alt="Delete"></abbr></a></td>
+                    </tr>
+                    <tr class="spacer"></tr>
+            {% endfor %}
+        </table>
+        <p></p>
+        <h2>Answers</h2>
+        <table border="1" cellpadding="10">
+                <tr class="header">
+                    <th class=table_head_start> Submission time </th>
+                    <th> Vote number </th>
+                    <th> Message </th>
+                    <th> Question title </th>
+                    <th> Edit </th>
+                    <th class="table_head_end"> Delete </th>
+                </tr>
+                <tr class="spacer"></tr>
+            {% for answer in answers %}
+                <tr id="content">
+                    {% for key in answer_keys %}
+                        {% if key == "title": %}
+                            <td align="center"><a href="{{url_for('display_question_by_id', question_id = answer['question_id'])}}"> {{ answer["title"] }} </a></td>
+                        {% else %}   
+                            <td align="center">{{ answer[key] }}</td>
+                        {% endif %}
+                        {% endfor %}
+                    <td><a href="/question/{{ answer['id'] }}/edit"><abbr title="Edit"><img src="/static/edit.svg" width="20" height="20" alt="Edit"></abbr></a></td>
+                    <td><a href="/answer/{{ answer['id'] }}/delete"><abbr title="Delete"><img src="/static/delete.png" width="20" height="20" alt="Delete"></abbr></a></td>
+                    </tr>
+                    <tr class="spacer"></tr>
+            {% endfor %}
+        </table>
+        <h2>Comments</h2>
+        <table border="1" cellpadding="10">
+                <tr class="header">
+                    <th class=table_head_start> Submission time </th>
+                    <th> Comment </th>
+                    <th> Question </th>
+                    <th> Edit </th>
+                    <th class="table_head_end"> Delete </th>
+                </tr>
+                <tr class="spacer"></tr>
+            {% for comment in comments %}
+                <tr id="content">
+                    {% for key in comment_keys %}
+                    {% if key == "question_id" %}
+                        {% if comment['question_id'] %}
+                            <td align="center"><a href="{{url_for('display_question_by_id', question_id = comment['question_id'])}}">link to question</a></td>
+                        {% else %}
+                        <td align="center"><a href="{{url_for('display_question_by_id', question_id = comment['other_question_id'])}}">link to question </a></td>
+                        {% endif %}
+                    {% elif key != "other_question_id" %}
+                        <td align="center">{{ comment[key] }}</td>
+                    {% endif %}
+                    {% endfor %}
+                    <td><a href="/comments/{{ comment['id'] }}/edit"><abbr title="Edit"><img src="/static/edit.svg" width="20" height="20" alt="Edit"></abbr></a></td>
+                    <td><a href="/comments/{{ comment['id'] }}/delete"><abbr title="Delete"><img src="/static/delete.png" width="20" height="20" alt="Delete"></abbr></a></td>
+                    </tr>
+                    <tr class="spacer"></tr>
+            {% endfor %} 
+        </table>
+    {% endif %}
+</body>
+</html>
