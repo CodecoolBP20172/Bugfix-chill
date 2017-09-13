@@ -72,6 +72,9 @@ def registration():
             return redirect("/")
     return render_template("registration.html", new_user=new_user)
 
+@app.route('/user/<username>')
+def userpage(username):
+    pass
 
 
 
