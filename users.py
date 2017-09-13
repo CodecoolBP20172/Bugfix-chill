@@ -17,6 +17,7 @@ def login_to_page(cursor, username, password):
     return False
 
 
+@connection_handler
 def register_user(cursor, user_name, password):
     cursor.execute("""SELECT username
                       FROM users;""")

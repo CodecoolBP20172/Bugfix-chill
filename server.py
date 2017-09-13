@@ -73,9 +73,6 @@ def registration():
     return render_template("registration.html", new_user=new_user)
 
 
-
-
-
 """
 Functins handleing interactions with questions
 """
