@@ -116,13 +116,13 @@ a:visited {
 
 #add {
   position: absolute;
-  top: 203px;
+  top: 237px;
   right: 100px;
 }
 
 #full_list, #latest_five_question {
   position: absolute;
-  top: 203px;
+  top: 237px;
   right: 50px;
 }
 
@@ -144,4 +144,13 @@ a:visited {
      -moz-background-clip: text;
           background-clip: text;
 
+}
+
+#question_table, #answer_table, #comment_table {
+  margin: 0 auto;
+  width: 70%;
+}
+
+#search {
+  text-align: center;
 }
