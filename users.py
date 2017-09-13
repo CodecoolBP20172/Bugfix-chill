@@ -23,8 +23,8 @@ def register_user(cursor, user_name, password):
         existing_users.append(dictionary["username"])
     if user_name in existing_users:
         return False
-    cursor.execute("""INSERT INTO users (username, password, registration_date)
-                      VALUES(%s, %s, %s);""", (user_name, password, datetime.now().replace(microsecond=0)))
+    cursor.execute("""INSERT INTO users (username, password)
+                      VALUES(%s, %s);""", (user_name, password))
     return True
 
 

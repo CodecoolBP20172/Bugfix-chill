@@ -73,9 +73,8 @@ CREATE TABLE users (
     id serial NOT NULL,
     username VARCHAR(15) unique NOT NULL,
     password text NOT NULL,
-    registration_date timestamp without time zone,
-    reputation integer DEFAULT 0,
-    salt VARCHAR(3)
+    registration_date NOT NULL DEFAULT CURRENT_DATE,
+    reputation integer DEFAULT 0
 );
 
 
