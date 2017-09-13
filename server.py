@@ -127,6 +127,12 @@ def upvote_question():
     return question.upvote_question(id_, vote, username)
 
 
+@app.route('/search')
+def search_question():
+    query = request.args.get("search_phrase")
+    return question.search_phrase(query)
+
+
 """
 Functions responding to answer URL's
 """
