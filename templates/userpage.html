@@ -10,7 +10,7 @@
     <h3>User: {{ session['username'] }}</h3>
     {% if questions %}
         <h2>Questions</h2>
-        <table border="1" cellpadding="10">
+        <table id="question_table" border="1" cellpadding="10">
                 <tr class="header">
                     <th class=table_head_start> Submission time </th>
                     <th> View number </th>
@@ -35,9 +35,9 @@
                     <tr class="spacer"></tr>
             {% endfor %}
         </table>
-        <p></p>
+        <div class="spacer"></div>
         <h2>Answers</h2>
-        <table border="1" cellpadding="10">
+        <table id="answer_table" border="1" cellpadding="10">
                 <tr class="header">
                     <th class=table_head_start> Submission time </th>
                     <th> Vote number </th>
@@ -62,8 +62,9 @@
                     <tr class="spacer"></tr>
             {% endfor %}
         </table>
+        <div class="spacer"></div>
         <h2>Comments</h2>
-        <table border="1" cellpadding="10">
+        <table id="comment_table" border="1" cellpadding="10">
                 <tr class="header">
                     <th class=table_head_start> Submission time </th>
                     <th> Comment </th>
@@ -92,5 +93,6 @@
             {% endfor %} 
         </table>
     {% endif %}
+    <a id="back_from_display" href="/"><abbr title="Back to the home page"><img src="{{url_for('static', filename='leftarrow.png')}}" width='40' height='40' alt='Back'></abbr></a>
 </body>
 </html>
