@@ -9,6 +9,7 @@
         {% if form_type == "add_question" %}
             <h1>Ask a question</h1>
                 <form action="/new_question" method="post">
+                    <input type="hidden" name="username" value="{{ session['username'] }}">
                     <p>
                         <label for="title">Question title</label><br>
                         <textarea name="title" minlength="10" cols="50" maxlength="140" required></textarea>
@@ -59,7 +60,7 @@
             <form action="/add_answer" method="post">
                 <p>
                         <label for="message">Answer</label><br>
-                        <textarea name="answer" rows="5" cols="50" minlength="10" maxlength="140"></textarea>
+                        <textarea name="answer" rows="5" cols="50" minlength="10" maxlength="140" required></textarea>
                     </p>
                     <p>
                         <label for="image">Image link</label><br>
@@ -77,7 +78,7 @@
                 <form action="/question/{{ question_id }}/new-comment" method="POST">
                 <p>
                         <label for="message">Comment this question</label><br>
-                        <textarea  name="message" rows="5" cols="50" minlength="10" maxlength="140"></textarea>
+                        <textarea  name="message" rows="5" cols="50" minlength="10" maxlength="140" required></textarea>
                 </p>
                 <input type="hidden" name="question_id" value="{{ question_id }}"/>
                 <button type="submit">Add comment</button>
@@ -88,7 +89,7 @@
                 <form action="/answer/{{ answer_id }}/new-comment" method="POST">
                 <p>
                         <label for="message">Comment this answer</label><br>
-                        <textarea  name="message" rows="5" cols="50" minlength="10" maxlength="140"></textarea>
+                        <textarea  name="message" rows="5" cols="50" minlength="10" maxlength="140" required></textarea>
                 </p>
                 <input type="hidden" name="question" value="{{ question_id }}"/>
                 <button type="submit">Add comment</button>

@@ -40,6 +40,7 @@
                 <td>
                     <b>Views:</b> {{question["view_number"]}}
                 </td>
+                {% if session and session["username"] == question["username"] %}
                 <td>
                     <a href="/question/{{ question['id'] }}/edit">
                         <abbr title="Edit question"></abbr><img src="/static/edit.svg" width="20" height="20" alt="Edit">
@@ -50,6 +51,7 @@
                         <abbr title="Delete question"></abbr><img src="/static/delete.png" width="20" height="20" alt="Delete">
                     </a>
                 </td>
+                {% endif %}
             </tr>
         </table>
         <table>
@@ -57,43 +59,44 @@
                 <td>
                     <b>Votes:</b> {{question["vote_number"]}}
                 </td>
-                <td>
-                    <form action="/upvote_question" method="POST">
-                    <input type="hidden" name="question_id" value="{{ question['id'] }}"/>
-                    <input type="hidden" name="vote" value="up"/>
-                    <input type="hidden" name="username" value="{{question['username']}}"/>
-                        <p>
-                            <button type="Submit"><abbr title="Upvote question"></abbr><img src="/static/upvote.png" height="20" width="20" /></button>
-                        </p>
-                    </form>
-                </td>
-                <td>
-                    <form action="/upvote_question" method="POST">
-                    <input type="hidden" name="question_id" value="{{ question['id'] }}"/>
-                    <input type="hidden" name="vote" value="down"/>
-                    <input type="hidden" name="username" value="{{question['username']}}"/>
-                        <p>
-                            <button type="Submit"><abbr title="Downvote question"></abbr><img src="/static/downvote.png" height="20" width="20" /></button>
-                        </p>
-                    </form>
-                </td>
+                {% if session and session["username"] != question["username"] %}
+                    <td>
+                        <form action="/upvote_question" method="POST">
+                            <input type="hidden" name="question_id" value="{{ question['id'] }}"/>
+                            <input type="hidden" name="vote" value="up"/>
+                            <input type="hidden" name="username" value="{{question['username']}}"/>
+                            <p>
+                                <button type="Submit"><abbr title="Upvote question"></abbr><img src="/static/upvote.png" height="20" width="20" /></button>
+                            </p>
+                        </form>
+                    </td>
+                    <td>
+                        <form action="/upvote_question" method="POST">
+                            <input type="hidden" name="question_id" value="{{ question['id'] }}"/>
+                            <input type="hidden" name="vote" value="down"/>
+                            <input type="hidden" name="username" value="{{question['username']}}"/>
+                            <p>
+                                <button type="Submit"><abbr title="Downvote question"></abbr><img src="/static/downvote.png" height="20" width="20" /></button>
+                            </p>
+                        </form>
+                    </td>
+                    {% endif %}
             </tr>
         </table>
         {% if question_comments != [] %}
             <h4>
                 Comments to question:
             </h4>
-            {% for dict in question_comments%}
-                    <p id=comment_message>
-                        {{ dict["message"]}}
-                        <a href="/comments/{{ dict['id'] }}/edit"><abbr title="Edit comment">
-                            </abbr><img src="/static/edit.svg" width="20" height="20" alt="Edit">
-                        </a>
-                        <a href="/comments/{{ dict['id'] }}/delete">
-                                <abbr title="Delete comment"></abbr><img src="/static/delete.png" width="20" height="20" alt="Delete">
-                        </a>
+            {% for dict in question_comments %}
+            <p id=comment_message>
+                {{ dict["message"]}}
+                {% if session and session["username"] == dict["username"] %}
+                    <a href="/comments/{{ dict['id'] }}/edit"><abbr title="Edit comment"></abbr><img src="/static/edit.svg" width="20" height="20" alt="Edit"></a>
+                    <a href="/comments/{{ dict['id'] }}/delete"><abbr title="Delete comment"></abbr><img src="/static/delete.png" width="20" height="20" alt="Delete"></a><br>
+                {% endif %}
                     </p>
-
+                    <p>
+                        <b> Submitted by: </b>{{ dict["username"] }}
                     <p>
                         <b>Submission time: </b>{{ dict["submission_time"] }}
                     </p>
@@ -102,10 +105,12 @@
                     </p>
             {% endfor %}
         {% endif %}
+        {% if session %}
             <a id="comment_question" href="/question/{{ question['id'] }}/new-comment">Add comment to question</a>
             <p></p>
             <a id="answer_question" href="{{url_for('new_answer', question_id=question['id'])}}">Answer this question</a>
             <p></p>
+        {% endif %}
         {% if answer_list != [] %}
             <p id="answer_header"> Answers </p>
             {% for answer in answers_list %}
@@ -115,18 +120,19 @@
                         <p><img src="{{answer['image']}}" height=20% width="20%" /></p>
                     {% endif %}
                     <p><b>Submitted by:</b>{{answer['username']}}
-                       <b> Reputation:</b> {{reputation['reputation']}}
+                       <b> Reputation:</b> {{answer['reputation']}}
                        <b> Submitted:</b> {{ answer['submission_time'] }}</p>
                 </div>
                 <table>
                     <tr>
                         <td><b>Votes:</b> {{answer["vote_number"]}}</td>
+                        {% if session and session["username"] != answer["username"] %}
                         <td>
                             <form action="/upvote_answer" method="POST">
                                 <input type="hidden" name="question_id" value="{{ question['id'] }}"/>
                                 <input type="hidden" name="answer_id" value="{{ answer['id'] }}"/>
                                 <input type="hidden" name="vote" value="up"/>
-                                <input type="hidden" name="username" value="{{question['username']}}"/>
+                                <input type="hidden" name="username" value="{{answer['username']}}"/>
                                 <button type="submit"><abbr title="Upvote answer"></abbr><img src="/static/upvote.png" height="20" width="20" /></button>
                             </form>
                         </td>
@@ -135,49 +141,56 @@
                                 <input type="hidden" name="question_id" value="{{ question['id'] }}"/>
                                 <input type="hidden" name="answer_id" value="{{ answer['id'] }}"/>
                                 <input type="hidden" name="vote" value="down"/>
-                                <input type="hidden" name="username" value="{{question['username']}}"/>
+                                <input type="hidden" name="username" value="{{answer['username']}}"/>
                                 <button type="submit"><abbr title="Downvote answer"></abbr><img src="/static/downvote.png" height="20" width="20" /></button>
                             </form>
                         </td>
+                        {% endif %}
                     </tr>
                 </table>
                 <form action="{{ url_for('delete_answer', answer_id=answer['id'] ) }}" method="POST">
                     <p>
                         <input type="hidden" name="question_id" value="{{ question['id'] }}"/>
-                        <button id="delete_answer"type="Submit">Delete answer</button>
-                        <a id="comment_answer"href="/answer/{{ answer['id'] }}/new-comment">Comment this answer</a>
+                        {% if session %}
+                            {% if session["username"] == answer["username"] %}
+                                <button id="delete_answer"type="Submit">Delete answer</button>
+                            {% endif %}
+                            <a id="comment_answer"href="/answer/{{ answer['id'] }}/new-comment">Comment this answer</a>
+                        {% endif %}
                     </p>
                 </form>
-                {% if answer_comment_count[answer['id']] != 0 %}
+                    {% if answer_comment_count[answer['id']] != 0 %}
                     <h4>
                         Comments to answer:
                     </h4>
-                    {% for comment_dict in answer_comments %}
+                        {% for comment in answer_comments %}
                         <p></p>
-                        {% if comment_dict['answer_id'] == answer['id'] %}
+                            {% if comment['answer_id'] == answer['id'] %}
                             <div id='comment_indent_div'>
                                 <p id="comment_message" class="comment">
-                                    {{ comment_dict["message"]}}
-                                    <a href="/comments/{{ comment_dict['id'] }}/edit"><abbr title="Edit comment"></abbr><img src="/static/edit.svg" width="20" height="20" alt="Edit"></a>
-                                    <a href="/comments/{{ comment_dict['id'] }}/delete"><abbr title="Delete comment"></abbr><img src="/static/delete.png" width="20" height="20" alt="Delete"></a><br>
+                                    {{ comment["message"]}}
+                                    {% if session["username"] == comment["username"] %}
+                                        <a href="/comments/{{ comment['id'] }}/edit"><abbr title="Edit comment"></abbr><img src="/static/edit.svg" width="20" height="20" alt="Edit"></a>
+                                        <a href="/comments/{{ comment['id'] }}/delete"><abbr title="Delete comment"></abbr><img src="/static/delete.png" width="20" height="20" alt="Delete"></a><br>
+                                    {% endif %}
                                 </p>
                                 <p>
-                                    <b>Submission time:</b> {{ comment_dict["submission_time"] }}
-                                </p>
-                                <p>
-                                    <b>Edited:</b> {{ comment_dict["edited_count"] }}
+                                    <b>Submitted by:</b> {{ comment["username"] }}
+                                    <b>Submission time:</b> {{ comment["submission_time"] }}
+                                    <b>Edited:</b> {{ comment["edited_count"] }}
                                 </p>
                                 <br>
-                            </div>
-                        {% endif %}
-                    {% endfor %}
-                {% endif %}
+                                </div>
+                            {% endif %}
+                        {% endfor %}
+                    {% endif %}
             {% endfor %}
         {% endif %}
+        {% if session %}
         <p></p>
         <a id="answer_question" href="{{url_for('new_answer', question_id=question['id'])}}">Add another answer for this question</a>
         <p></p>
         <a id="back_from_display" href="/"><abbr title="Back to the question page"><img src="{{url_for('static', filename='leftarrow.png')}}" width='40' height='40' alt='Back'></abbr></a>
-
+        {% endif %}
     </body>
 </html>

@@ -21,7 +21,9 @@
                 <div id="logged_in">Logged in as {{ session['username'] }}</div>
                 <a id="login" href="{{ url_for('logout') }}">Logout</a>
         {% endif %}
+        {% if session %}
         <a href="{{ url_for('new_question_form') }}" id="add"><abbr title="Add new question"><img src="static/Add.png" width="30" height="30" alt="Add new question"></abbr></a>
+        {% endif     %}
         {% if limit == 5 %}
         <a href="{{url_for('index_list', criteria='id', order=ordering)}}" id="full_list"><abbr title="See full list"><img src="static/downarrow.png"width="30" height="30" alt="See full list"></abbr></a>
         <table border="1" cellpadding="10">
@@ -42,8 +44,10 @@
                 <th><a href="{{url_for('index_list', criteria='view_number', order=ordering )}}"> View number </th>
                 <th><a href="{{url_for('index_list', criteria='vote_number', order=ordering )}}"> Vote number </th>
                 <th> Title </th>
-                <th> Edit </th>
-                <th class="table_head_end"> Delete </th>
+                {% if session %}
+                    <th> Edit </th>
+                    <th class="table_head_end"> Delete </th>
+                {% endif %}
             </tr>
             <tr class="spacer"></tr>
 
@@ -59,9 +63,14 @@
                     {% endif %}
                 {% endfor %}
                 {% if row: %}
+                {% if session["username"] == row["username"] %}
                     <td><a href="/question/{{ row['id'] }}/edit"><abbr title="Edit"><img src="static/edit.svg" width="20" height="20" alt="Edit"></abbr></a></td>
                     <td><a href="/question/{{ row['id'] }}/delete"><abbr title="Delete"><img src="static/delete.png" width="20" height="20" alt="Delete"></abbr></a></td>
-                {% endif%}
+                {% elif session["username"] != row["username"] %}
+                        <td><abbr title="Edit"><img src="static/edit_inactive.png" width="20" height="20" alt="Edit"></abbr></td>
+                        <td><abbr title="Delete"><img src="static/delete_inactive.png" width="20" height="20" alt="Delete"></abbr></td>
+                {% endif %}
+                {% endif %}
             </tr>
             <tr class="spacer"></tr>
             {% endfor %}
