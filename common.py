@@ -2,6 +2,7 @@ from config import Config
 import psycopg2
 import psycopg2.extras
 from flask import Flask, render_template, redirect, request, session, url_for
+import bcrypt
 
 
 def open_database():
@@ -97,3 +98,16 @@ def get_question_id(cursor, comment_id):
         question_id = cursor.fetchall()
     question_id = question_id[0]["question_id"]
     return question_id
+
+
+def get_hashed_password(plain_text_password):
+    # Hash a password for the first time
+    #   (Using bcrypt, the salt is saved into the hash itself)
+    hashed_bytes = bcrypt.hashpw(plain_text_password.encode('utf-8'), bcrypt.gensalt())
+    return hashed_bytes.decode("utf-8")
+
+
+def check_password(plain_text_password, hashed_text_password):
+    hashed_bytes_password = hashed_text_password.encode("utf-8")
+    # Check hased password. Useing bcrypt, the salt is saved into the hash itself
+    return bcrypt.checkpw(plain_text_password.encode('utf-8'), hashed_bytes_password)
