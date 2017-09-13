@@ -35,16 +35,9 @@ def upvote(cursor, id_, question_id, vote, username):
     cursor.execute("""UPDATE users
                       SET reputation = reputation + {rep}
                       WHERE username = %s;""".format(rep=10 if vote == "up" else -2), (username,))
-    if vote == "up":
-        current_vote += 1
-        cursor.execute("""UPDATE answer
-                          SET vote_number = (%s)
-                          WHERE id = (%s);""", (current_vote, id_))
-    else:
-        current_vote -= 1
-        cursor.execute("""UPDATE answer
-                          SET vote_number = (%s)
-                          WHERE id = (%s);""", (current_vote, id_))
+    cursor.execute("""UPDATE answer
+                      SET vote_number = vote_number + {vote}
+                      WHERE username = %s;""".format(vote=1 if vote == "up" else -1), (username,))
     cursor.execute("""UPDATE question
                       SET view_number = view_number - 1
                       WHERE id = (%s);""", (question_id,))

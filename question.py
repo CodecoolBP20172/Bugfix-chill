@@ -26,9 +26,10 @@ def new_question(cursor):
 @connection_handler
 def add_question(cursor, new_question_data):
     new_question_data["submission_time"] = datetime.now().replace(microsecond=0)
+    new_question_data["username"] = session["username"]
     cursor.execute("INSERT INTO question \
-                    (submission_time, vote_number, view_number, title, message, image) \
-                    VALUES (%(submission_time)s, 0, 0, %(title)s, %(message)s, {image}); \
+                    (submission_time, vote_number, view_number, title, message, image, username) \
+                    VALUES (%(submission_time)s, 0, 0, %(title)s, %(message)s, {image}, %(username)s); \
                     ".format(image='NULL' if new_question_data["image"] == '' else '%(image)s'), new_question_data)
     cursor.execute("SELECT * FROM question ORDER BY id DESC LIMIT 1")
     new_question = cursor.fetchall()
@@ -66,6 +67,7 @@ def display_question(cursor, question_id):
     question_dict = cursor.fetchall()
     cursor.execute("""SELECT *
                       FROM answer
+                      INNER JOIN users ON answer.username = users.username
                       WHERE question_id = (%s)
                       ORDER BY vote_number DESC;""", (question_id,))
     answer_list = cursor.fetchall()
@@ -77,14 +79,12 @@ def display_question(cursor, question_id):
                       FROM comment
                       WHERE answer_id IN (SELECT id FROM answer WHERE question_id = (%s));""", (question_id,))
     answer_comments = cursor.fetchall()
-    
     answer_comment_count = get_answer_comment_len(answer_list, answer_comments)
     get_reputation = cursor.execute("""SELECT reputation
                                        FROM users
                                        WHERE username IN
                                        (SELECT username FROM question WHERE id = (%s));""", (question_id,))
     reputation = cursor.fetchall()
-    print(reputation)
     if reputation != []:
         return render_template("display.html", question=question_dict[0], answers_list=answer_list,
                                question_comments=question_comments, answer_comments=answer_comments,

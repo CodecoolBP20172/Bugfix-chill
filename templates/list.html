@@ -32,10 +32,8 @@
                 <th><a href="{{url_for('index', criteria='view_number', order=ordering )}}"> View number </th>
                 <th><a href="{{url_for('index', criteria='vote_number', order=ordering )}}"> Vote number </th>
                 <th> Title </th>
-                {% if session %}
-                    <th> Edit </th>
-                    <th class="table_head_end"> Delete </th>
-                {% endif %}
+                <th> Edit </th>
+                <th class="table_head_end"> Delete </th>
             </tr>
             <tr class="spacer"></tr>
         {% else %}
@@ -68,6 +66,9 @@
                 {% if session["username"] == row["username"] %}
                     <td><a href="/question/{{ row['id'] }}/edit"><abbr title="Edit"><img src="static/edit.svg" width="20" height="20" alt="Edit"></abbr></a></td>
                     <td><a href="/question/{{ row['id'] }}/delete"><abbr title="Delete"><img src="static/delete.png" width="20" height="20" alt="Delete"></abbr></a></td>
+                {% elif session["username"] != row["username"] %}
+                        <td><abbr title="Edit"><img src="static/edit_inactive.png" width="20" height="20" alt="Edit"></abbr></td>
+                        <td><abbr title="Delete"><img src="static/delete_inactive.png" width="20" height="20" alt="Delete"></abbr></td>
                 {% endif %}
                 {% endif %}
             </tr>
