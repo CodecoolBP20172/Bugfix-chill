@@ -42,10 +42,13 @@ def login():
     if request.method == 'POST':
         username = request.form['username']
         password = request.form['password']
-        login = users.login_to_page(username, password)
-        if login:
-            session['username'] = username
-            return redirect(url_for('index'))
+        user = users.get_user_by_name(username)
+        if user:
+            valid_password = common.check_password(password, user['password'])
+            if valid_password:
+                session['username'] = username
+                session['user_id'] = user['id']
+                return redirect(url_for('index'))
     return render_template("login.html", login=login)
 
 
@@ -53,6 +56,7 @@ def login():
 def logout():
     # remove the username from the session if it's there
     session.pop('username', None)
+    session.pop('user_id', None)
     return redirect(url_for('index'))
 
 
@@ -67,12 +71,14 @@ def registration():
     if request.method == 'POST':
         user_name = request.form.get("user_name")
         password = request.form.get("password")
-        new_user = users.register_user(user_name, password)
+        hashed_password = common.get_hashed_password(password)
+        new_user = users.register_user(user_name, hashed_password)
         if new_user:
             return redirect("/")
     return render_template("registration.html", new_user=new_user)
 
 
+<<<<<<< HEAD
 @app.route('/user/<username>')
 def userpage(username):
     users_question, users_answer, users_comments = users.get_user_stuffs(username)
@@ -83,6 +89,8 @@ def userpage(username):
     return render_template("userpage.html", questions=users_question, question_keys=question_keys, answers=users_answer, answer_keys=answer_keys, comments=users_comments)
 
 
+=======
+>>>>>>> development
 """
 Functins handleing interactions with questions
 """
@@ -132,6 +140,12 @@ def upvote_question():
     id_ = request.form.get("question_id")
     username = request.form.get("username")
     return question.upvote_question(id_, vote, username)
+
+
+@app.route('/search')
+def search_question():
+    query = request.args.get("search_phrase")
+    return question.search_phrase(query)
 
 
 """
