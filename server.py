@@ -76,8 +76,9 @@ def registration():
 @app.route('/user/<username>')
 def userpage(username):
     users_question, users_answer, users_comments = users.get_user_stuffs(username)
-    print (users_question)
-    return render_template("userpage.html", questions=users_question, answers=users_answer, comments=users_comments)
+    question_keys = ["submission_time", "view_number", "vote_number", "title"]
+    answer_keys = ["submission_time", "vote_number", "message", "title"]
+    return render_template("userpage.html", questions=users_question, question_keys=question_keys, answers=users_answer, answers_keys=answer_keys, comments=users_comments)
 
 
 """
