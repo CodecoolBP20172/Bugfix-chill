@@ -157,7 +157,7 @@ a:hover {
     margin-left: 10px;
 }
 
-
-#comment_indent_div{
-
+#error_message {
+  text-align: center;
+  margin: 0 auto;
 }
