@@ -38,7 +38,7 @@ def index_list():
 
 @app.route('/login', methods=['GET', 'POST'])
 def login():
-    login = True
+    valid_login = True
     if request.method == 'POST':
         username = request.form['username']
         password = request.form['password']
@@ -49,7 +49,9 @@ def login():
                 session['username'] = username
                 session['user_id'] = user['id']
                 return redirect(url_for('index'))
-    return render_template("login.html", login=login)
+        if not user:
+               valid_login = False
+    return render_template("login.html", valid_login=valid_login)
 
 
 @app.route('/logout')
