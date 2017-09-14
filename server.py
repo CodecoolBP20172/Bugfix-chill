@@ -49,6 +49,8 @@ def login():
                 session['username'] = username
                 session['user_id'] = user['id']
                 return redirect(url_for('index'))
+            if not valid_password:
+                valid_login = False
         if not user:
             valid_login = False
     return render_template("login.html", valid_login=valid_login)
