@@ -2,6 +2,7 @@ from flask import Flask, render_template, redirect, request, session, url_for
 import common
 import question
 import answer
+import users
 
 
 app = Flask(__name__)
@@ -33,6 +34,62 @@ def index_list():
     if not valid_url:
         return question.question_index()
     return question.question_index(criteria, order)
+
+
+@app.route('/login', methods=['GET', 'POST'])
+def login():
+    valid_login = True
+    if request.method == 'POST':
+        username = request.form['username']
+        password = request.form['password']
+        user = users.get_user_by_name(username)
+        if user:
+            valid_password = common.check_password(password, user['password'])
+            if valid_password:
+                session['username'] = username
+                session['user_id'] = user['id']
+                return redirect(url_for('index'))
+        if not user:
+            valid_login = False
+    return render_template("login.html", valid_login=valid_login)
+
+
+@app.route('/logout')
+def logout():
+    # remove the username from the session if it's there
+    session.pop('username', None)
+    session.pop('user_id', None)
+    return redirect(url_for('index'))
+
+
+"""
+Functions related to users
+"""
+
+
+@app.route('/registration', methods=['GET', 'POST'])
+def registration():
+    new_user = True
+    if request.method == 'POST':
+        user_name = request.form.get("user_name")
+        password = request.form.get("password")
+        hashed_password = common.get_hashed_password(password)
+        new_user = users.register_user(user_name, hashed_password)
+        if new_user:
+            session['username'] = user_name
+            session['user_id'] = users.get_user_id(user_name)
+            return redirect("/")
+    return render_template("registration.html", new_user=new_user)
+
+
+@app.route('/user/<username>')
+def userpage(username):
+    users_question, users_answer, users_comments = users.get_user_stuffs(username)
+    question_keys = ["submission_time", "view_number", "vote_number", "title"]
+    answer_keys = ["submission_time", "vote_number", "message", "title"]
+    comment_keys = ["submission_time", "message", "question_id", "other_question_id"]
+    return render_template("userpage.html", questions=users_question, question_keys=question_keys, answers=users_answer,
+                           answer_keys=answer_keys, comments=users_comments, comment_keys=comment_keys)
 
 
 """
@@ -82,7 +139,14 @@ def del_question_by_id(question_id):
 def upvote_question():
     vote = request.form.get("vote")
     id_ = request.form.get("question_id")
-    return question.upvote_question(id_, vote)
+    username = request.form.get("username")
+    return question.upvote_question(id_, vote, username)
+
+
+@app.route('/search')
+def search_question():
+    query = request.args.get("search_phrase")
+    return question.search_phrase(query)
 
 
 """
@@ -115,7 +179,22 @@ def upvote_answer():
     vote = request.form.get("vote")
     question_id = request.form.get("question_id")
     answer_id = request.form.get("answer_id")
-    return answer.upvote(answer_id, question_id, vote)
+    username = request.form.get("username")
+    return answer.upvote(answer_id, question_id, vote, username)
+
+
+@app.route("/answer/<answer_id>/edit")
+def edit_answer(answer_id):
+    return answer.edit_answer(answer_id)
+
+
+@app.route("/answer/<answer_id>/edit_answer", methods=["POST"])
+def save_edited_answer(answer_id):
+    message = request.form.get("message")
+    image = request.form.get("image")
+    answer_id = request.form.get("answer_id")
+    question_id = request.form.get("question_id")
+    return answer.edited_answer(message, image, answer_id, question_id)
 
 
 """
@@ -159,6 +238,16 @@ def render_comment_edit(comment_id):
 def submit_edited_comment(comment_id):
     message = request.form.get("message")
     return common.submit_comment_edited(comment_id, message)
+
+
+'''
+User related url functions
+'''
+
+
+@app.route('/user_list')
+def user_list():
+    return users.list_users()
 
 
 if __name__ == "__main__":

@@ -26,9 +26,10 @@ def new_question(cursor):
 @connection_handler
 def add_question(cursor, new_question_data):
     new_question_data["submission_time"] = datetime.now().replace(microsecond=0)
+    new_question_data["username"] = session["username"]
     cursor.execute("INSERT INTO question \
-                    (submission_time, vote_number, view_number, title, message, image) \
-                    VALUES (%(submission_time)s, 0, 0, %(title)s, %(message)s, {image}); \
+                    (submission_time, vote_number, view_number, title, message, image, username) \
+                    VALUES (%(submission_time)s, 0, 0, %(title)s, %(message)s, {image}, %(username)s); \
                     ".format(image='NULL' if new_question_data["image"] == '' else '%(image)s'), new_question_data)
     cursor.execute("SELECT * FROM question ORDER BY id DESC LIMIT 1")
     new_question = cursor.fetchall()
@@ -64,10 +65,11 @@ def display_question(cursor, question_id):
                       WHERE id = %s
                       ORDER BY id;""", (question_id,))
     question_dict = cursor.fetchall()
-    cursor.execute("""SELECT *
-                      FROM answer
-                    WHERE question_id = (%s)
-                    ORDER BY vote_number DESC;""", (question_id,))
+    cursor.execute("""SELECT a.id, a.submission_time, a.vote_number, a.question_id, a.message, a.image, a.username, users. reputation
+                      FROM answer a
+                      INNER JOIN users ON a.username = users.username
+                      WHERE question_id = (%s)
+                      ORDER BY vote_number DESC;""", (question_id,))
     answer_list = cursor.fetchall()
     cursor.execute("""SELECT *
                       FROM comment
@@ -78,33 +80,27 @@ def display_question(cursor, question_id):
                       WHERE answer_id IN (SELECT id FROM answer WHERE question_id = (%s));""", (question_id,))
     answer_comments = cursor.fetchall()
     answer_comment_count = get_answer_comment_len(answer_list, answer_comments)
-    return render_template("display.html", question=question_dict[0], answers_list=answer_list,
-                           question_comments=question_comments, answer_comments=answer_comments,
-                           answer_comment_count=answer_comment_count)
-
-
-@connection_handler
-def delete_question(cursor, question_id):
-    cursor.execute("DELETE FROM question_tag WHERE question_id = %s;", (question_id,))
-    cursor.execute("DELETE FROM comment WHERE question_id = %s;", (question_id,))
-    cursor.execute("DELETE FROM question WHERE id = %s;", (question_id,))
-
-
-@connection_handler
-def delete_answers_for_question_id(cursor, question_id):
-    cursor.execute("SELECT id FROM answer WHERE question_id = %s;", (question_id,))
-    deleted_answers = cursor.fetchall()
-    for answer_id in deleted_answers:
-        cursor.execute("DELETE FROM comment WHERE answer_id = %(id)s;", answer_id)
-        cursor.execute("DELETE FROM answer WHERE id = %(id)s;", answer_id)
+    get_reputation = cursor.execute("""SELECT reputation
+                                       FROM users
+                                       WHERE username IN
+                                       (SELECT username FROM question WHERE id = (%s));""", (question_id,))
+    reputation = cursor.fetchall()
+    if reputation != []:
+        return render_template("display.html", question=question_dict[0], answers_list=answer_list,
+                               question_comments=question_comments, answer_comments=answer_comments,
+                               answer_comment_count=answer_comment_count, reputation=reputation[0])
+    else:
+        return render_template("display.html", question=question_dict[0], answers_list=answer_list,
+                               question_comments=question_comments, answer_comments=answer_comments,
+                               answer_comment_count=answer_comment_count, reputation=reputation)
 
 
 # deleting a question by id
 # deletes the answers for the deleted question too
 # redirects to /list
-def delete_question_with_answers(question_id):
-    delete_answers_for_question_id(question_id)
-    delete_question(question_id)
+@connection_handler
+def delete_question_with_answers(cursor, question_id):
+    cursor.execute("DELETE FROM question WHERE id = %s;", (question_id,))
     return redirect('/list')
 
 
@@ -133,16 +129,30 @@ def question_for_edit(cursor, question_id):
 
 
 @connection_handler
-def upvote_question(cursor, id_, vote):
+def upvote_question(cursor, id_, vote, username):
     cursor.execute("UPDATE question \
                     SET vote_number = vote_number + {vote_var}, view_number = view_number -1 \
                     WHERE id = %s;".format(vote_var=1 if vote == "up" else -1), (id_,))
+    cursor.execute("""UPDATE users
+                      SET reputation = reputation + {rep}
+                      WHERE username = %s;""".format(rep=15 if vote == "up" else -2), (username,))
     return redirect("/question/{}".format(id_))
 
 
 @connection_handler
 def comment_question(cursor, question_id, message):
-    cursor.execute("INSERT INTO comment (question_id, answer_id, message, submission_time, edited_count)"
-                   "VALUES (%s, %s, %s, %s, %s);",
-                   (question_id, None, message, datetime.now().replace(microsecond=0), 0))
+    cursor.execute("INSERT INTO comment (question_id, answer_id, message, submission_time, edited_count, username)"
+                   "VALUES (%s, %s, %s, %s, %s, %s);",
+                   (question_id, None, message, datetime.now().replace(microsecond=0), 0, session["username"]),)
     return redirect("/question/{}".format(question_id))
+
+
+@connection_handler
+def search_phrase(cursor, search_phrase):
+    cursor.execute("""SELECT *
+                      FROM question
+                      WHERE title LIKE  %(searched)s  ;""", {'searched': "%"+search_phrase+"%"})
+    table = cursor.fetchall()
+    header = ["id", "submission_time", "view_number", "vote_number", "title", "message", "image"]
+    search = True
+    return render_template('list.html', table=table, header=header, search=search)

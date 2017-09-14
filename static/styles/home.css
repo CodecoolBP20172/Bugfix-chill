@@ -14,12 +14,15 @@ h1 {
             background-clip: text;
 }
 
+h2 {
+  text-align: center;
+}
 
 table {
    margin-left: auto;
    margin-right: auto;
    margin-top: 10px;
-   width: auto;
+   width: 77.5%;
    border: none;
    border-collapse: collapse;
 }
@@ -60,10 +63,44 @@ tr.header a:hover {
   text-decoration: underline;
 }
 
+
+#login_button, #register_button, #userpage_button, #user_list_button {
+  font-size: 20px;
+  text-decoration: none;
+  background-color: white;
+  color: #9B1D20;
+  padding: 10px;
+  border-radius: 5px;
+  position: absolute;
+  top: 20px;
+}
+
+#login_button {
+  right: 20px;
+}
+
+#register_button {
+  right: 100px;
+}
+
+#userpage_button {
+  right: 110px;
+}
+
+#user_list_button {
+  left: 10px;
+}
+
 #content td {
   border:none;
   background-color: white; 
   padding: 25px;
+}
+
+#logged_in {
+  top: 20px;
+  margin: 0 auto;
+  text-align: center;;
 }
 
 #content td:first-child {
@@ -84,14 +121,66 @@ a:visited {
   color: blue;
 }
 
-#add {
+/* #add {
   position: absolute;
-  top: 203px;
+  top: 237px;
   right: 100px;
 }
 
 #full_list, #latest_five_question {
   position: absolute;
-  top: 203px;
+  top: 237px;
   right: 50px;
+} */
+
+#menu {
+  text-align: center;
+  position: relative;
+  width: 77.5%;
+  margin: 0 auto;
+}
+
+#add, #search, #full-list, #latest_five_question {
+  display: inline-block;
+}
+
+#add {
+  position: absolute;
+  top: 10px;
+  left: 10px;
+}
+
+#full_list, #latest_five_question {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+}
+
+#logo {
+  text-decoration: none;
+}
+
+
+#logo_h3{
+  margin-top: 10px;
+  margin-bottom: 0px;
+  font: bold 40px arial, sans-serif;
+  text-transform: uppercase;
+  text-align: left;
+  background-color: #3D3A37;
+  color: transparent;
+  text-shadow: 4px 4px 3px rgba(255,255,255, 0.5);
+  -webkit-background-clip: text;
+     -moz-background-clip: text;
+          background-clip: text;
+
+}
+
+#question_table, #answer_table, #comment_table {
+  margin: 0 auto;
+  width: 70%;
+}
+
+#search {
+  text-align: center;
 }
