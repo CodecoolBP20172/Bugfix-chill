@@ -50,7 +50,7 @@ def login():
                 session['user_id'] = user['id']
                 return redirect(url_for('index'))
         if not user:
-               valid_login = False
+            valid_login = False
     return render_template("login.html", valid_login=valid_login)
 
 
@@ -76,6 +76,8 @@ def registration():
         hashed_password = common.get_hashed_password(password)
         new_user = users.register_user(user_name, hashed_password)
         if new_user:
+            session['username'] = user_name
+            session['user_id'] = users.get_user_id(user_name)
             return redirect("/")
     return render_template("registration.html", new_user=new_user)
 
