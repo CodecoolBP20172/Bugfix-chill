@@ -84,7 +84,9 @@ def userpage(username):
     question_keys = ["submission_time", "view_number", "vote_number", "title"]
     answer_keys = ["submission_time", "vote_number", "message", "title"]
     comment_keys = ["submission_time", "message", "question_id", "other_question_id"]
-    return render_template("userpage.html", questions=users_question, question_keys=question_keys, answers=users_answer, answer_keys=answer_keys, comments=users_comments, comment_keys=comment_keys)
+    return render_template("userpage.html", questions=users_question, question_keys=question_keys, answers=users_answer,
+                           answer_keys=answer_keys, comments=users_comments, comment_keys=comment_keys)
+
 
 """
 Functins handleing interactions with questions
@@ -175,6 +177,20 @@ def upvote_answer():
     answer_id = request.form.get("answer_id")
     username = request.form.get("username")
     return answer.upvote(answer_id, question_id, vote, username)
+
+
+@app.route("/answer/<answer_id>/edit")
+def edit_answer(answer_id):
+    return answer.edit_answer(answer_id)
+
+
+@app.route("/answer/<answer_id>/edit_answer", methods=["POST"])
+def save_edited_answer(answer_id):
+    message = request.form.get("message")
+    image = request.form.get("image")
+    answer_id = request.form.get("answer_id")
+    question_id = request.form.get("question_id")
+    return answer.edited_answer(message, image, answer_id, question_id)
 
 
 """

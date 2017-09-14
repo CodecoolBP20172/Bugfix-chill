@@ -55,3 +55,20 @@ def comment_answer(cursor, answer_id, message):
     question_id = cursor.fetchall()
     question_id = question_id[0]["question_id"]
     return redirect("/question/{}".format(question_id))
+
+
+@connection_handler
+def edit_answer(cursor, answer_id):
+    cursor.execute("""SELECT *
+                      FROM answer
+                      WHERE id = %s;""", (answer_id,))
+    answer = cursor.fetchone()
+    return render_template("form.html", form_type="edit_answer", answer=answer)
+
+
+@connection_handler
+def edited_answer(cursor, message, image, answer_id, question_id):
+    cursor.execute("""UPDATE answer
+                      SET message = %s, image = %s
+                      WHERE id = %s;""", (message, image, answer_id))
+    return redirect("/question/{}".format(question_id))
