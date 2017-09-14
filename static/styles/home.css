@@ -64,7 +64,7 @@ tr.header a:hover {
 }
 
 
-#login_button, #register_button, #userpage_button {
+#login_button, #register_button, #userpage_button, #user_list_button {
   font-size: 20px;
   text-decoration: none;
   background-color: white;
@@ -73,6 +73,9 @@ tr.header a:hover {
   border-radius: 5px;
   position: absolute;
   top: 20px;
+}
+
+#login_button {
   right: 20px;
 }
 
@@ -84,6 +87,10 @@ tr.header a:hover {
   right: 110px;
 }
 
+#user_list_button {
+  left: 10px;
+}
+
 #content td {
   border:none;
   background-color: white; 
@@ -93,7 +100,7 @@ tr.header a:hover {
 #logged_in {
   position: absolute;
   top: 20px;
-  left: 20px;
+  left: auto;
 }
 
 #content td:first-child {
