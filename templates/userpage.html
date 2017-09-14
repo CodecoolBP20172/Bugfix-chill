@@ -25,7 +25,7 @@
                     {% for key in question_keys %}
                         {% if key == "title": %}
                             <td align="center"><a href="{{url_for('display_question_by_id', question_id = question['id'])}}"> {{ question["title"] }} </a></td>
-                        {% else %}   
+                        {% else %}
                             <td align="center">{{ question[key] }}</td>
                         {% endif %}
                         {% endfor %}
@@ -52,7 +52,7 @@
                     {% for key in answer_keys %}
                         {% if key == "title": %}
                             <td align="center"><a href="{{url_for('display_question_by_id', question_id = answer['question_id'])}}"> {{ answer["title"] }} </a></td>
-                        {% else %}   
+                        {% else %}
                             <td align="center">{{ answer[key] }}</td>
                         {% endif %}
                         {% endfor %}
@@ -77,9 +77,9 @@
                     {% for key in comment_keys %}
                     {% if key == "question_id" %}
                         {% if comment['question_id'] %}
-                            <td align="center"><a href="{{url_for('display_question_by_id', question_id = comment['question_id'])}}">link to question</a></td>
+                            <td align="center"><a href="{{url_for('display_question_by_id', question_id = comment['question_id'])}}">{{comment['question_title']}}</a></td>
                         {% else %}
-                        <td align="center"><a href="{{url_for('display_question_by_id', question_id = comment['other_question_id'])}}">link to question </a></td>
+                        <td align="center"><a href="{{url_for('display_question_by_id', question_id = comment['other_question_id'])}}">{{comment['question_title']}} </a></td>
                         {% endif %}
                     {% elif key != "other_question_id" %}
                         <td align="center">{{ comment[key] }}</td>
@@ -89,7 +89,7 @@
                     <td><a href="/comments/{{ comment['id'] }}/delete"><abbr title="Delete"><img src="/static/delete.png" width="20" height="20" alt="Delete"></abbr></a></td>
                     </tr>
                     <tr class="spacer"></tr>
-            {% endfor %} 
+            {% endfor %}
         </table>
     {% endif %}
 </body>

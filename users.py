@@ -49,12 +49,13 @@ def get_user_stuffs(cursor, username):
                    ON (answer.question_id = question.id)
                    WHERE answer.username = %(user)s;""", {"user": username})
     users_answers = cursor.fetchall()
-    cursor.execute("""SELECT comment.id, comment.submission_time, comment.message, question.id AS question_id, answer.id AS answer_id, answer.question_id AS other_question_id
+    cursor.execute("""SELECT comment.id, comment.submission_time, comment.message, question.id AS question_id, answer.id AS answer_id, answer.question_id AS other_question_id, question.title AS question_title
                    FROM comment
-                   LEFT JOIN question
-                   ON (comment.question_id = question.id)
                    LEFT JOIN answer
                    ON (comment.answer_id = answer.id)
+                   JOIN question
+                   ON (comment.question_id = question.id OR answer.question_id = question.id)
                    WHERE comment.username = %(user)s;""", {"user": username})
     users_comments = cursor.fetchall()
+    print(users_comments)
     return users_questions, users_answers, users_comments
