@@ -156,3 +156,8 @@ a:hover {
     margin-bottom: 10px;
     margin-left: 10px;
 }
+
+#error_message {
+  text-align: center;
+  margin: 0 auto;
+}

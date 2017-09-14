@@ -22,7 +22,7 @@ table {
    margin-left: auto;
    margin-right: auto;
    margin-top: 10px;
-   width: auto;
+   width: 77.5%;
    border: none;
    border-collapse: collapse;
 }
@@ -64,7 +64,7 @@ tr.header a:hover {
 }
 
 
-#login_button, #register_button, #userpage_button {
+#login_button, #register_button, #userpage_button, #user_list_button {
   font-size: 20px;
   text-decoration: none;
   background-color: white;
@@ -73,6 +73,9 @@ tr.header a:hover {
   border-radius: 5px;
   position: absolute;
   top: 20px;
+}
+
+#login_button {
   right: 20px;
 }
 
@@ -84,6 +87,10 @@ tr.header a:hover {
   right: 110px;
 }
 
+#user_list_button {
+  left: 10px;
+}
+
 #content td {
   border:none;
   background-color: white; 
@@ -91,9 +98,9 @@ tr.header a:hover {
 }
 
 #logged_in {
-  position: absolute;
   top: 20px;
-  left: 20px;
+  margin: 0 auto;
+  text-align: center;;
 }
 
 #content td:first-child {
@@ -114,16 +121,39 @@ a:visited {
   color: blue;
 }
 
-#add {
+/* #add {
   position: absolute;
-  top: 203px;
+  top: 237px;
   right: 100px;
 }
 
 #full_list, #latest_five_question {
   position: absolute;
-  top: 203px;
+  top: 237px;
   right: 50px;
+} */
+
+#menu {
+  text-align: center;
+  position: relative;
+  width: 77.5%;
+  margin: 0 auto;
+}
+
+#add, #search, #full-list, #latest_five_question {
+  display: inline-block;
+}
+
+#add {
+  position: absolute;
+  top: 10px;
+  left: 10px;
+}
+
+#full_list, #latest_five_question {
+  position: absolute;
+  top: 10px;
+  right: 10px;
 }
 
 #logo {
@@ -144,4 +174,13 @@ a:visited {
      -moz-background-clip: text;
           background-clip: text;
 
+}
+
+#question_table, #answer_table, #comment_table {
+  margin: 0 auto;
+  width: 70%;
+}
+
+#search {
+  text-align: center;
 }

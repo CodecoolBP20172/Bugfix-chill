@@ -7,10 +7,10 @@
     </head>
     <body>
         <h1>Login page</h1>
-        {% if not login %}
-            <p>
+        {% if not valid_login %}
+            <div id="error_message">
                 <font size="3" color="red">Invalid username or password!</font>
-            </p>
+            </div>
         {% endif %}
         <form action="/login" method="POST">
             <p>
