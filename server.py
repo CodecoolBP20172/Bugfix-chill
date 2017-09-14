@@ -78,6 +78,16 @@ def registration():
     return render_template("registration.html", new_user=new_user)
 
 
+@app.route('/user/<username>')
+def userpage(username):
+    users_question, users_answer, users_comments = users.get_user_stuffs(username)
+    question_keys = ["submission_time", "view_number", "vote_number", "title"]
+    answer_keys = ["submission_time", "vote_number", "message", "title"]
+    comment_keys = ["submission_time", "message", "question_id", "other_question_id"]
+    return render_template("userpage.html", questions=users_question, question_keys=question_keys, answers=users_answer,
+                           answer_keys=answer_keys, comments=users_comments, comment_keys=comment_keys)
+
+
 """
 Functins handleing interactions with questions
 """
@@ -181,6 +191,7 @@ def save_edited_answer(answer_id):
     answer_id = request.form.get("answer_id")
     question_id = request.form.get("question_id")
     return answer.edited_answer(message, image, answer_id, question_id)
+
 
 """
 Functions related to comments

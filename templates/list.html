@@ -20,12 +20,13 @@
             </p>
         </form>
         {% if not session['username'] %}
-        <a id="login" href="{{ url_for('login') }}">Login</a>
+        <a id="login_button" href="{{ url_for('login') }}">Login</a>
         <a id="register_button" href="{{ url_for('registration') }}" id="register">Register</a>
         {% endif %}
         {% if session['username'] %}
                 <div id="logged_in">Logged in as {{ session['username'] }}</div>
-                <a id="login" href="{{ url_for('logout') }}">Logout</a>
+                <a id="userpage_button" href="/user/{{session['username']}}">My profile</a>
+                <a id="login_button" href="{{ url_for('logout') }}">Logout</a>
         {% endif %}
         {% if session %}
         <a href="{{ url_for('new_question_form') }}" id="add"><abbr title="Add new question"><img src="static/Add.png" width="30" height="30" alt="Add new question"></abbr></a>
@@ -50,10 +51,8 @@
                 <th><a href="{{url_for('index_list', criteria='view_number', order=ordering )}}"> View number </th>
                 <th><a href="{{url_for('index_list', criteria='vote_number', order=ordering )}}"> Vote number </th>
                 <th> Title </th>
-                {% if session %}
-                    <th> Edit </th>
-                    <th class="table_head_end"> Delete </th>
-                {% endif %}
+                <th> Edit </th>
+                <th class="table_head_end"> Delete </th>
             </tr>
             <tr class="spacer"></tr>
 

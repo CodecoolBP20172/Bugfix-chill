@@ -3,6 +3,7 @@ body {
     position: relative;
   }
 
+
 h1 {
   font-weight: bold;
   font-size: 50px;
@@ -15,6 +16,8 @@ h1 {
      -moz-background-clip: text;
           background-clip: text;
   }
+
+
 h2 {
   font-weight: bold;
   text-align: center;
@@ -24,6 +27,7 @@ h2 {
   border-radius: 10px;
   padding: 10px;
 }
+
 
 #answer_header {
     text-transform: uppercase;
@@ -35,9 +39,6 @@ h2 {
     padding: 10px;
 }
 
-p {
-  text-align: center;
-}
 
 form p {
   text-align: center;
@@ -45,7 +46,8 @@ form p {
   position: relative;
 }
 
-.login-input {
+
+.login-input, .register-input {
   overflow: hidden;
   text-align: center;
   border-radius: 10px 10px 0 0;
@@ -54,6 +56,7 @@ form p {
   margin: 0 auto;
   width: 20%;
 }
+
 
 label {
   background-color: #9B1D20;
@@ -64,35 +67,31 @@ label {
   border-top-right-radius: 10px;
 }
 
-.login-input label, .login-input input {
+
+.login-input label, .login-input input, .register-input label, .register-input input {
   width: 100%;
 }
 
-.login-input label {
+
+.login-input label, .register-input label {
   padding: 10px 0;
 }
+
 
 #last_text {
   position: relative;
 }
 
-#create {
-  position: absolute;
-  top: 450px;
-  left: 850px;
-}
-
-#login_button {
-  align-self: auto;
-}
 
 p {
   overflow-wrap: break-word;
 }
 
+
 p, pre, b, a {
     font-size: 15px;
 }
+
 
 #back {
   position: absolute;
@@ -100,13 +99,16 @@ p, pre, b, a {
   left: 470px;
 }
 
+
 b{
     font-weight: bold;
 }
 
+
 a:hover {
   background-color: #a6a6a6;
 }
+
 
 #answer_question, #comment_question, #comment_answer, #delete_answer, #edit_answer {
   background-color: #4D7EA8;
@@ -126,15 +128,11 @@ a:hover {
   border-radius: 10px;
 }
 
-#back_from_display {
-  /*position: fixed;*/
-  /*top: 3%;
-  right: 2%;*/
-}
 
 #logo {
     text-decoration: none;
 }
+
 
 #logo_h3{
     margin-top: 10px;
@@ -151,13 +149,10 @@ a:hover {
 
 }
 
+
 #comment_message{
     font-size: 125%;
     margin-top: 10px;
     margin-bottom: 10px;
     margin-left: 10px;
-}
-
-#comment_indent_div{
-
 }
