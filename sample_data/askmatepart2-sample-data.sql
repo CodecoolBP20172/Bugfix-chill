@@ -152,4 +152,4 @@ INSERT INTO question_tag VALUES (0, 1);
 INSERT INTO question_tag VALUES (1, 3);
 INSERT INTO question_tag VALUES (2, 3);
 
-INSERT INTO users VALUES (0, 'Xattus', 'admin', '2017-09-11 20:26:00')
+INSERT INTO users VALUES (0, 'Xattus', '$2b$12$uJq8y9m9l0r82BwEbBjQSuegcmvZLiUX900ykhI9J/9oR60wfkg7m', '2017-09-11 20:26:00')

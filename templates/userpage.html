@@ -79,7 +79,7 @@
                         {% if comment['question_id'] %}
                             <td align="center"><a href="{{url_for('display_question_by_id', question_id = comment['question_id'])}}">{{comment['question_title']}}</a></td>
                         {% else %}
-                        <td align="center"><a href="{{url_for('display_question_by_id', question_id = comment['other_question_id'])}}">{{comment['question_title']}} </a></td>
+                        <td align="center"><a href="{{url_for('display_question_by_id', question_id = comment['question_id'])}}">{{comment['question_title']}} </a></td>
                         {% endif %}
                     {% elif key != "other_question_id" %}
                         <td align="center">{{ comment[key] }}</td>
