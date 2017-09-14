@@ -110,11 +110,7 @@ a:hover {
 }
 
 
-<<<<<<< HEAD
-#answer_question, #comment_question, #comment_answer, #delete_answer {
-=======
 #answer_question, #comment_question, #comment_answer, #delete_answer, #edit_answer {
->>>>>>> development
   background-color: #4D7EA8;
   padding: 5px;
   border-radius: 10px;
@@ -160,11 +156,8 @@ a:hover {
     margin-bottom: 10px;
     margin-left: 10px;
 }
-<<<<<<< HEAD
 
 #error_message {
   text-align: center;
   margin: 0 auto;
 }
-=======
->>>>>>> development
