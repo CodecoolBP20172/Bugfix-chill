@@ -73,7 +73,7 @@ CREATE TABLE users (
     id serial NOT NULL,
     username VARCHAR(15) unique NOT NULL,
     password text NOT NULL,
-    registration_date NOT NULL DEFAULT CURRENT_DATE,
+    registration_date date NOT NULL DEFAULT CURRENT_DATE,
     reputation integer DEFAULT 0
 );
 
