@@ -59,3 +59,13 @@ def get_user_stuffs(cursor, username):
     users_comments = cursor.fetchall()
     print(users_comments)
     return users_questions, users_answers, users_comments
+
+
+@connection_handler
+def get_user_id(cursor, user_name):
+    cursor.execute("""SELECT id
+                      FROM users
+                      WHERE username = %s;""", (user_name,))
+    new_user_id = cursor.fetchone()
+    new_user_id = new_user_id['id']
+    return new_user_id
